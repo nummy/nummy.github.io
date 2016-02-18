@@ -105,9 +105,10 @@
 <p><strong>su缺点</strong><br>需要把root用户的口令泄露给普通用户，带来安全威胁。</p>
 <h3 id="2-sudo授权许可使用su"><a href="#2-sudo授权许可使用su" class="headerlink" title="2.sudo授权许可使用su"></a>2.sudo授权许可使用su</h3><p>通过sudo，我们能把某些超级权限有针对性的下放，并且不需要普通用户知道root密码，所以sudo 相对于权限无限制性的su来说，还是比较安全的，所以sudo 也能被称为受限制的su ；另外sudo 是需要授权许可的，所以也被称为授权许可的su；</p>
 <p>sudo 执行命令的流程是当前用户切换到root（或其它指定切换到的用户），然后以root（或其它指定的切换到的用户）身份执行命令，执行完成后，直接退回到当前用户；而这些的前提是要通过sudo的配置文件/etc/sudoers来进行授权；</p>
-<p>比如我们使用普通用户查看etc/shadow文件的内容时，就会报权限不够的问题。这时可以使用<figure class="highlight"><figcaption><span>more</span><a href="/etc/shadow```进行查看。前提是先配置/etc/sudoers文件进行授权。在root用户在使用visodu对/etc/sudoers进行修改。添加如下一行：">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">```shell&#10;normal_user ALL=/bin/more</span><br></pre></td></tr></table></figure></p>
+<p>比如我们使用普通用户查看etc/shadow文件的内容时，就会报权限不够的问题。这时可以使用sudo more /etc/shadow进行查看。前提是先配置/etc/sudoers文件进行授权。在root用户在使用visodu对/etc/sudoers进行修改。添加如下一行：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">normal_user</span> <span class="literal">ALL</span>=/bin/more</span><br></pre></td></tr></table></figure>
 <p>如果是给用户组授权，则需要在用户组名前加上%</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%group_name ALL=/usr/bin*</span><br></pre></td></tr></table></figure>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">%<span class="title">group_name</span></span> ALL=/usr/bin*</span><br></pre></td></tr></table></figure>
 
         
         
