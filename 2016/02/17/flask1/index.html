@@ -4,35 +4,26 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Python:classmethod &amp; staticmethod 的区别 | Blog Of Nummy</title>
+    <title>flask学习笔记【1】编码规范 | Blog Of Nummy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="nummy">
     
 
     
-    <meta name="description" content="classmethod：类方法staticmethod：静态方法在python中，静态方法和类方法都是可以通过类对象和类对象实例访问。但是区别是：
-
-@classmethod 是一个修饰器，它表示接下来的是一个类方法，而对于平常我们见到的则叫做实例方法。 类方法的第一个参数cls，而实例方法的第一个参数是self，表示该类的一个实例。 
-普通对象方法至少需要一个self参数，代表类对象实例
-类方法">
+    <meta name="description" content="PEP8：Python代码的风格指南PEP8是官方的Python代码指南，强烈推荐使用，pycharm也是默认使用PEP8进行代码检查的。尤其要注意的是，缩进采用四个空格而不是制表符tab。
+相对导入相对导入与绝对导入相比，更加灵活，书写代码也更少, 例如，我们需要从myapp/models.py中导入User模型，使用绝对导入，则需要使用myapp.models。如果使用相对导入，则只需要指明相">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python:classmethod & staticmethod 的区别">
-<meta property="og:url" content="http://yoursite.com/2016/02/17/python-method/index.html">
+<meta property="og:title" content="flask学习笔记【1】编码规范">
+<meta property="og:url" content="http://yoursite.com/2016/02/17/flask1/index.html">
 <meta property="og:site_name" content="Blog Of Nummy">
-<meta property="og:description" content="classmethod：类方法staticmethod：静态方法在python中，静态方法和类方法都是可以通过类对象和类对象实例访问。但是区别是：
-
-@classmethod 是一个修饰器，它表示接下来的是一个类方法，而对于平常我们见到的则叫做实例方法。 类方法的第一个参数cls，而实例方法的第一个参数是self，表示该类的一个实例。 
-普通对象方法至少需要一个self参数，代表类对象实例
-类方法">
-<meta property="og:updated_time" content="2016-02-18T03:18:37.000Z">
+<meta property="og:description" content="PEP8：Python代码的风格指南PEP8是官方的Python代码指南，强烈推荐使用，pycharm也是默认使用PEP8进行代码检查的。尤其要注意的是，缩进采用四个空格而不是制表符tab。
+相对导入相对导入与绝对导入相比，更加灵活，书写代码也更少, 例如，我们需要从myapp/models.py中导入User模型，使用绝对导入，则需要使用myapp.models。如果使用相对导入，则只需要指明相">
+<meta property="og:updated_time" content="2016-02-18T07:45:40.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python:classmethod & staticmethod 的区别">
-<meta name="twitter:description" content="classmethod：类方法staticmethod：静态方法在python中，静态方法和类方法都是可以通过类对象和类对象实例访问。但是区别是：
-
-@classmethod 是一个修饰器，它表示接下来的是一个类方法，而对于平常我们见到的则叫做实例方法。 类方法的第一个参数cls，而实例方法的第一个参数是self，表示该类的一个实例。 
-普通对象方法至少需要一个self参数，代表类对象实例
-类方法">
+<meta name="twitter:title" content="flask学习笔记【1】编码规范">
+<meta name="twitter:description" content="PEP8：Python代码的风格指南PEP8是官方的Python代码指南，强烈推荐使用，pycharm也是默认使用PEP8进行代码检查的。尤其要注意的是，缩进采用四个空格而不是制表符tab。
+相对导入相对导入与绝对导入相比，更加灵活，书写代码也更少, 例如，我们需要从myapp/models.py中导入User模型，使用绝对导入，则需要使用myapp.models。如果使用相对导入，则只需要指明相">
 
     
     <link rel="alternative" href="/atom.xml" title="Blog Of Nummy" type="application/atom+xml">
@@ -92,14 +83,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/02/17/python-method/" title="Python:classmethod &amp; staticmethod 的区别" itemprop="url">Python:classmethod &amp; staticmethod 的区别</a>
+      <a href="/2016/02/17/flask1/" title="flask学习笔记【1】编码规范" itemprop="url">flask学习笔记【1】编码规范</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="nummy" target="_blank" itemprop="author">nummy</a>
 		
   <p class="article-time">
-    <time datetime="2016-02-18T03:07:45.000Z" itemprop="datePublished"> 发表于 2016-02-17</time>
+    <time datetime="2016-02-18T07:34:52.000Z" itemprop="datePublished"> 发表于 2016-02-17</time>
     
   </p>
 </header>
@@ -108,20 +99,13 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PEP8：Python代码的风格指南"><span class="toc-number">1.</span> <span class="toc-text">PEP8：Python代码的风格指南</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相对导入"><span class="toc-number">2.</span> <span class="toc-text">相对导入</span></a></li></ol>
 		
 		</div>
 		
-		<p>classmethod：类方法<br>staticmethod：静态方法<br>在python中，静态方法和类方法都是可以通过类对象和类对象实例访问。但是区别是：</p>
-<ul>
-<li>@classmethod 是一个修饰器，它表示接下来的是一个类方法，而对于平常我们见到的则叫做实例方法。 类方法的第一个参数cls，而实例方法的第一个参数是self，表示该类的一个实例。 </li>
-<li>普通对象方法至少需要一个self参数，代表类对象实例</li>
-<li>类方法有类变量cls传入，从而可以用cls做一些相关的处理。并且有子类继承时，调用该类方法时，传入的类变量cls是子类，而非父类。 对于类方法，可以通过类来调用，就像C.f()，有点类似C＋＋中的静态方法, 也可以通过类的一个实例来调用，就像C().f()，这里C()，写成这样之后它就是类的一个实例了。 </li>
-<li>静态方法则没有，它基本上跟一个全局函数相同，一般来说用的很少</li>
-</ul>
-<p>示例1：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; class a():</span><br><span class="line">	@staticmethod</span><br><span class="line">	def staticm():</span><br><span class="line">		print 'static'</span><br><span class="line">	</span><br><span class="line">	def normalm(self):</span><br><span class="line">		print 'nomarl',self</span><br><span class="line">	</span><br><span class="line">	@classmethod</span><br><span class="line">	def classm(cls):</span><br><span class="line">		print 'class',cls</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; a1=a()</span><br><span class="line">&gt;&gt;&gt; a1.normalm()</span><br><span class="line">nomarl &lt;__main__.a instance at 0x84dddec&gt;</span><br><span class="line">&gt;&gt;&gt; a1.staticm()</span><br><span class="line">static</span><br><span class="line">&gt;&gt;&gt; a1.classm()</span><br><span class="line">class __main__.a</span><br><span class="line">&gt;&gt;&gt; type(a)</span><br><span class="line">&lt;type 'classobj'&gt;</span><br><span class="line">&gt;&gt;&gt; type(a1)</span><br><span class="line">&lt;type 'instance'&gt;</span><br></pre></td></tr></table></figure></p>
-<p>示例2：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">(object)</span>:</span></span><br><span class="line"><span class="decorator">	@classmethod</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">cm</span><span class="params">(cls)</span>:</span></span><br><span class="line">		<span class="keyword">print</span> <span class="string">'类方法cm(cls)调用者：'</span>, cls.__name__</span><br><span class="line"></span><br><span class="line"><span class="decorator">	@staticmethod</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">sm</span><span class="params">()</span>:</span></span><br><span class="line">		<span class="keyword">print</span> <span class="string">'静态方法sm()被调用'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(A)</span>:</span></span><br><span class="line">	<span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">A.cm()</span><br><span class="line">B.cm()</span><br><span class="line">A.sm()</span><br><span class="line">B.sm()</span><br></pre></td></tr></table></figure></p>
-<p>输出如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">类方法<span class="function"><span class="title">cm</span><span class="params">(cls)</span></span>调用者： A</span><br><span class="line">类方法<span class="function"><span class="title">cm</span><span class="params">(cls)</span></span>调用者： B</span><br><span class="line">静态方法<span class="function"><span class="title">sm</span><span class="params">()</span></span>被调用</span><br><span class="line">静态方法<span class="function"><span class="title">sm</span><span class="params">()</span></span>被调用</span><br></pre></td></tr></table></figure></p>
+		<h2 id="PEP8：Python代码的风格指南"><a href="#PEP8：Python代码的风格指南" class="headerlink" title="PEP8：Python代码的风格指南"></a>PEP8：Python代码的风格指南</h2><p>PEP8是官方的Python代码指南，强烈推荐使用，pycharm也是默认使用PEP8进行代码检查的。<br>尤其要注意的是，缩进采用四个空格而不是制表符tab。</p>
+<h2 id="相对导入"><a href="#相对导入" class="headerlink" title="相对导入"></a>相对导入</h2><p>相对导入与绝对导入相比，更加灵活，书写代码也更少, 例如，我们需要从myapp/models.py中导入User模型，使用绝对导入，则需要使用myapp.models。如果使用相对导入，则只需要指明相对于源文件的目标模块的位置，这个可以使用（.）来实现，一个(.)代表当前目录，每一个随后的点符号(.)都代表下一个父目录。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># myapp/views.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># An absolute import gives us the User model</span></span><br><span class="line"><span class="keyword">from</span> myapp.models <span class="keyword">import</span> User</span><br><span class="line"></span><br><span class="line"><span class="comment"># A relative import does the same thing</span></span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> User</span><br></pre></td></tr></table></figure></p>
+<p>这种方法的优点是软件包变得更加模块化。而且可以重新命名你的包，并且其他项目中不需要拍更新硬编码的导入语句，从而实现模块重用。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -129,13 +113,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/python/">python</a>
+  <a class="article-category-link" href="/categories/flask/">flask</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/python/">python</a>
+  <span></span> <a href="/tags/flask/">flask</a><a href="/tags/python/">python</a>
   </div>
 
 </div>
@@ -144,7 +128,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/02/17/python-method/" data-title="Python:classmethod &amp; staticmethod 的区别 | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/02/17/flask1/" data-title="flask学习笔记【1】编码规范 | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -157,19 +141,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/02/17/sudo/" title="Linux su &amp; sudo 用法">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Linux su &amp; sudo 用法</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/02/17/python-类中方法的区别/"  title="python 类中方法的区别">
+<a href="/2016/02/17/sudo/"  title="Linux su &amp; sudo 用法">
  <strong>下一篇：</strong><br/> 
- <span>python 类中方法的区别
+ <span>Linux su &amp; sudo 用法
 </span>
 </a>
 </div>
@@ -178,7 +154,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/02/17/python-method/" data-title="Python:classmethod & staticmethod 的区别" data-url="http://yoursite.com/2016/02/17/python-method/"></div>
+	<div class="ds-thread" data-thread-key="2016/02/17/flask1/" data-title="flask学习笔记【1】编码规范" data-url="http://yoursite.com/2016/02/17/flask1/"></div>
 </section>
 
 
@@ -188,7 +164,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PEP8：Python代码的风格指南"><span class="toc-number">1.</span> <span class="toc-text">PEP8：Python代码的风格指南</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相对导入"><span class="toc-number">2.</span> <span class="toc-text">相对导入</span></a></li></ol>
  
   </div>
 
