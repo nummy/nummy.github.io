@@ -26,7 +26,8 @@
 用法使用方法很简单：
 123456789101112from flask import Flaskfrom flask_debugtoolbar import DebugToolbarExtensionapp =">
 <meta property="og:image" content="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/example.gif">
-<meta property="og:updated_time" content="2016-02-18T09:06:30.000Z">
+<meta property="og:image" content="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-time-panel.png">
+<meta property="og:updated_time" content="2016-02-18T09:32:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="flask学习笔记【3】Flask-DebugToolbar的用法">
 <meta name="twitter:description" content="这个扩展模块可以给Flask项目中的每个页面都添加一个调试工具栏，里面包含了丰富而有用的调试信息。
@@ -109,7 +110,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-number">2.</span> <span class="toc-text">用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">3.</span> <span class="toc-text">配置</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-number">2.</span> <span class="toc-text">用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">3.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内置面板"><span class="toc-number">4.</span> <span class="toc-text">内置面板</span></a></li></ol>
 		
 		</div>
 		
@@ -120,7 +121,30 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_debugtoolbar <span class="keyword">import</span> DebugToolbarExtension</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># the toolbar is only enabled in debug mode:</span></span><br><span class="line">app.debug = <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># set a 'SECRET_KEY' to enable the Flask session cookies</span></span><br><span class="line">app.config[<span class="string">'SECRET_KEY'</span>] = <span class="string">'&lt;replace with a secret key&gt;'</span></span><br><span class="line"></span><br><span class="line">toolbar = DebugToolbarExtension(app)</span><br></pre></td></tr></table></figure>
 <p>当调试模式开启的时候，这个工具栏就会自动插入HTML代码中，在部署环境中，由于debug设置为False，所以不会显示这个工具栏。<br>这个扩展也支持在Flask工厂模式中使用，先独立创建toolbar，然后在a部署到应用中。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">toolbar = DebugToolbarExtension()</span><br><span class="line"><span class="comment"># Then later on.</span></span><br><span class="line">app = create_app(<span class="string">'the-config.cfg'</span>)</span><br><span class="line">toolbar.init_app(app)</span><br></pre></td></tr></table></figure>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>toolbar模块可以进行一下配置：<br>|属性名|功能|默认值|<br>|————|————|————|<br>|DEBUG_TB_ENABLED|开启工具栏|app.debug|<br>|DEBUG_TB_HOST|能够显示工具栏的主机白名单|任意主机|<br>|DEBUG_TB_INTERCEPT_REDIRECTS|是否拦截重定向|True|</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>toolbar模块可以进行一下配置：</p>
+<ul>
+<li>DEBUG_TB_ENABLED: 用来控制工具栏的显示。</li>
+<li>DEBUG_TB_HOST: 可以显示工具栏的主机白名单，默认所有主机均可以显示</li>
+<li>DEBUG_TB_INTERCEPT_REDIRECTS: 是否拦截重定向，默认为拦截。</li>
+<li>DEBUG_TB_PANELS: 工具栏中显示的面板，默认显示所有面板。</li>
+<li>DEBUG_TB_PROFILER_ENABLED: 是否在所有的请求中激活profiler，默认为了不激活。</li>
+<li>DEBUG_TB_TEMPLATE_EDITOR_ENABLED: 开启模板编辑器，默认不开启。</li>
+</ul>
+<p>如果需要改变其中的配置选项，可以在flask的配置文件中进行如下设置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.config[<span class="string">'DEBUG_TB_INTERCEPT_REDIRECTS'</span>] = <span class="keyword">False</span></span><br></pre></td></tr></table></figure>
+<h3 id="内置面板"><a href="#内置面板" class="headerlink" title="内置面板"></a>内置面板</h3><p>工具栏中包括如下面板：</p>
+<ol>
+<li>Versions面板：显示flask的版本信息<br><img src="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-time-panel.png" alt="version"></li>
+<li>Time面板: 显示处理当前请求所耗费的时间，扩展面板可以显示更加详细的信息</li>
+<li>HTTP Headers面板：显示当前请求的HTTP头部信息。</li>
+<li>Request Vars面板：显示当前请求中所包含变量的详细信息，包括视图函数的参数、cookies、sessions以及GET和POST方法所传输的数据等等。</li>
+<li>Config面板：显示flask应用中的配置信息。</li>
+<li>Templates面板：显示当前请求被渲染的模板信息，以及模板参数中提供导入变量。</li>
+<li>SQLAlchemy：显示当前请求中的SQL查询语句。这个面板需要安装Flask-SQLAlchemy。</li>
+<li>Logging面板：显示当前请求所产生的日志信息。</li>
+<li>Route List面板: 显示Flask中的路由表信息。</li>
+<li>Profile面板：显示当前请求的详细数据分析，由于性能瓶颈，默认不开启这个面板，可以手动激活，再刷新页面，就可以看到分析数据。</li>
+</ol>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -179,7 +203,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-number">2.</span> <span class="toc-text">用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">3.</span> <span class="toc-text">配置</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-number">2.</span> <span class="toc-text">用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">3.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内置面板"><span class="toc-number">4.</span> <span class="toc-text">内置面板</span></a></li></ol>
  
   </div>
 
