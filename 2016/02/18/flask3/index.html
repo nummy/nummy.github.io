@@ -11,17 +11,29 @@
     
 
     
-    <meta name="description" content="这个扩展模块可以给Flask项目中的每个页面都添加一个调试工具栏，里面包含了丰富而有用的调试信息。">
+    <meta name="description" content="这个扩展模块可以给Flask项目中的每个页面都添加一个调试工具栏，里面包含了丰富而有用的调试信息。
+安装使用pip进行安装
+1pip install flask-debugtoolbar
+用法使用方法很简单：
+123456789101112from flask import Flaskfrom flask_debugtoolbar import DebugToolbarExtensionapp =">
 <meta property="og:type" content="article">
 <meta property="og:title" content="flask学习笔记【3】Flask-DebugToolbar的用法">
 <meta property="og:url" content="http://yoursite.com/2016/02/18/flask3/index.html">
 <meta property="og:site_name" content="Blog Of Nummy">
-<meta property="og:description" content="这个扩展模块可以给Flask项目中的每个页面都添加一个调试工具栏，里面包含了丰富而有用的调试信息。">
+<meta property="og:description" content="这个扩展模块可以给Flask项目中的每个页面都添加一个调试工具栏，里面包含了丰富而有用的调试信息。
+安装使用pip进行安装
+1pip install flask-debugtoolbar
+用法使用方法很简单：
+123456789101112from flask import Flaskfrom flask_debugtoolbar import DebugToolbarExtensionapp =">
 <meta property="og:image" content="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/example.gif">
-<meta property="og:updated_time" content="2016-02-18T08:46:06.000Z">
+<meta property="og:updated_time" content="2016-02-18T09:05:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="flask学习笔记【3】Flask-DebugToolbar的用法">
-<meta name="twitter:description" content="这个扩展模块可以给Flask项目中的每个页面都添加一个调试工具栏，里面包含了丰富而有用的调试信息。">
+<meta name="twitter:description" content="这个扩展模块可以给Flask项目中的每个页面都添加一个调试工具栏，里面包含了丰富而有用的调试信息。
+安装使用pip进行安装
+1pip install flask-debugtoolbar
+用法使用方法很简单：
+123456789101112from flask import Flaskfrom flask_debugtoolbar import DebugToolbarExtensionapp =">
 
     
     <link rel="alternative" href="/atom.xml" title="Blog Of Nummy" type="application/atom+xml">
@@ -97,11 +109,18 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-number">2.</span> <span class="toc-text">用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">3.</span> <span class="toc-text">配置</span></a></li></ol>
 		
 		</div>
 		
 		<p>这个扩展模块可以给Flask项目中的每个页面都添加一个调试工具栏，里面包含了丰富而有用的调试信息。<br><img src="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/example.gif" alt="example"></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>使用pip进行安装</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> flask-debugtoolbar</span><br></pre></td></tr></table></figure>
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><p>使用方法很简单：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_debugtoolbar <span class="keyword">import</span> DebugToolbarExtension</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># the toolbar is only enabled in debug mode:</span></span><br><span class="line">app.debug = <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># set a 'SECRET_KEY' to enable the Flask session cookies</span></span><br><span class="line">app.config[<span class="string">'SECRET_KEY'</span>] = <span class="string">'&lt;replace with a secret key&gt;'</span></span><br><span class="line"></span><br><span class="line">toolbar = DebugToolbarExtension(app)</span><br></pre></td></tr></table></figure>
+<p>当调试模式开启的时候，这个工具栏就会自动插入HTML代码中，在部署环境中，由于debug设置为False，所以不会显示这个工具栏。<br>这个扩展也支持在Flask工厂模式中使用，先独立创建toolbar，然后在a部署到应用中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">toolbar = DebugToolbarExtension()</span><br><span class="line"><span class="comment"># Then later on.</span></span><br><span class="line">app = create_app(<span class="string">'the-config.cfg'</span>)</span><br><span class="line">toolbar.init_app(app)</span><br></pre></td></tr></table></figure>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>toolbar模块可以进行一下配置：<br>|属性名|功能|默认值|<br>|——–|——–|——–|<br>|DEBUG_TB_ENABLED|开启工具栏|app.debug|<br>|DEBUG_TB_HOST|能够显示工具栏的主机白名单|任意主机|<br>|DEBUG_TB_INTERCEPT_REDIRECTS|是否拦截重定向|True|</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -160,7 +179,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-number">2.</span> <span class="toc-text">用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">3.</span> <span class="toc-text">配置</span></a></li></ol>
  
   </div>
 
