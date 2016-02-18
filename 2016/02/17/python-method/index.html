@@ -4,26 +4,35 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>python 类中方法的区别 | Blog Of Nummy</title>
+    <title>Python:classmethod &amp; staticmethod 的区别 | Blog Of Nummy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="nummy">
     
 
     
-    <meta name="description" content="Python 除了拥有实例方法外，还拥有静态方法和类方法，跟Java相比需要理解这个类方法的含义。
-123456789class Foo(object):      def test(self)://定义了实例方法          print(&quot;object&quot;)      @classmethod      def test2(clss)://定义了类方法          print(&quot;cla">
+    <meta name="description" content="classmethod：类方法staticmethod：静态方法在python中，静态方法和类方法都是可以通过类对象和类对象实例访问。但是区别是：
+
+@classmethod 是一个修饰器，它表示接下来的是一个类方法，而对于平常我们见到的则叫做实例方法。 类方法的第一个参数cls，而实例方法的第一个参数是self，表示该类的一个实例。 
+普通对象方法至少需要一个self参数，代表类对象实例
+类方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python 类中方法的区别">
-<meta property="og:url" content="http://yoursite.com/2016/02/17/python-类中方法的区别/index.html">
+<meta property="og:title" content="Python:classmethod & staticmethod 的区别">
+<meta property="og:url" content="http://yoursite.com/2016/02/17/python-method/index.html">
 <meta property="og:site_name" content="Blog Of Nummy">
-<meta property="og:description" content="Python 除了拥有实例方法外，还拥有静态方法和类方法，跟Java相比需要理解这个类方法的含义。
-123456789class Foo(object):      def test(self)://定义了实例方法          print(&quot;object&quot;)      @classmethod      def test2(clss)://定义了类方法          print(&quot;cla">
-<meta property="og:updated_time" content="2016-02-18T02:56:01.000Z">
+<meta property="og:description" content="classmethod：类方法staticmethod：静态方法在python中，静态方法和类方法都是可以通过类对象和类对象实例访问。但是区别是：
+
+@classmethod 是一个修饰器，它表示接下来的是一个类方法，而对于平常我们见到的则叫做实例方法。 类方法的第一个参数cls，而实例方法的第一个参数是self，表示该类的一个实例。 
+普通对象方法至少需要一个self参数，代表类对象实例
+类方法">
+<meta property="og:updated_time" content="2016-02-18T03:13:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python 类中方法的区别">
-<meta name="twitter:description" content="Python 除了拥有实例方法外，还拥有静态方法和类方法，跟Java相比需要理解这个类方法的含义。
-123456789class Foo(object):      def test(self)://定义了实例方法          print(&quot;object&quot;)      @classmethod      def test2(clss)://定义了类方法          print(&quot;cla">
+<meta name="twitter:title" content="Python:classmethod & staticmethod 的区别">
+<meta name="twitter:description" content="classmethod：类方法staticmethod：静态方法在python中，静态方法和类方法都是可以通过类对象和类对象实例访问。但是区别是：
+
+@classmethod 是一个修饰器，它表示接下来的是一个类方法，而对于平常我们见到的则叫做实例方法。 类方法的第一个参数cls，而实例方法的第一个参数是self，表示该类的一个实例。 
+普通对象方法至少需要一个self参数，代表类对象实例
+类方法">
 
     
     <link rel="alternative" href="/atom.xml" title="Blog Of Nummy" type="application/atom+xml">
@@ -83,14 +92,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/02/17/python-类中方法的区别/" title="python 类中方法的区别" itemprop="url">python 类中方法的区别</a>
+      <a href="/2016/02/17/python-method/" title="Python:classmethod &amp; staticmethod 的区别" itemprop="url">Python:classmethod &amp; staticmethod 的区别</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="nummy" target="_blank" itemprop="author">nummy</a>
 		
   <p class="article-time">
-    <time datetime="2016-02-18T02:49:04.000Z" itemprop="datePublished"> 发表于 2016-02-17</time>
+    <time datetime="2016-02-18T03:07:45.000Z" itemprop="datePublished"> 发表于 2016-02-17</time>
     
   </p>
 </header>
@@ -103,27 +112,16 @@
 		
 		</div>
 		
-		<p>Python 除了拥有实例方法外，还拥有静态方法和类方法，跟Java相比需要理解这个类方法的含义。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span><span class="params">(object)</span>:</span>  </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(self)</span>:</span>//定义了实例方法  </span><br><span class="line">        print(<span class="string">"object"</span>)  </span><br><span class="line"><span class="decorator">    @classmethod  </span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">(clss)</span>:</span>//定义了类方法  </span><br><span class="line">        print(<span class="string">"class"</span>)  </span><br><span class="line"><span class="decorator">    @staticmethod  </span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test3</span><span class="params">()</span>:</span>//定义了静态方法  </span><br><span class="line">        print(<span class="string">"static"</span>)</span><br></pre></td></tr></table></figure>
+		<p>classmethod：类方法<br>staticmethod：静态方法<br>在python中，静态方法和类方法都是可以通过类对象和类对象实例访问。但是区别是：</p>
 <ul>
-<li>实例方法访问方式：</li>
+<li>@classmethod 是一个修饰器，它表示接下来的是一个类方法，而对于平常我们见到的则叫做实例方法。 类方法的第一个参数cls，而实例方法的第一个参数是self，表示该类的一个实例。 </li>
+<li>普通对象方法至少需要一个self参数，代表类对象实例</li>
+<li>类方法有类变量cls传入，从而可以用cls做一些相关的处理。并且有子类继承时，调用该类方法时，传入的类变量cls是子类，而非父类。 对于类方法，可以通过类来调用，就像C.f()，有点类似C＋＋中的静态方法, 也可以通过类的一个实例来调用，就像C().f()，这里C()，写成这样之后它就是类的一个实例了。 </li>
+<li>静态方法则没有，它基本上跟一个全局函数相同，一般来说用的很少</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ff = new Foo()</span><br><span class="line">ff.test();//通过实例调用  </span><br><span class="line">Foo.test(ff)//直接通过类的方式调用，但是需要自己传递实例引用</span><br></pre></td></tr></table></figure>
-<ul>
-<li>类方法访问方式：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Foo.test2();</span><br></pre></td></tr></table></figure>
-<p>如果Foo有了子类并且子类覆盖了这个类方法，最终调用会调用子类的方法并传递的是子类的类对象。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo2</span><span class="params">(Foo)</span>:</span>  </span><br><span class="line"><span class="decorator">    @classmethod  </span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">(self)</span>:</span>  </span><br><span class="line">        print(self)  </span><br><span class="line">        print(<span class="string">"foo2 object"</span>)  </span><br><span class="line">f2=Foo2()  </span><br><span class="line">print(f2.test2())</span><br></pre></td></tr></table></figure>
-<p>输出结果：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;class '__main__.Foo2'&gt;  </span><br><span class="line">foo2 object</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>静态方法调用方式：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ff = Foo()</span><br><span class="line">ff.test3()</span><br><span class="line">Foo.test3()</span><br></pre></td></tr></table></figure>
-<ul>
-<li>总结</li>
-</ul>
-<p>其实通过以上可以看出：<br>实例方法，类方法，静态方法都可以通过实例或者类调用，只不过实例方法通过类调用时需要传递实例的引用（python 3可以传递任意对象，其他版本会报错）。<br>三种方法从不同层次上来对方法进行了描述：实例方法针对的是实例，类方法针对的是类，他们都可以继承和重新定义，静态方法也能继承(NND)，可以认为是全局函数。</p>
+<p>示例1：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; class a():</span><br><span class="line">@staticmethod</span><br><span class="line">def staticm():</span><br><span class="line">print 'static'</span><br><span class="line">def normalm(self):</span><br><span class="line">print 'nomarl',self</span><br><span class="line">@classmethod</span><br><span class="line">def classm(cls):</span><br><span class="line">print 'class',cls</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; a1=a()</span><br><span class="line">&gt;&gt;&gt; a1.normalm()</span><br><span class="line">nomarl &lt;__main__.a instance at 0x84dddec&gt;</span><br><span class="line">&gt;&gt;&gt; a1.staticm()</span><br><span class="line">static</span><br><span class="line">&gt;&gt;&gt; a1.classm()</span><br><span class="line">class __main__.a</span><br><span class="line">&gt;&gt;&gt; type(a)</span><br><span class="line">&lt;type 'classobj'&gt;</span><br><span class="line">&gt;&gt;&gt; type(a1)</span><br><span class="line">&lt;type 'instance'&gt;</span><br></pre></td></tr></table></figure></p>
+<p>示例2：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">(object)</span>:</span></span><br><span class="line"><span class="decorator">@classmethod</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cm</span><span class="params">(cls)</span>:</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'类方法cm(cls)调用者：'</span>, cls.__name__</span><br><span class="line"><span class="decorator">@staticmethod</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sm</span><span class="params">()</span>:</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'静态方法sm()被调用'</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(A)</span>:</span></span><br><span class="line"><span class="keyword">pass</span></span><br><span class="line">A.cm()</span><br><span class="line">B.cm()</span><br><span class="line">A.sm()</span><br><span class="line">B.sm()</span><br></pre></td></tr></table></figure></p>
+<p>输出如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">类方法<span class="function"><span class="title">cm</span><span class="params">(cls)</span></span>调用者： A</span><br><span class="line">类方法<span class="function"><span class="title">cm</span><span class="params">(cls)</span></span>调用者： B</span><br><span class="line">静态方法<span class="function"><span class="title">sm</span><span class="params">()</span></span>被调用</span><br><span class="line">静态方法<span class="function"><span class="title">sm</span><span class="params">()</span></span>被调用</span><br></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -146,7 +144,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/02/17/python-类中方法的区别/" data-title="python 类中方法的区别 | Blog Of Nummy" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/02/17/python-method/" data-title="Python:classmethod &amp; staticmethod 的区别 | Blog Of Nummy" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -159,19 +157,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/02/17/python-method/" title="Python:classmethod &amp; staticmethod 的区别">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Python:classmethod &amp; staticmethod 的区别</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/02/17/Hexo创建静态博客/"  title="Hexo搭建静态博客">
+<a href="/2016/02/17/python-类中方法的区别/"  title="python 类中方法的区别">
  <strong>下一篇：</strong><br/> 
- <span>Hexo搭建静态博客
+ <span>python 类中方法的区别
 </span>
 </a>
 </div>
