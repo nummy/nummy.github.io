@@ -4,26 +4,29 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>flask学习笔记【1】编码规范 | Blog Of Nummy</title>
+    <title>flask学习笔记【2】环境配置 | Blog Of Nummy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="nummy">
     
 
     
-    <meta name="description" content="PEP8：Python代码的风格指南PEP8是官方的Python代码指南，强烈推荐使用，pycharm也是默认使用PEP8进行代码检查的。尤其要注意的是，缩进采用四个空格而不是制表符tab。
-相对导入相对导入与绝对导入相比，更加灵活，书写代码也更少, 例如，我们需要从myapp/models.py中导入User模型，使用绝对导入，则需要使用myapp.models。如果使用相对导入，则只需要指明相">
+    <meta name="description" content="1.使用virtualenv管理开发环境virtualenv用于创建一个虚拟的隔离环境，或者说安全沙盒，用户在其中安装的任何程序都只存在于这个沙盒中，而不会安装到系统级或者用户级目录中。这样就可以根方便的指定Python版本与每一个项目依赖的包。
+virtualenv还可以让开发者在不同的项目中使用相同的包，但是属于不同的版本。使用pip安装virtualenv
+1pip install virt">
 <meta property="og:type" content="article">
-<meta property="og:title" content="flask学习笔记【1】编码规范">
-<meta property="og:url" content="http://yoursite.com/2016/02/17/flask1/index.html">
+<meta property="og:title" content="flask学习笔记【2】环境配置">
+<meta property="og:url" content="http://yoursite.com/2016/02/17/flask2/index.html">
 <meta property="og:site_name" content="Blog Of Nummy">
-<meta property="og:description" content="PEP8：Python代码的风格指南PEP8是官方的Python代码指南，强烈推荐使用，pycharm也是默认使用PEP8进行代码检查的。尤其要注意的是，缩进采用四个空格而不是制表符tab。
-相对导入相对导入与绝对导入相比，更加灵活，书写代码也更少, 例如，我们需要从myapp/models.py中导入User模型，使用绝对导入，则需要使用myapp.models。如果使用相对导入，则只需要指明相">
-<meta property="og:updated_time" content="2016-02-18T07:46:58.000Z">
+<meta property="og:description" content="1.使用virtualenv管理开发环境virtualenv用于创建一个虚拟的隔离环境，或者说安全沙盒，用户在其中安装的任何程序都只存在于这个沙盒中，而不会安装到系统级或者用户级目录中。这样就可以根方便的指定Python版本与每一个项目依赖的包。
+virtualenv还可以让开发者在不同的项目中使用相同的包，但是属于不同的版本。使用pip安装virtualenv
+1pip install virt">
+<meta property="og:updated_time" content="2016-02-18T08:24:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="flask学习笔记【1】编码规范">
-<meta name="twitter:description" content="PEP8：Python代码的风格指南PEP8是官方的Python代码指南，强烈推荐使用，pycharm也是默认使用PEP8进行代码检查的。尤其要注意的是，缩进采用四个空格而不是制表符tab。
-相对导入相对导入与绝对导入相比，更加灵活，书写代码也更少, 例如，我们需要从myapp/models.py中导入User模型，使用绝对导入，则需要使用myapp.models。如果使用相对导入，则只需要指明相">
+<meta name="twitter:title" content="flask学习笔记【2】环境配置">
+<meta name="twitter:description" content="1.使用virtualenv管理开发环境virtualenv用于创建一个虚拟的隔离环境，或者说安全沙盒，用户在其中安装的任何程序都只存在于这个沙盒中，而不会安装到系统级或者用户级目录中。这样就可以根方便的指定Python版本与每一个项目依赖的包。
+virtualenv还可以让开发者在不同的项目中使用相同的包，但是属于不同的版本。使用pip安装virtualenv
+1pip install virt">
 
     
     <link rel="alternative" href="/atom.xml" title="Blog Of Nummy" type="application/atom+xml">
@@ -83,14 +86,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/02/17/flask1/" title="flask学习笔记【1】编码规范" itemprop="url">flask学习笔记【1】编码规范</a>
+      <a href="/2016/02/17/flask2/" title="flask学习笔记【2】环境配置" itemprop="url">flask学习笔记【2】环境配置</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="nummy" target="_blank" itemprop="author">nummy</a>
 		
   <p class="article-time">
-    <time datetime="2016-02-18T07:34:52.000Z" itemprop="datePublished"> 发表于 2016-02-17</time>
+    <time datetime="2016-02-18T07:52:04.000Z" itemprop="datePublished"> 发表于 2016-02-17</time>
     
   </p>
 </header>
@@ -99,13 +102,29 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PEP8：Python代码的风格指南"><span class="toc-number">1.</span> <span class="toc-text">PEP8：Python代码的风格指南</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相对导入"><span class="toc-number">2.</span> <span class="toc-text">相对导入</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-使用virtualenv管理开发环境"><span class="toc-number">1.</span> <span class="toc-text">1.使用virtualenv管理开发环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-安装依赖包"><span class="toc-number">2.</span> <span class="toc-text">2.安装依赖包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-版本控制"><span class="toc-number">3.</span> <span class="toc-text">3.版本控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-调试"><span class="toc-number">4.</span> <span class="toc-text">4.调试</span></a></li></ol>
 		
 		</div>
 		
-		<h2 id="PEP8：Python代码的风格指南"><a href="#PEP8：Python代码的风格指南" class="headerlink" title="PEP8：Python代码的风格指南"></a>PEP8：Python代码的风格指南</h2><p>PEP8是官方的Python代码指南，强烈推荐使用，pycharm也是默认使用PEP8进行代码检查的。<br>尤其要注意的是，缩进采用四个空格而不是制表符tab。</p>
-<h2 id="相对导入"><a href="#相对导入" class="headerlink" title="相对导入"></a>相对导入</h2><p>相对导入与绝对导入相比，更加灵活，书写代码也更少, 例如，我们需要从myapp/models.py中导入User模型，使用绝对导入，则需要使用myapp.models。如果使用相对导入，则只需要指明相对于源文件的目标模块的位置，这个可以使用（.）来实现，一个(.)代表当前目录，每一个随后的点符号(.)都代表下一个父目录。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># myapp/views.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># An absolute import gives us the User model</span></span><br><span class="line"><span class="keyword">from</span> myapp.models <span class="keyword">import</span> User</span><br><span class="line"></span><br><span class="line"><span class="comment"># A relative import does the same thing</span></span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> User</span><br></pre></td></tr></table></figure></p>
-<p>这种方法的优点是软件包变得更加模块化。而且可以重新命名你的包，并且其他项目中不需要更新硬编码的导入语句，从而实现模块重用。</p>
+		<h3 id="1-使用virtualenv管理开发环境"><a href="#1-使用virtualenv管理开发环境" class="headerlink" title="1.使用virtualenv管理开发环境"></a>1.使用virtualenv管理开发环境</h3><p>virtualenv用于创建一个虚拟的隔离环境，或者说安全沙盒，用户在其中安装的任何程序都只存在于这个沙盒中，而不会安装到系统级或者用户级目录中。这样就可以根方便的指定Python版本与每一个项目依赖的包。</p>
+<p>virtualenv还可以让开发者在不同的项目中使用相同的包，但是属于不同的版本。<br>使用pip安装virtualenv</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> virtualenv</span><br></pre></td></tr></table></figure>
+<p>安装完virtualenv之后就可以创建虚拟环境了，命令如下：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ virtualenv venv</span><br><span class="line"><span class="literal">New</span> python executable <span class="keyword">in</span> venv/bin/python</span><br><span class="line">Installing Setuptools<span class="attribute">...</span><span class="attribute">...</span><span class="attribute">...</span><span class="built_in">..</span><span class="preprocessor">[</span><span class="attribute">...</span><span class="preprocessor">]</span><span class="markup">.....done.</span><br><span class="line">Installing Pip..................</span><span class="preprocessor">[</span><span class="attribute">...</span><span class="preprocessor">]</span><span class="markup">.....done.</span><br><span class="line">$</span></span><br></pre></td></tr></table></figure>
+<p>virtualenv会创建一个新目录venv，依赖包将安装在这个目录中。新的虚拟环境创建之后，还必须激活才可以使用，通过执行虚拟环境中的bin/activate脚本来激活：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ which python</span><br><span class="line"><span class="regexp">/usr/</span>local<span class="regexp">/bin/</span>python</span><br><span class="line">$ <span class="keyword">source</span> venv<span class="regexp">/bin/</span>activate</span><br><span class="line">(venv)$ which python</span><br><span class="line"><span class="regexp">/Users/</span>robert<span class="regexp">/Code/my</span>app<span class="regexp">/venv/</span>bin<span class="regexp">/python</span></span><br></pre></td></tr></table></figure>
+<p>bin/activate 脚本对你的 shell 环境变量进行一些改变以致一切都指向新的虚拟环境而不是全局系统。你可以在上面的代码块中看到效果。激活后，python 命令指向虚拟环境的中 Python 的 bin 目录。当虚拟环境激活后，使用 Pip 安装的依赖包会被下载到虚拟环境中而不是全局系统。</p>
+<p>你可能会注意到 shell 中的提示符也已经改变了。virtualenv 预先设定目前激活虚拟环境的名称，因此你会知道你不是在全局系统上工作。</p>
+<p>通过运行<code>deactivate</code>来停止虚拟环境的使用</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(venv)<span class="variable">$ </span>deactivate</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
+<h3 id="2-安装依赖包"><a href="#2-安装依赖包" class="headerlink" title="2.安装依赖包"></a>2.安装依赖包</h3><p>一般情况下我们可以使用pip或者easy_install来进行包的安装，但是随着项目的发展，需要安装的包也越来越多，如果重新部署环境的时候，再一个个进行安装，非常的麻烦，因为还得一个个找出来。但是pip提供了一个快捷的方法，它能够生成一个列出所有已安装包的文本文件。如果是在一个新系统中部署项目，直接读取文件中的内容进行安装即可。</p>
+<p>pip使用freeze命令来导出所有已安装的包到指定的文本文件：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">pip</span> <span class="tag">freeze</span> &gt; <span class="tag">requirements</span><span class="class">.txt</span></span><br></pre></td></tr></table></figure>
+<p>重新安装这些包使用下面的命令即可：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> -r requirements.txt</span><br></pre></td></tr></table></figure>
+<h3 id="3-版本控制"><a href="#3-版本控制" class="headerlink" title="3.版本控制"></a>3.版本控制</h3><p>推荐使用现在最流行的git进行版本控制。<br>如果不需要对某些文件进行控制，可以创建一个特殊文件.gitignore，在这个文件中,使用列表通配符来匹配文件名，任何匹配其中一个模式的文件名都会被git忽略。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*<span class="class">.pyc</span></span><br><span class="line">instance/</span><br></pre></td></tr></table></figure>
+<h3 id="4-调试"><a href="#4-调试" class="headerlink" title="4.调试"></a>4.调试</h3><p>在配置文件中设置<code>debug = True</code>就可以开启调试模式，当它打开的时候，服务器会在代码变化的时候自动加载并且出错的时候会伴随着一个堆栈跟踪和一个交互式控制台。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -128,7 +147,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/02/17/flask1/" data-title="flask学习笔记【1】编码规范 | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/02/17/flask2/" data-title="flask学习笔记【2】环境配置 | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -141,19 +160,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/02/17/flask2/" title="flask学习笔记【2】环境配置">
-  <strong>上一篇：</strong><br/>
-  <span>
-  flask学习笔记【2】环境配置</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/02/17/sudo/"  title="Linux su &amp; sudo 用法">
+<a href="/2016/02/17/flask1/"  title="flask学习笔记【1】编码规范">
  <strong>下一篇：</strong><br/> 
- <span>Linux su &amp; sudo 用法
+ <span>flask学习笔记【1】编码规范
 </span>
 </a>
 </div>
@@ -162,7 +173,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/02/17/flask1/" data-title="flask学习笔记【1】编码规范" data-url="http://yoursite.com/2016/02/17/flask1/"></div>
+	<div class="ds-thread" data-thread-key="2016/02/17/flask2/" data-title="flask学习笔记【2】环境配置" data-url="http://yoursite.com/2016/02/17/flask2/"></div>
 </section>
 
 
@@ -172,7 +183,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PEP8：Python代码的风格指南"><span class="toc-number">1.</span> <span class="toc-text">PEP8：Python代码的风格指南</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相对导入"><span class="toc-number">2.</span> <span class="toc-text">相对导入</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-使用virtualenv管理开发环境"><span class="toc-number">1.</span> <span class="toc-text">1.使用virtualenv管理开发环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-安装依赖包"><span class="toc-number">2.</span> <span class="toc-text">2.安装依赖包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-版本控制"><span class="toc-number">3.</span> <span class="toc-text">3.版本控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-调试"><span class="toc-number">4.</span> <span class="toc-text">4.调试</span></a></li></ol>
  
   </div>
 
