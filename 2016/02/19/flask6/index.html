@@ -1,0 +1,575 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>flask学习笔记【6】视图和路由进阶 | Blog Of Nummy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="nummy">
+    
+
+    
+    <meta name="description" content="视图装饰器Python 装饰器是用于转换其它函数的函数。当一个装饰的函数被调用的时候，装饰器也会被调用。接着装饰器就会采取行动，修改参数，停止执行或者调用原始函数。我们可以使用装饰器来包装视图，让它们在执行之前运行我们希望的代码。
+123@decorator_functiondef decorated():    pass
+@app.route 是用于为 Flask 应用程序的视图函数匹配 URL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flask学习笔记【6】视图和路由进阶">
+<meta property="og:url" content="http://yoursite.com/2016/02/19/flask6/index.html">
+<meta property="og:site_name" content="Blog Of Nummy">
+<meta property="og:description" content="视图装饰器Python 装饰器是用于转换其它函数的函数。当一个装饰的函数被调用的时候，装饰器也会被调用。接着装饰器就会采取行动，修改参数，停止执行或者调用原始函数。我们可以使用装饰器来包装视图，让它们在执行之前运行我们希望的代码。
+123@decorator_functiondef decorated():    pass
+@app.route 是用于为 Flask 应用程序的视图函数匹配 URL">
+<meta property="og:updated_time" content="2016-02-19T02:40:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="flask学习笔记【6】视图和路由进阶">
+<meta name="twitter:description" content="视图装饰器Python 装饰器是用于转换其它函数的函数。当一个装饰的函数被调用的时候，装饰器也会被调用。接着装饰器就会采取行动，修改参数，停止执行或者调用原始函数。我们可以使用装饰器来包装视图，让它们在执行之前运行我们希望的代码。
+123@decorator_functiondef decorated():    pass
+@app.route 是用于为 Flask 应用程序的视图函数匹配 URL">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Blog Of Nummy" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Blog Of Nummy" title="Blog Of Nummy"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Blog Of Nummy">Blog Of Nummy</a></h1>
+				<h2 class="blog-motto">Less is more</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/02/19/flask6/" title="flask学习笔记【6】视图和路由进阶" itemprop="url">flask学习笔记【6】视图和路由进阶</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="nummy" target="_blank" itemprop="author">nummy</a>
+		
+  <p class="article-time">
+    <time datetime="2016-02-19T18:10:09.000Z" itemprop="datePublished"> 发表于 2016-02-19</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#视图装饰器"><span class="toc-number">1.</span> <span class="toc-text">视图装饰器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#认证"><span class="toc-number">1.0.1.</span> <span class="toc-text">认证</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#缓存"><span class="toc-number">1.0.2.</span> <span class="toc-text">缓存</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#自定义装饰器"><span class="toc-number">1.0.3.</span> <span class="toc-text">自定义装饰器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#URL转换器"><span class="toc-number">2.</span> <span class="toc-text">URL转换器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#内置转换器"><span class="toc-number">2.0.1.</span> <span class="toc-text">内置转换器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#自定义转换器"><span class="toc-number">2.0.2.</span> <span class="toc-text">自定义转换器</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="视图装饰器"><a href="#视图装饰器" class="headerlink" title="视图装饰器"></a>视图装饰器</h3><p>Python 装饰器是用于转换其它函数的函数。当一个装饰的函数被调用的时候，装饰器也会被调用。接着装饰器就会采取行动，修改参数，停止执行或者调用原始函数。我们可以使用装饰器来包装视图，让它们在执行之前运行我们希望的代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="decorator">@decorator_function</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decorated</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<p>@app.route 是用于为 Flask 应用程序的视图函数匹配 URLs 的装饰器。</p>
+<p>Flask还有其它几种装饰器，在应用开发中也会经常用到。</p>
+<h5 id="认证"><a href="#认证" class="headerlink" title="认证"></a>认证</h5><p>Flask-Login 扩展可以很容易地实现登录系统。除了处理用户认证的细节，Flask-Login 提供给我们一个装饰器，它用来限制只允许登录的用户访问某些视图： @login_required。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># app.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> render_template</span><br><span class="line"><span class="keyword">from</span> flask.ext.login <span class="keyword">import</span> login_required, current_user</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.route('/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">"index.html"</span>)</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.route('/dashboard')</span></span><br><span class="line"><span class="decorator">@login_required</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">account</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">"account.html"</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong></p>
+<blockquote>
+<p>@app.route 应该是最外层的视图装饰（换句话说，@app.route 应该在所有装饰器的最前面）</p>
+</blockquote>
+<p>一个登录过的用户才能够访问 /dashboard 路由。我们可以配置 Flask-Login，让未登录的用户重定向到一个登录页，返回一个 HTTP 401 状态码或者我们想要它做的任何东西。</p>
+<h5 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h5><p>对于大流量的网站，如果每秒接受数千次的请求，而每次请求都要多次访问数据库，那么很容易导致系统越来越慢，用户等待时间也会越来越长，那么怎样才能加快访问速度呢？<br>其中一种精解决方式就是采用缓存技术，这里我们使用FLask—Cache扩展。这个扩展提供我们一个装饰器，我们可以在我们的首页视图上使用这个装饰器用来在一段时间内缓存响应。</p>
+<p>Flask-Cache 可以被配置成与一堆不同的缓存后端一起工作。一个流行的选择是 Redis，Redis 很容易设置和使用。假设 Flask-Cache 已经配置好，这个代码块显示我们的缓存装饰器视图是什么样子的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># app.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask.ext.cache <span class="keyword">import</span> Cache</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line">app = Flask()</span><br><span class="line"></span><br><span class="line"><span class="comment"># We'd normally include configuration settings in this call</span></span><br><span class="line">cache = Cache(app)</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.route('/')</span></span><br><span class="line"><span class="decorator">@cache.cached(timeout=60)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span></span><br><span class="line">    [...] <span class="comment"># Make a few database calls to get the information we need</span></span><br><span class="line">    <span class="keyword">return</span> render_template(</span><br><span class="line">        <span class="string">'index.html'</span>,</span><br><span class="line">        latest_posts=latest_posts,</span><br><span class="line">        recent_users=recent_users,</span><br><span class="line">        recent_photos=recent_photos</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<p>现在函数将每 60 秒会执行一次，因为 60 秒后缓存就过期。响应将会保存在我们的缓存中，在缓存没有过期之前，所有针对首页的请求都会直接从缓存中读取。</p>
+<h5 id="自定义装饰器"><a href="#自定义装饰器" class="headerlink" title="自定义装饰器"></a>自定义装饰器</h5><p>先让我们想象下我们有一个应用程序，该应用程序每个月都会向用户收费。如果用户的账号已经过期，我们将会重定向到收费页面并且让用户升级。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># myapp/util.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> flash, redirect, url_for</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask.ext.login <span class="keyword">import</span> current_user</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_expired</span><span class="params">(func)</span>:</span></span><br><span class="line"><span class="decorator">    @wraps(func)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decorated_function</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> datetime.utcnow() &gt; current_user.account_expires:</span><br><span class="line">            flash(<span class="string">"Your account has expired. Update your billing info."</span>)</span><br><span class="line">            <span class="keyword">return</span> redirect(url_for(<span class="string">'account_billing'</span>))</span><br><span class="line">        <span class="keyword">return</span> func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> decorated_function</span><br></pre></td></tr></table></figure>
+<p>当我们叠加装饰器的时候，最上层的装饰器会首先运行，接着调用下一行的下一个函数：要么是视图函数，要么就是装饰器。装饰器的语法只是 Python 提供的一个语法糖。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This code:</span></span><br><span class="line"><span class="decorator">@foo</span></span><br><span class="line"><span class="decorator">@bar</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">one</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">r1 = one()</span><br><span class="line"></span><br><span class="line"><span class="comment"># is the same as this code:</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">two</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">two = foo(bar(two))</span><br><span class="line">r2 = two()</span><br><span class="line"></span><br><span class="line">r1 == r2 <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+<p>此代码块展示了一个使用我们自定义的装饰器和来自 Flask-Login 扩展的 @login_required 装饰器的示例。我们可以通过叠加使用多个装饰器。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># myapp/views.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> render_template</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask.ext.login <span class="keyword">import</span> login_required</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> app</span><br><span class="line"><span class="keyword">from</span> .util <span class="keyword">import</span> check_expired</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.route('/use_app')</span></span><br><span class="line"><span class="decorator">@login_required</span></span><br><span class="line"><span class="decorator">@check_expired</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">use_app</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""Use our amazing app."""</span></span><br><span class="line">    <span class="comment"># [...]</span></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">'use_app.html'</span>)</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.route('/account/billing')</span></span><br><span class="line"><span class="decorator">@login_required</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">account_billing</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""Update your billing info."""</span></span><br><span class="line">    <span class="comment"># [...]</span></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">'account/billing.html'</span>)</span><br></pre></td></tr></table></figure>
+<p>现在当一个用户试图访问 /use_app，check_expired() 将会确保在运行视图函数之前用户的账号没有过期。</p>
+<h3 id="URL转换器"><a href="#URL转换器" class="headerlink" title="URL转换器"></a>URL转换器</h3><hr>
+<h5 id="内置转换器"><a href="#内置转换器" class="headerlink" title="内置转换器"></a>内置转换器</h5><p>当你在 Flask 中定义路由的时候，你可以指定路由的一部分，它们将会转换成 Python 变量并且传递到视图函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="decorator">@app.route('/user/&lt;username&gt;')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">profile</span><span class="params">(username)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<p>在 URL 中的 <username> 将会作为 username 参数传入到视图。你也可以指定一个转换器，用来在变量传入视图之前对其进行过滤筛选。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="decorator">@app.route('/user/id/&lt;int:user_id&gt;')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">profile</span><span class="params">(user_id)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></username></p>
+<p>在这个代码块中，URL：<a href="http://myapp.com/user/id/Q29kZUxlc3NvbiEh" target="_blank" rel="external">http://myapp.com/user/id/Q29kZUxlc3NvbiEh</a> 将会返回一个 404 状态码 – 未找到。这是因为 URL 中的 user_id 要求的是一个整数但实际上是一个字符串。</p>
+<p>下面是Flask中内置的URL转换器</p>
+<ul>
+<li>string 不带斜杠的任何文本</li>
+<li>int 整数</li>
+<li>float 浮点数</li>
+<li>path 像字符串但是允许斜杠</li>
+</ul>
+<h5 id="自定义转换器"><a href="#自定义转换器" class="headerlink" title="自定义转换器"></a>自定义转换器</h5><p>我们也可以自定义转换器，下面定义一个转换器，通过+来分离任意数量的元素，转换成一个列表，并把列表元素传送给视图函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># myapp/util.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> werkzeug.routing <span class="keyword">import</span> BaseConverter</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListConverter</span><span class="params">(BaseConverter)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">to_python</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> value.split(<span class="string">'+'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">to_url</span><span class="params">(self, values)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'+'</span>.join(BaseConverter.to_url(value)</span><br><span class="line">                        <span class="keyword">for</span> value <span class="keyword">in</span> values)</span><br></pre></td></tr></table></figure>
+<p>我们需要定义两个方法：to_python() 和 to_url()。正如名称暗示的一样，to_python() 是用于转换 URL 中的路径成为一个 Python 对象，该对象将会传递给视图；to_url() 是被 url_for() 用来把参数转换为合适的形式的 URL。</p>
+<p>为了使用我们的 ListConverter，我们首先必须告诉 Flask 它的存在。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /myapp/__init__.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> .util <span class="keyword">import</span> ListConverter</span><br><span class="line"></span><br><span class="line">app.url_map.converters[<span class="string">'list'</span>] = ListConverter</span><br></pre></td></tr></table></figure>
+<p>现在我们就可以像使用内置的转换器一样使用自己的转换器。我们可以在 @app.route() 中使用 “list”，就像使用内置的 int，float，string，path 一样。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># myapp/views.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> app</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.route('/r/&lt;list:subreddits&gt;')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">subreddit_home</span><span class="params">(subreddits)</span>:</span></span><br><span class="line">    <span class="string">"""Show all of the posts for the given subreddits."""</span></span><br><span class="line">    posts = []</span><br><span class="line">    <span class="keyword">for</span> subreddit <span class="keyword">in</span> subreddits:</span><br><span class="line">        posts.extend(subreddit.posts)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">'/r/index.html'</span>, posts=posts)</span><br></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/python/">python</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/flask/">flask</a><a href="/tags/python/">python</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2016/02/19/flask6/" data-title="flask学习笔记【6】视图和路由进阶 | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/02/19/flash5/"  title="flash学习笔记【5】配置">
+ <strong>下一篇：</strong><br/> 
+ <span>flash学习笔记【5】配置
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/02/19/flask6/" data-title="flask学习笔记【6】视图和路由进阶" data-url="http://yoursite.com/2016/02/19/flask6/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#视图装饰器"><span class="toc-number">1.</span> <span class="toc-text">视图装饰器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#认证"><span class="toc-number">1.0.1.</span> <span class="toc-text">认证</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#缓存"><span class="toc-number">1.0.2.</span> <span class="toc-text">缓存</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#自定义装饰器"><span class="toc-number">1.0.3.</span> <span class="toc-text">自定义装饰器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#URL转换器"><span class="toc-number">2.</span> <span class="toc-text">URL转换器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#内置转换器"><span class="toc-number">2.0.1.</span> <span class="toc-text">内置转换器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#自定义转换器"><span class="toc-number">2.0.2.</span> <span class="toc-text">自定义转换器</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="nummy" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/flask/" title="flask">flask<sup>5</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/flask/" title="flask">flask<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/blog/" title="blog">blog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title=" 快速搭建静态博客">Hexo</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://nummy.github.io" target="_blank" title="Nummy&#39;s Blog">Nummy&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1683688031&verifier=4fd81735&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Nummy in UC. <br/>
+			Simple is better than complex.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/1683688031" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/nummy" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:allen_li89@163.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="nummy">nummy</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"nummy"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
