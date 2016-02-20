@@ -1,0 +1,589 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>flask学习笔记【11】与用户相关的操作 | Blog Of Nummy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="nummy">
+    
+
+    
+    <meta name="description" content="本章的前提是使用SQLAlchemy模型以及WTFForms来处理表单。
+确认电子邮箱当一个新用户提供我们他们的邮箱，我们通常要确认他们提供给我们的邮箱是否是正确的。一旦我们已经通过邮箱验证，我们可以安心地给我们用户发送密码重置链接以及其它敏感的信息，而无需担心是谁在接收这些内容。
+确认邮箱最常见的模式之一就是发送一个 URL 唯一的密码重置链接，当访问它的时候，证实了用户的邮箱地址。例如，joh">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flask学习笔记【11】与用户相关的操作">
+<meta property="og:url" content="http://yoursite.com/2016/02/20/flask12/index.html">
+<meta property="og:site_name" content="Blog Of Nummy">
+<meta property="og:description" content="本章的前提是使用SQLAlchemy模型以及WTFForms来处理表单。
+确认电子邮箱当一个新用户提供我们他们的邮箱，我们通常要确认他们提供给我们的邮箱是否是正确的。一旦我们已经通过邮箱验证，我们可以安心地给我们用户发送密码重置链接以及其它敏感的信息，而无需担心是谁在接收这些内容。
+确认邮箱最常见的模式之一就是发送一个 URL 唯一的密码重置链接，当访问它的时候，证实了用户的邮箱地址。例如，joh">
+<meta property="og:updated_time" content="2016-02-20T10:53:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="flask学习笔记【11】与用户相关的操作">
+<meta name="twitter:description" content="本章的前提是使用SQLAlchemy模型以及WTFForms来处理表单。
+确认电子邮箱当一个新用户提供我们他们的邮箱，我们通常要确认他们提供给我们的邮箱是否是正确的。一旦我们已经通过邮箱验证，我们可以安心地给我们用户发送密码重置链接以及其它敏感的信息，而无需担心是谁在接收这些内容。
+确认邮箱最常见的模式之一就是发送一个 URL 唯一的密码重置链接，当访问它的时候，证实了用户的邮箱地址。例如，joh">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Blog Of Nummy" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Blog Of Nummy" title="Blog Of Nummy"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Blog Of Nummy">Blog Of Nummy</a></h1>
+				<h2 class="blog-motto">Less is more</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/02/20/flask12/" title="flask学习笔记【11】与用户相关的操作" itemprop="url">flask学习笔记【11】与用户相关的操作</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="nummy" target="_blank" itemprop="author">nummy</a>
+		
+  <p class="article-time">
+    <time datetime="2016-02-21T01:54:54.000Z" itemprop="datePublished"> 发表于 2016-02-20</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#确认电子邮箱"><span class="toc-number">1.</span> <span class="toc-text">确认电子邮箱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#存储密码"><span class="toc-number">2.</span> <span class="toc-text">存储密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#认证"><span class="toc-number">3.</span> <span class="toc-text">认证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flask—Login"><span class="toc-number">4.</span> <span class="toc-text">Flask—Login</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#忘记密码"><span class="toc-number">5.</span> <span class="toc-text">忘记密码</span></a></li></ol>
+		
+		</div>
+		
+		<p>本章的前提是使用SQLAlchemy模型以及WTFForms来处理表单。</p>
+<h3 id="确认电子邮箱"><a href="#确认电子邮箱" class="headerlink" title="确认电子邮箱"></a>确认电子邮箱</h3><p>当一个新用户提供我们他们的邮箱，我们通常要确认他们提供给我们的邮箱是否是正确的。一旦我们已经通过邮箱验证，我们可以安心地给我们用户发送密码重置链接以及其它敏感的信息，而无需担心是谁在接收这些内容。</p>
+<p>确认邮箱最常见的模式之一就是发送一个 URL 唯一的密码重置链接，当访问它的时候，证实了用户的邮箱地址。例如，john@gmail.com 注册了我们的应用程序。我们把他的用户数据插入到数据库中，该条用户数据的 <code>email_confirmed</code>字段被设置成 <code>False</code> 并且发送了一封携带唯一的 URL 的邮件到 john@gmail.com 上。这个 URL 通常包含一个唯一的令牌，例如，<a href="http://myapp.com/accounts/confirm-/Q2hhZCBDYXRsZXR0IHJvY2tzIG15IHNvY2tz。当" target="_blank" rel="external">http://myapp.com/accounts/confirm-/Q2hhZCBDYXRsZXR0IHJvY2tzIG15IHNvY2tz。当</a> John 收到这封邮件的时候，他点击链接。我们的应用程序会检查令牌，知道谁在确认邮箱并且设置 John 的<code>email_confirmed</code>字段为 <code>True</code>。</p>
+<p>我们是如何知道 URL 中的令牌是对应哪个用户？一种方式就是在令牌被创建的时候存储到数据库中，当我们收到确认请求的时候到数据库中检查对比。这是一个很大的开销，幸运地是，我们不必这么做。</p>
+<p>我们会把邮箱地址编码成令牌。并且令牌也包含一个时间戳，该时间戳是让我们设置一个令牌在什么时间内有效的时间限制。为了完成这些，我们使用 <code>itsdangerous</code> 包。这个包提供我们一个用来发送敏感数据到一个不可信的环境的工具（像发送一封邮件确认令牌到一个未确认的邮箱）。在本例中，我们将会使用 <code>URLSafeTimedSerializer</code> 类的一个实例。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ourapp/util/security.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> itsdangerous <span class="keyword">import</span> URLSafeTimedSerializer</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> .. <span class="keyword">import</span> app</span><br><span class="line"></span><br><span class="line">ts = URLSafeTimedSerializer(app.config[<span class="string">"SECRET_KEY"</span>])</span><br></pre></td></tr></table></figure>
+<p>当一个用户给我们他们的邮箱地址的时候，我们可以使用它序列化来生成一个确认令牌。我们实现了一个简单的账号创建过程，里面就使用了这种方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ourapp/views.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> redirect, render_template, url_for</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> app, db</span><br><span class="line"><span class="keyword">from</span> .forms <span class="keyword">import</span> EmailPasswordForm</span><br><span class="line"><span class="keyword">from</span> .util <span class="keyword">import</span> ts, send_email</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.route('/accounts/create', methods=["GET", "POST"])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_account</span><span class="params">()</span>:</span></span><br><span class="line">    form = EmailPasswordForm()</span><br><span class="line">    <span class="keyword">if</span> form.validate_on_submit():</span><br><span class="line">        user = User(</span><br><span class="line">            email = form.email.data,</span><br><span class="line">            password = form.password.data</span><br><span class="line">        )</span><br><span class="line">        db.session.add(user)</span><br><span class="line">        db.session.commit()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Now we'll send the email confirmation link</span></span><br><span class="line">        subject = <span class="string">"Confirm your email"</span></span><br><span class="line"></span><br><span class="line">        token = ts.dumps(self.email, salt=<span class="string">'email-confirm-key'</span>)</span><br><span class="line"></span><br><span class="line">        confirm_url = url_for(</span><br><span class="line">            <span class="string">'confirm_email'</span>,</span><br><span class="line">            token=token,</span><br><span class="line">            _external=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">        html = render_template(</span><br><span class="line">            <span class="string">'email/activate.html'</span>,</span><br><span class="line">            confirm_url=confirm_url)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># We'll assume that send_email has been defined in myapp/util.py</span></span><br><span class="line">        send_email(user.email, subject, html)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> redirect(url_for(<span class="string">"index"</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">"accounts/create.html"</span>, form=form)</span><br></pre></td></tr></table></figure>
+<p>我们上面定义的视图处理用户的创建以及发送一封邮件到指定的邮箱地址。你可能注意到我们使用了一个模板用来生成邮件内容的 HTML 形式。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;# ourapp/templates/email/activate.html #&#125;</span><br><span class="line"></span><br><span class="line">Your account was successfully created. Please click the link below&lt;br&gt;</span><br><span class="line">to confirm your email address and activate your account:</span><br><span class="line"></span><br><span class="line">&lt;p&gt;</span><br><span class="line">&lt;a href="&#123;&#123; confirm_url &#125;&#125;"&gt;&#123;&#123; confirm_url &#125;&#125;&lt;/a&gt;</span><br><span class="line">&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;</span><br><span class="line">--&lt;br&gt;</span><br><span class="line">Questions? Comments? Email hello@myapp.com.</span><br><span class="line">&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<p>好了，现在我们只需要实现一个处理邮件中确认链接的视图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ourapp/views.py</span></span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.route('/confirm/&lt;token&gt;')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">confirm_email</span><span class="params">(token)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        email = ts.loads(token, salt=<span class="string">"email-confirm-key"</span>, max_age=<span class="number">86400</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        abort(<span class="number">404</span>)</span><br><span class="line"></span><br><span class="line">    user = User.query.filter_by(email=email).first_or_404()</span><br><span class="line"></span><br><span class="line">    user.email_confirmed = <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">    db.session.add(user)</span><br><span class="line">    db.session.commit()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> redirect(url_for(<span class="string">'signin'</span>))</span><br></pre></td></tr></table></figure>
+<p>这个视图是一个简单的表单视图。我们只在开始的时候添加了<code>try ... except</code> 来检查令牌是否有效。令牌中包含了一个时间戳，因此我们能够告诉<code>ts.loads()</code>引发一个异常如果它大于 <code>max_age</code> 的话。在本例中，我们设置<code>max_age</code>为 <code>86400</code> 秒，即：<code>24</code>小时。</p>
+<h3 id="存储密码"><a href="#存储密码" class="headerlink" title="存储密码"></a>存储密码</h3><p>使用散列密钥储存用户口令。我们将继续并且使用 Flask-Bcrypt 扩展在我们的应用中实现 bcrypt 包。这个包基本上是对 py-bcrypt 包的封装，但是为我们做了一些很烦人的事情（像在比较散列之前检查字符编码等等）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ourapp/__init__.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask.ext.bcrypt <span class="keyword">import</span> Bcrypt</span><br><span class="line"></span><br><span class="line">bcrypt = Bcrypt(app)</span><br></pre></td></tr></table></figure>
+<p>为了测试散列密码花费的时间，我们可以编写一个简单且快速的散列密码的 Python 脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># benchmark.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask.ext.bcrypt <span class="keyword">import</span> generate_password_hash</span><br><span class="line"></span><br><span class="line"><span class="comment"># Change the number of rounds (second argument) until it takes between</span></span><br><span class="line"><span class="comment"># 0.25 and 0.5 seconds to run.</span></span><br><span class="line">generate_password_hash(<span class="string">'password1'</span>, <span class="number">12</span>)</span><br></pre></td></tr></table></figure>
+<p>现在我们可以使用 UNIX 的 time 工具来记录时间的消耗数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ time python test.py</span><br><span class="line"></span><br><span class="line">real    <span class="number">0</span>m0<span class="number">.496</span>s</span><br><span class="line">user    <span class="number">0</span>m0<span class="number">.464</span>s</span><br><span class="line">sys     <span class="number">0</span>m0<span class="number">.024</span>s</span><br></pre></td></tr></table></figure>
+<p>我做了一个快速的基准测试在一个小型的服务器上，12 是一个很合适的值，因此我们使用它来配置我的示例。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># config.py</span></span><br><span class="line"></span><br><span class="line">BCRYPT_LOG_ROUNDS = <span class="number">12</span></span><br></pre></td></tr></table></figure>
+<p>接下来就可以生成散列密码了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ourapp/models.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sqlalchemy.ext.hybrid <span class="keyword">import</span> hybrid_property</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> bcrypt, db</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(db.Model)</span>:</span></span><br><span class="line">    id = db.Column(db.Integer, primary_key=<span class="keyword">True</span>, autoincrement=<span class="keyword">True</span>)</span><br><span class="line">    username = db.Column(db.String(<span class="number">64</span>), unique=<span class="keyword">True</span>)</span><br><span class="line">    _password = db.Column(db.String(<span class="number">128</span>))</span><br><span class="line"></span><br><span class="line"><span class="decorator">    @hybrid_property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">password</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._password</span><br><span class="line"></span><br><span class="line"><span class="decorator">    @password.setter</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_set_password</span><span class="params">(self, plaintext)</span>:</span></span><br><span class="line">        self._password = bcrypt.generate_password_hash(plaintext)</span><br></pre></td></tr></table></figure>
+<p>我们使用了 SQLAlchemy 的 hybrid 扩展来定义一个属性，这个属性从相同接口调用的时候拥有不同的功能。当我们为password赋值的时候，调用setter，当需要获取密码时，调用password()。</p>
+<p>现在我们使用上面的模型为应用程序实现一个注册视图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ourapp/views.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> app, db</span><br><span class="line"><span class="keyword">from</span> .forms <span class="keyword">import</span> EmailPasswordForm</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> User</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.route('/signup', methods=["GET", "POST"])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">signup</span><span class="params">()</span>:</span></span><br><span class="line">    form = EmailPasswordForm()</span><br><span class="line">    <span class="keyword">if</span> form.validate_on_submit():</span><br><span class="line">        user = User(username=form.username.data, password=form.password.data)</span><br><span class="line">        db.session.add(user)</span><br><span class="line">        db.session.commit()</span><br><span class="line">        <span class="keyword">return</span> redirect(url_for(<span class="string">'index'</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">'signup.html'</span>, form=form)</span><br></pre></td></tr></table></figure>
+<h3 id="认证"><a href="#认证" class="headerlink" title="认证"></a>认证</h3><p>既然我们在数据库中有用户了，我们可以实现认证。我们要一个用户提交携带他们的用户名和密码的表单（尽管对一些应用来说这可能是邮箱和密码），接着确保他们是否提供了正确的密码。如果所有的都验证通过了，我们通过在他们的浏览器上设置一个 cookie 来标记他们已经通过认证。下一次他们再过来请求的时候我们通过查找 cookie 知道他们已经登录。</p>
+<p>让我们开始用 WTForms 定义一个<code>UsernamePassword</code>表单。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ourapp/forms.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask_wtf <span class="keyword">import</span> Form</span><br><span class="line"><span class="keyword">from</span> wtforms <span class="keyword">import</span> StringField, PasswordField</span><br><span class="line"><span class="keyword">from</span> wtforms.validators <span class="keyword">import</span> DataRequired</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UsernamePasswordForm</span><span class="params">(Form)</span>:</span></span><br><span class="line">    username = StringField(<span class="string">'Username'</span>, validators=[DataRequired()])</span><br><span class="line">    password = PasswordField(<span class="string">'Password'</span>, validators=[DataRequired()])</span><br></pre></td></tr></table></figure>
+<p>下一步我们在我们的用户模型中添加一个方法，该方法用来比较一个字符串和用户存储的散列密码。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># ourapp/models.py</span><br><span class="line"></span><br><span class="line">from . import db</span><br><span class="line"></span><br><span class="line">class User(db.Model):</span><br><span class="line"></span><br><span class="line">    # [...] columns and properties</span><br><span class="line"></span><br><span class="line">    def is_correct_password(self, plaintext)</span><br><span class="line">        return bcrypt.check_password_hash(self._password, plaintext)</span><br></pre></td></tr></table></figure>
+<h3 id="Flask—Login"><a href="#Flask—Login" class="headerlink" title="Flask—Login"></a>Flask—Login</h3><p>我们下一目标就是定义一个登录的视图，该视图用来服务和接收我们的表单。如果用户输入正确的凭证的话，我们将使用 Flask-Login 扩展来认证他们。这个扩展简化了处理用户会话和认证的过程。</p>
+<p>我们需要的就是对 <code>Flask-Login</code> 进行一些小小的配置。</p>
+<p>在 <strong>init</strong>.py 中，我们将定义<code>Flask-Login</code> 的 <code>login_manager</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ourapp/__init__.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask.ext.login <span class="keyword">import</span> LoginManager</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create and configure app</span></span><br><span class="line"><span class="comment"># [...]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> User</span><br><span class="line"></span><br><span class="line">login_manager = LoginManager()</span><br><span class="line">login_manager.init_app(app)</span><br><span class="line">login_manager.login_view =  <span class="string">"signin"</span></span><br><span class="line"></span><br><span class="line"><span class="decorator">@login_manager.user_loader</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_user</span><span class="params">(userid)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> User.query.filter(User.id==userid).first()</span><br></pre></td></tr></table></figure>
+<p>这里我们创建了一个 <code>LoginManager</code> 示例，并且用我们的 <code>app</code>对象初始化它，定义登录视图并且告诉它如何用一个的用户的<code>id</code> 得到用户对象。这是我们使用 <code>Flask-Login</code> 的最基本的配置。</p>
+<p>现在我们可以定义处理登录的 <code>signin</code>视图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ourapp/views.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> redirect, url_for</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask.ext.login <span class="keyword">import</span> login_user</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> app</span><br><span class="line"><span class="keyword">from</span> .forms <span class="keyword">import</span> UsernamePasswordForm()</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.route('signin', methods=["GET", "POST"])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">signin</span><span class="params">()</span>:</span></span><br><span class="line">    form = UsernamePasswordForm()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> form.validate_on_submit():</span><br><span class="line">        user = User.query.filter_by(username=form.username.data).first_or_404()</span><br><span class="line">        <span class="keyword">if</span> user.is_correct_password(form.password.data):</span><br><span class="line">            login_user(user)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> redirect(url_for(<span class="string">'index'</span>))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> redirect(url_for(<span class="string">'signin'</span>))</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">'signin.html'</span>, form=form)</span><br></pre></td></tr></table></figure>
+<p>我们简单地从<code>Flask-Login</code> 中导入 <code>login_user</code> 函数，检查用户登录凭证并且调用 <code>login_user(user)</code>。你可以使用 <code>logout_user()</code> 实现用户的退出操作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ourapp/views.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> redirect, url_for</span><br><span class="line"><span class="keyword">from</span> flask.ext.login <span class="keyword">import</span> logout_user</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> app</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.route('/signout')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">signout</span><span class="params">()</span>:</span></span><br><span class="line">    logout_user()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> redirect(url_for(<span class="string">'index'</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="忘记密码"><a href="#忘记密码" class="headerlink" title="忘记密码"></a>忘记密码</h3><p>我们通常要实现一个”忘记你的密码“的功能，允许一个用户通过邮箱找回自己的账号。这个地方也会有很多潜在的风险，因为关键是让一个未认证的用户接管一个账号。我们这里实现密码重置采用了我们在邮箱确认的时候一些同样的技术。</p>
+<p>我们通常要实现一个”忘记你的密码“的功能，允许一个用户通过邮箱找回自己的账号。这个地方也会有很多潜在的风险，因为关键是让一个未认证的用户接管一个账号。我们这里实现密码重置采用了我们在邮箱确认的时候一些同样的技术。</p>
+<p>我们将需要两个表单。一个是用于申请重置密码的链接，一个是用于一旦邮件被认证用于更改密码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ourapp/forms.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask_wtf <span class="keyword">import</span> Form</span><br><span class="line"><span class="keyword">from</span> wtforms <span class="keyword">import</span> StringField, PasswordField</span><br><span class="line"><span class="keyword">from</span> wtforms.validators <span class="keyword">import</span> DataRequired, Email</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EmailForm</span><span class="params">(Form)</span>:</span></span><br><span class="line">    email = TextField(<span class="string">'Email'</span>, validators=[DataRequired(), Email()])</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PasswordForm</span><span class="params">(Form)</span>:</span></span><br><span class="line">    password = PasswordField(<span class="string">'Email'</span>, validators=[DataRequired()])</span><br></pre></td></tr></table></figure>
+<p>上面的代码假设我们的密码重置的表单只需要一个密码字段（只需要输入一次新密码）。许多应用程序需要用户输入新的密码两次以确保他们没有输错。要做到这一点的话，我们可以简单地添加另一个 <code>PasswordField</code> 字段，并且添加 <code>WTForms</code> 的验证器：<code>EqualTo</code>。</p>
+<p>现在我们实现第一个视图，用户可以申请发送密码重置链接到一个指定的邮箱地址。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ourapp/views.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> redirect, url_for, render_template</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> app</span><br><span class="line"><span class="keyword">from</span> .forms <span class="keyword">import</span> EmailForm</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> User</span><br><span class="line"><span class="keyword">from</span> .util <span class="keyword">import</span> send_email, ts</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.route('/reset', methods=["GET", "POST"])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reset</span><span class="params">()</span>:</span></span><br><span class="line">    form = EmailForm()</span><br><span class="line">    <span class="keyword">if</span> form.validate_on_submit()</span><br><span class="line">        user = User.query.filter_by(email=form.email.data).first_or_404()</span><br><span class="line"></span><br><span class="line">        subject = <span class="string">"Password reset requested"</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Here we use the URLSafeTimedSerializer we created in `util` at the</span></span><br><span class="line">        <span class="comment"># beginning of the chapter</span></span><br><span class="line">        token = ts.dumps(user.email, salt=<span class="string">'recover-key'</span>)</span><br><span class="line"></span><br><span class="line">        recover_url = url_for(</span><br><span class="line">            <span class="string">'reset_with_token'</span>,</span><br><span class="line">            token=token,</span><br><span class="line">            _external=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">        html = render_template(</span><br><span class="line">            <span class="string">'email/recover.html'</span>,</span><br><span class="line">            recover_url=recover_url)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Let's assume that send_email was defined in myapp/util.py</span></span><br><span class="line">        send_email(user.email, subject, html)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> redirect(url_for(<span class="string">'index'</span>))</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">'reset.html'</span>, form=form)</span><br></pre></td></tr></table></figure>
+<p>当表单接收到一个邮箱地址，我们获取与该邮箱地址有关的用户，生成一个重置的令牌并且发送他们一个密码重置的 URL。这个 URL 将他们路由到一个视图，该视图验证令牌并且让他们重置密码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ourapp/views.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> redirect, url_for, render_template</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> app, db</span><br><span class="line"><span class="keyword">from</span> .forms <span class="keyword">import</span> PasswordForm</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> User</span><br><span class="line"><span class="keyword">from</span> .util <span class="keyword">import</span> ts</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.route('/reset/&lt;token&gt;', methods=["GET", "POST"])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reset_with_token</span><span class="params">(token)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        email = ts.loads(token, salt=<span class="string">"recover-key"</span>, max_age=<span class="number">86400</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        abort(<span class="number">404</span>)</span><br><span class="line"></span><br><span class="line">    form = PasswordForm()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> form.validate_on_submit():</span><br><span class="line">        user = User.query.filter_by(email=email).first_or_404()</span><br><span class="line"></span><br><span class="line">        user.password = form.password.data</span><br><span class="line"></span><br><span class="line">        db.session.add(user)</span><br><span class="line">        db.session.commit()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> redirect(url_for(<span class="string">'signin'</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">'reset_with_token.html'</span>, form=form, token=token)</span><br></pre></td></tr></table></figure>
+<p>我们使用了和验证用户的邮箱地址一样的令牌验证方法。视图把从 URL 中获取的令牌传入到模板中。接着模板使用令牌提交表单到正确的 URL。让我们看看模板可能的样子。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;# ourapp/templates/reset_with_token.html #&#125;</span><br><span class="line"></span><br><span class="line">&#123;% extends "layout.html" %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% block body %&#125;</span><br><span class="line">&lt;form action="&#123;&#123; url_for('reset_with_token', token=token) &#125;&#125;" method="POST"&gt;</span><br><span class="line">    &#123;&#123; form.password.label &#125;&#125;: &#123;&#123; form.password &#125;&#125;&lt;br&gt;</span><br><span class="line">    &#123;&#123; form.csrf_token &#125;&#125;</span><br><span class="line">    &lt;input type="submit" value="Change my password" /&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&#123;% endblock %&#125;</span><br></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/flask/">flask</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/flask/">flask</a><a href="/tags/python/">python</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2016/02/20/flask12/" data-title="flask学习笔记【11】与用户相关的操作 | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/02/20/flask11/"  title="flask学习笔记【10】处理表单">
+ <strong>下一篇：</strong><br/> 
+ <span>flask学习笔记【10】处理表单
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/02/20/flask12/" data-title="flask学习笔记【11】与用户相关的操作" data-url="http://yoursite.com/2016/02/20/flask12/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#确认电子邮箱"><span class="toc-number">1.</span> <span class="toc-text">确认电子邮箱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#存储密码"><span class="toc-number">2.</span> <span class="toc-text">存储密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#认证"><span class="toc-number">3.</span> <span class="toc-text">认证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flask—Login"><span class="toc-number">4.</span> <span class="toc-text">Flask—Login</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#忘记密码"><span class="toc-number">5.</span> <span class="toc-text">忘记密码</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="nummy" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/flask/" title="flask">flask<sup>11</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/shell/" title="shell">shell<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/flask/" title="flask">flask<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/shell/" title="shell">shell<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/blog/" title="blog">blog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title=" 快速搭建静态博客">Hexo</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://nummy.github.io" target="_blank" title="Nummy&#39;s Blog">Nummy&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1683688031&verifier=4fd81735&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Nummy in UC. <br/>
+			Simple is better than complex.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/1683688031" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/nummy" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:allen_li89@163.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="nummy">nummy</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"nummy"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
