@@ -4,26 +4,45 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>flask学习笔记【1】编码规范 | Blog Of Nummy</title>
+    <title>U盘启动盘安装Win10&amp;CentOS所遇到的坑 | Blog Of Nummy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="nummy">
     
 
     
-    <meta name="description" content="PEP8：Python代码的风格指南PEP8是官方的Python代码指南，强烈推荐使用，pycharm也是默认使用PEP8进行代码检查的。尤其要注意的是，缩进采用四个空格而不是制表符tab。
-相对导入相对导入与绝对导入相比，更加灵活，书写代码也更少, 例如，我们需要从myapp/models.py中导入User模型，使用绝对导入，则需要使用myapp.models。如果使用相对导入，则只需要指明相">
+    <meta name="description" content="之前一直在Win10上用虚拟机装的CentOS，很不爽，想自己再装个Win10&amp;amp;CentOS双系统，无可用光盘，只好自己制作一个U盘启动盘。具体过程就不描述了，网上教程一大把。
+现在说一下安装之后所遇到的问题以及解决办法。
+
+问题1：U盘安装启动出现press the enter key to begin the installation process 就不动弹了。
+
+解决办法：
+
+替换">
 <meta property="og:type" content="article">
-<meta property="og:title" content="flask学习笔记【1】编码规范">
-<meta property="og:url" content="http://yoursite.com/2016/02/17/flask1/index.html">
+<meta property="og:title" content="U盘启动盘安装Win10&CentOS所遇到的坑">
+<meta property="og:url" content="http://yoursite.com/2016/02/20/centos/index.html">
 <meta property="og:site_name" content="Blog Of Nummy">
-<meta property="og:description" content="PEP8：Python代码的风格指南PEP8是官方的Python代码指南，强烈推荐使用，pycharm也是默认使用PEP8进行代码检查的。尤其要注意的是，缩进采用四个空格而不是制表符tab。
-相对导入相对导入与绝对导入相比，更加灵活，书写代码也更少, 例如，我们需要从myapp/models.py中导入User模型，使用绝对导入，则需要使用myapp.models。如果使用相对导入，则只需要指明相">
-<meta property="og:updated_time" content="2016-02-18T07:46:58.000Z">
+<meta property="og:description" content="之前一直在Win10上用虚拟机装的CentOS，很不爽，想自己再装个Win10&amp;amp;CentOS双系统，无可用光盘，只好自己制作一个U盘启动盘。具体过程就不描述了，网上教程一大把。
+现在说一下安装之后所遇到的问题以及解决办法。
+
+问题1：U盘安装启动出现press the enter key to begin the installation process 就不动弹了。
+
+解决办法：
+
+替换">
+<meta property="og:image" content="http://www.osyunwei.com/wp-content/uploads/2012/02/492.jpg">
+<meta property="og:updated_time" content="2016-02-20T03:33:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="flask学习笔记【1】编码规范">
-<meta name="twitter:description" content="PEP8：Python代码的风格指南PEP8是官方的Python代码指南，强烈推荐使用，pycharm也是默认使用PEP8进行代码检查的。尤其要注意的是，缩进采用四个空格而不是制表符tab。
-相对导入相对导入与绝对导入相比，更加灵活，书写代码也更少, 例如，我们需要从myapp/models.py中导入User模型，使用绝对导入，则需要使用myapp.models。如果使用相对导入，则只需要指明相">
+<meta name="twitter:title" content="U盘启动盘安装Win10&CentOS所遇到的坑">
+<meta name="twitter:description" content="之前一直在Win10上用虚拟机装的CentOS，很不爽，想自己再装个Win10&amp;amp;CentOS双系统，无可用光盘，只好自己制作一个U盘启动盘。具体过程就不描述了，网上教程一大把。
+现在说一下安装之后所遇到的问题以及解决办法。
+
+问题1：U盘安装启动出现press the enter key to begin the installation process 就不动弹了。
+
+解决办法：
+
+替换">
 
     
     <link rel="alternative" href="/atom.xml" title="Blog Of Nummy" type="application/atom+xml">
@@ -83,14 +102,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/02/17/flask1/" title="flask学习笔记【1】编码规范" itemprop="url">flask学习笔记【1】编码规范</a>
+      <a href="/2016/02/20/centos/" title="U盘启动盘安装Win10&amp;CentOS所遇到的坑" itemprop="url">U盘启动盘安装Win10&amp;CentOS所遇到的坑</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="nummy" target="_blank" itemprop="author">nummy</a>
 		
   <p class="article-time">
-    <time datetime="2016-02-18T07:34:52.000Z" itemprop="datePublished"> 发表于 2016-02-17</time>
+    <time datetime="2016-02-20T19:03:53.000Z" itemprop="datePublished"> 发表于 2016-02-20</time>
     
   </p>
 </header>
@@ -99,13 +118,44 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PEP8：Python代码的风格指南"><span class="toc-number">1.</span> <span class="toc-text">PEP8：Python代码的风格指南</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相对导入"><span class="toc-number">2.</span> <span class="toc-text">相对导入</span></a></li></ol>
+			
 		
 		</div>
 		
-		<h2 id="PEP8：Python代码的风格指南"><a href="#PEP8：Python代码的风格指南" class="headerlink" title="PEP8：Python代码的风格指南"></a>PEP8：Python代码的风格指南</h2><p>PEP8是官方的Python代码指南，强烈推荐使用，pycharm也是默认使用PEP8进行代码检查的。<br>尤其要注意的是，缩进采用四个空格而不是制表符tab。</p>
-<h2 id="相对导入"><a href="#相对导入" class="headerlink" title="相对导入"></a>相对导入</h2><p>相对导入与绝对导入相比，更加灵活，书写代码也更少, 例如，我们需要从myapp/models.py中导入User模型，使用绝对导入，则需要使用myapp.models。如果使用相对导入，则只需要指明相对于源文件的目标模块的位置，这个可以使用（.）来实现，一个(.)代表当前目录，每一个随后的点符号(.)都代表下一个父目录。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># myapp/views.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># An absolute import gives us the User model</span></span><br><span class="line"><span class="keyword">from</span> myapp.models <span class="keyword">import</span> User</span><br><span class="line"></span><br><span class="line"><span class="comment"># A relative import does the same thing</span></span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> User</span><br></pre></td></tr></table></figure></p>
-<p>这种方法的优点是软件包变得更加模块化。而且可以重新命名你的包，并且其他项目中不需要更新硬编码的导入语句，从而实现模块重用。</p>
+		<p>之前一直在Win10上用虚拟机装的CentOS，很不爽，想自己再装个Win10&amp;CentOS双系统，无可用光盘，只好自己制作一个U盘启动盘。具体过程就不描述了，网上教程一大把。</p>
+<p>现在说一下安装之后所遇到的问题以及解决办法。</p>
+<ol>
+<li>问题1：U盘安装启动出现press the enter key to begin the installation process 就不动弹了。</li>
+</ol>
+<p>解决办法：</p>
+<blockquote>
+<p>替换U盘中，/syslinux/vesamenu.c32文件，<a href="http://vdisk.weibo.com/s/dDpCP-5ht4wdC" target="_blank" rel="external">共享地址</a></p>
+</blockquote>
+<ol>
+<li>问题2：由于我的系统是Win10，之前的分区情况是两个主分区，一个扩展分区，扩展分区下两个逻辑分区。我首先使用其中一个空的主分区进行安装，结果无法安装。</li>
+</ol>
+<p>解决办法：</p>
+<blockquote>
+<p>使用DiskGenius先将空的主分区删除，然后将剩余空间扩展到其中一个逻辑分区，此处时间较长，最后再压缩这个逻辑分区，再次创建一个逻辑分区，我大概压缩出80GB的样子，用这个逻辑分区来安装CentOS。</p>
+</blockquote>
+<ol>
+<li><p>问题3：安装过程中又提示没有找到安装光盘映像。<br>解决办法：</p>
+<blockquote>
+<p>将CentOS的iso映像拷贝到u盘中。</p>
+</blockquote>
+</li>
+<li><p>问题4：继续安装，安装成功，拔掉U盘再启动，却发现无法启动系统。<br>解决办法：</p>
+<blockquote>
+<p>分区之后，进入下面的界面，点击更改设备<br><img src="http://www.osyunwei.com/wp-content/uploads/2012/02/492.jpg" alt="更改设备"><br>然后选择BIOS启动顺序，将第一启动器选择为本地磁盘，第二启动器改为U盘。因为默认情况下，会把启动引导安装到U盘中，所以拔掉U盘就会无法启动。</p>
+</blockquote>
+</li>
+<li><p>问题5：无法连接无线网络</p>
+</li>
+</ol>
+<p>解决办法：</p>
+<blockquote>
+<p>这是因为CentOS安装过程中不会主动安装无线网卡驱动，所以不能通过无线上网，由于条件限制，我这没有有线网络，所以最终还是决定抛弃CentOS了，选用更加人性化的Ubuntu。</p>
+</blockquote>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -113,13 +163,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/flask/">flask</a>
+  <a class="article-category-link" href="/categories/linux/">linux</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/flask/">flask</a><a href="/tags/python/">python</a>
+  <span></span> <a href="/tags/linux/">linux</a>
   </div>
 
 </div>
@@ -128,7 +178,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/02/17/flask1/" data-title="flask学习笔记【1】编码规范 | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/02/20/centos/" data-title="U盘启动盘安装Win10&amp;CentOS所遇到的坑 | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -141,19 +191,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/02/17/flask2/" title="flask学习笔记【2】环境配置">
-  <strong>上一篇：</strong><br/>
-  <span>
-  flask学习笔记【2】环境配置</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/02/17/sudo/"  title="Linux su &amp; sudo 用法">
+<a href="/2016/02/19/aps/"  title="Python定时任务框架APScheduler">
  <strong>下一篇：</strong><br/> 
- <span>Linux su &amp; sudo 用法
+ <span>Python定时任务框架APScheduler
 </span>
 </a>
 </div>
@@ -162,7 +204,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/02/17/flask1/" data-title="flask学习笔记【1】编码规范" data-url="http://yoursite.com/2016/02/17/flask1/"></div>
+	<div class="ds-thread" data-thread-key="2016/02/20/centos/" data-title="U盘启动盘安装Win10&CentOS所遇到的坑" data-url="http://yoursite.com/2016/02/20/centos/"></div>
 </section>
 
 
@@ -172,7 +214,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PEP8：Python代码的风格指南"><span class="toc-number">1.</span> <span class="toc-text">PEP8：Python代码的风格指南</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相对导入"><span class="toc-number">2.</span> <span class="toc-text">相对导入</span></a></li></ol>
+ 
  
   </div>
 
