@@ -19,7 +19,7 @@ APScheduler(以下简称APS)框架可以让用户定时执行或者周期性执�
 <meta property="og:site_name" content="Blog Of Nummy">
 <meta property="og:description" content="简介
 APScheduler(以下简称APS)框架可以让用户定时执行或者周期性执行Python任务。既可以添加任务也可以删除任务，还可以将任务存储在数据库中。当APS重启之后，还会继续执行之前设置的任务。APS是跨平台的，注意APS既不是守护进程也不是服务，更不是命令行程序。APS是进程内的调度器，也就是说它的实现原理是在进程内产生内置的阻塞来创建定时服务，以便在预定的时间内执行某个任务。APS支">
-<meta property="og:updated_time" content="2016-02-20T06:31:42.000Z">
+<meta property="og:updated_time" content="2016-02-20T06:34:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python定时任务框架APScheduler（译）">
 <meta name="twitter:description" content="简介
@@ -166,25 +166,25 @@ APScheduler(以下简称APS)框架可以让用户定时执行或者周期性执�
 <p>调度器启动之后，就不能更改它的配置了。</p>
 <h3 id="添加任务"><a href="#添加任务" class="headerlink" title="添加任务"></a>添加任务</h3><p>有两种添加任务的办法：</p>
 <ul>
-<li>调用add_job()</li>
-<li>使用scheduled_job()修饰器</li>
+<li>调用<code>add_job()</code></li>
+<li>使用<code>scheduled_job()</code>修饰器</li>
 </ul>
-<p>第一个方法是使用最多的，因为调用它会返回一个apscheduler.job.Job实例，后续可以对它进行修改或者删除，而使用修饰器添加的任务添加之后就不能进行修改。</p>
+<p>第一个方法是使用最多的，因为调用它会返回一个<code>apscheduler.job.Job</code>实例，后续可以对它进行修改或者删除，而使用修饰器添加的任务添加之后就不能进行修改。</p>
 <p>在调度器中设置定时任务，如果任务添加的时候，调度器还没有启动，那么任务只是暂时放到调度器中，当调度器启动之后重新计算第一次执行时间。</p>
 <p>需要注意的是，可以使用执行器或者任务仓库来序列化任务，但是这个任务必须满足两个条件：</p>
 <ol>
 <li>调用对象必须全局可访问</li>
 <li>调用对象的参数必须也可以序列化。</li>
 </ol>
-<p>在所有内置的任务仓库中，只有MemoryJobStore不能序列化对象；在所有内置的执行器中，只有ProcessPoolExecutors会序列化任务。</p>
+<p>在所有内置的任务仓库中，只有<code>MemoryJobStore</code>不能序列化对象；在所有内置的执行器中，只有<code>ProcessPoolExecutors</code>会序列化任务。</p>
 <p>如果你需要在应用中使用持久性任务，那就必须给任务定义一个ID，并设置<code>replace_existing=True</code>,否则每次重启应用都会返回一个新的任务。</p>
-<p>如果要立即执行任务，只需要在添加任务的时候省略trigger参数。</p>
+<p>如果要立即执行任务，只需要在添加任务的时候省略<code>trigger</code>参数。</p>
 <h3 id="删除任务"><a href="#删除任务" class="headerlink" title="删除任务"></a>删除任务</h3><p>当从调度器中删除任务的时候，就会从相关联的任务仓库中删除任务，后面就不会再执行了，有两种方法来删除任务。</p>
 <ol>
 <li>调用<code>remove_job()</code>，参数为job ID以及任务仓库名</li>
 <li>调用<code>remove()</code></li>
 </ol>
-<p>第二种方法用起来更加方便，但是需要先保存添加任务时返回的实例对象；而通过scheduled_job()添加的任务，只能使用第一种方法进行删除。</p>
+<p>第二种方法用起来更加方便，但是需要先保存添加任务时返回的实例对象；而通过<code>scheduled_job()</code>添加的任务，只能使用第一种方法进行删除。</p>
 <p>如果任务执行完毕，它会自动被删除。</p>
 <p>例如：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">job = scheduler.add_job(myfunc, <span class="string">'interval'</span>, minutes=<span class="number">2</span>)</span><br><span class="line">job.remove()</span><br></pre></td></tr></table></figure>
