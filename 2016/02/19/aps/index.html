@@ -19,7 +19,7 @@ APScheduler(以下简称APS)框架可以让用户定时执行或者周期性执�
 <meta property="og:site_name" content="Blog Of Nummy">
 <meta property="og:description" content="简介
 APScheduler(以下简称APS)框架可以让用户定时执行或者周期性执行Python任务。既可以添加任务也可以删除任务，还可以将任务存储在数据库中。当APS重启之后，还会继续执行之前设置的任务。APS是跨平台的，注意APS既不是守护进程也不是服务，更不是命令行程序。APS是进程内的调度器，也就是说它的实现原理是在进程内产生内置的阻塞来创建定时服务，以便在预定的时间内执行某个任务。APS支">
-<meta property="og:updated_time" content="2016-02-20T06:24:47.000Z">
+<meta property="og:updated_time" content="2016-02-20T06:27:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python定时任务框架APScheduler（译）">
 <meta name="twitter:description" content="简介
@@ -141,11 +141,11 @@ APScheduler(以下简称APS)框架可以让用户定时执行或者周期性执�
 <p>调度器将其它几个组件联系在一起，一般在应用中只有一个调度器，程序开发者不会直接操作触发器、任务仓库或执行器，相反，调度器提供了这个接口。任务仓库以及执行器的配置都是通过调度器来实现的。</p>
 <h3 id="选择合适的调度器、执行器以及任务仓库"><a href="#选择合适的调度器、执行器以及任务仓库" class="headerlink" title="选择合适的调度器、执行器以及任务仓库"></a>选择合适的调度器、执行器以及任务仓库</h3><p>选择调度器是根据我们的开发环境与实际应用来决定的，下面是一些常用调度器：</p>
 <ul>
-<li><a href="http://apscheduler.readthedocs.org/en/latest/modules/schedulers/blocking.html#apscheduler.schedulers.blocking.BlockingScheduler" target="_blank" rel="external"><code>BlockingScheduler</code></a>：适合于只在进程中运行单个任务的情况</li>
-<li><code>BackgroundScheduler</code>: 适合于要求任何在程序后台运行的情况</li>
+<li><a href="http://apscheduler.readthedocs.org/en/latest/modules/schedulers/blocking.html#apscheduler.schedulers.blocking.BlockingScheduler" target="_blank" rel="external">BlockingScheduler</a>：适合于只在进程中运行单个任务的情况</li>
+<li><a href="http://apscheduler.readthedocs.org/en/latest/modules/schedulers/background.html#apscheduler.schedulers.background.BackgroundScheduler" target="_blank" rel="external">BackgroundScheduler</a>: 适合于要求任何在程序后台运行的情况</li>
 <li><code>AsyncIOScheduler</code>：适合于使用asyncio框架的情况</li>
 <li><code>GeventScheduler</code>: 适合于使用gevent框架的情况</li>
-<li><code>TornadoScheduler</code>: 适合于使用Tornado框架的应用</li>
+<li><a href="http://apscheduler.readthedocs.org/en/latest/modules/schedulers/tornado.html#apscheduler.schedulers.tornado.TornadoScheduler" target="_blank" rel="external">TornadoScheduler</a>: 适合于使用Tornado框架的应用</li>
 <li><code>TwistedScheduler</code>: 适合使用Twisted框架的应用</li>
 <li><code>QtScheduler</code>: 适合使用QT的情况</li>
 </ul>
