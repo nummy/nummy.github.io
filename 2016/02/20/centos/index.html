@@ -32,7 +32,7 @@
 
 替换">
 <meta property="og:image" content="http://www.osyunwei.com/wp-content/uploads/2012/02/492.jpg">
-<meta property="og:updated_time" content="2016-02-20T03:33:34.000Z">
+<meta property="og:updated_time" content="2016-02-20T03:35:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="U盘启动盘安装Win10&CentOS所遇到的坑">
 <meta name="twitter:description" content="之前一直在Win10上用虚拟机装的CentOS，很不爽，想自己再装个Win10&amp;amp;CentOS双系统，无可用光盘，只好自己制作一个U盘启动盘。具体过程就不描述了，网上教程一大把。
@@ -139,18 +139,21 @@
 <p>使用DiskGenius先将空的主分区删除，然后将剩余空间扩展到其中一个逻辑分区，此处时间较长，最后再压缩这个逻辑分区，再次创建一个逻辑分区，我大概压缩出80GB的样子，用这个逻辑分区来安装CentOS。</p>
 </blockquote>
 <ol>
-<li><p>问题3：安装过程中又提示没有找到安装光盘映像。<br>解决办法：</p>
+<li>问题3：安装过程中又提示没有找到安装光盘映像。</li>
+</ol>
+<p>解决办法：</p>
 <blockquote>
 <p>将CentOS的iso映像拷贝到u盘中。</p>
 </blockquote>
-</li>
-<li><p>问题4：继续安装，安装成功，拔掉U盘再启动，却发现无法启动系统。<br>解决办法：</p>
+<ol>
+<li>问题4：继续安装，安装成功，拔掉U盘再启动，却发现无法启动系统。</li>
+</ol>
+<p>解决办法：</p>
 <blockquote>
 <p>分区之后，进入下面的界面，点击更改设备<br><img src="http://www.osyunwei.com/wp-content/uploads/2012/02/492.jpg" alt="更改设备"><br>然后选择BIOS启动顺序，将第一启动器选择为本地磁盘，第二启动器改为U盘。因为默认情况下，会把启动引导安装到U盘中，所以拔掉U盘就会无法启动。</p>
 </blockquote>
-</li>
-<li><p>问题5：无法连接无线网络</p>
-</li>
+<ol>
+<li>问题5：无法连接无线网络</li>
 </ol>
 <p>解决办法：</p>
 <blockquote>
