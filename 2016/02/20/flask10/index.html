@@ -1,0 +1,566 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>flask学习笔记【9】使用数据库 | Blog Of Nummy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="nummy">
+    
+
+    
+    <meta name="description" content="使用关系型数据库或者非关系型数据库存储都可以，根据项目的实际情况来选择合适的数据库。
+如果使用关系型数据库的话，可以使用SQLAlchemy。
+SQLAlchemySQLAlchemy是一个ORM（对象关系映射），它在SQL语句上做了一层封装，它为很多数据库引擎提供了一致的API接口，使我们直接编写Python代码就可以操作数据库。
+Flask提供了一个扩展Flask-SQLAlchemy来实现这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flask学习笔记【9】使用数据库">
+<meta property="og:url" content="http://yoursite.com/2016/02/20/flask10/index.html">
+<meta property="og:site_name" content="Blog Of Nummy">
+<meta property="og:description" content="使用关系型数据库或者非关系型数据库存储都可以，根据项目的实际情况来选择合适的数据库。
+如果使用关系型数据库的话，可以使用SQLAlchemy。
+SQLAlchemySQLAlchemy是一个ORM（对象关系映射），它在SQL语句上做了一层封装，它为很多数据库引擎提供了一致的API接口，使我们直接编写Python代码就可以操作数据库。
+Flask提供了一个扩展Flask-SQLAlchemy来实现这">
+<meta property="og:updated_time" content="2016-02-20T08:52:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="flask学习笔记【9】使用数据库">
+<meta name="twitter:description" content="使用关系型数据库或者非关系型数据库存储都可以，根据项目的实际情况来选择合适的数据库。
+如果使用关系型数据库的话，可以使用SQLAlchemy。
+SQLAlchemySQLAlchemy是一个ORM（对象关系映射），它在SQL语句上做了一层封装，它为很多数据库引擎提供了一致的API接口，使我们直接编写Python代码就可以操作数据库。
+Flask提供了一个扩展Flask-SQLAlchemy来实现这">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Blog Of Nummy" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Blog Of Nummy" title="Blog Of Nummy"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Blog Of Nummy">Blog Of Nummy</a></h1>
+				<h2 class="blog-motto">Less is more</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/02/20/flask10/" title="flask学习笔记【9】使用数据库" itemprop="url">flask学习笔记【9】使用数据库</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="nummy" target="_blank" itemprop="author">nummy</a>
+		
+  <p class="article-time">
+    <time datetime="2016-02-21T00:22:34.000Z" itemprop="datePublished"> 发表于 2016-02-20</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#SQLAlchemy"><span class="toc-number">1.</span> <span class="toc-text">SQLAlchemy</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#初始化数据库"><span class="toc-number">1.0.1.</span> <span class="toc-text">初始化数据库</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#迁移数据库"><span class="toc-number">1.0.2.</span> <span class="toc-text">迁移数据库</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<p>使用关系型数据库或者非关系型数据库存储都可以，根据项目的实际情况来选择合适的数据库。</p>
+<p>如果使用关系型数据库的话，可以使用SQLAlchemy。</p>
+<h3 id="SQLAlchemy"><a href="#SQLAlchemy" class="headerlink" title="SQLAlchemy"></a>SQLAlchemy</h3><p>SQLAlchemy是一个ORM（对象关系映射），它在SQL语句上做了一层封装，它为很多数据库引擎提供了一致的API接口，使我们直接编写Python代码就可以操作数据库。</p>
+<p>Flask提供了一个扩展Flask-SQLAlchemy来实现这个功能，Flask-SQLAlchemy 为 SQLAlchemy 配置大量完整的默认值。它也处理一些会话管理因此我们不需要在我们的应用程序代码中做一些清洁工作。</p>
+<p>首先，定义数据库：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ourapp/__init__.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask.ext.sqlalchemy <span class="keyword">import</span> SQLAlchemy</span><br><span class="line"></span><br><span class="line">app = Flask(__name__, instance_relative_config=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">app.config.from_object(<span class="string">'config'</span>)</span><br><span class="line">app.config.from_pyfile(<span class="string">'config.py'</span>)</span><br><span class="line"></span><br><span class="line">db = SQLAlchemy(app)</span><br></pre></td></tr></table></figure>
+<p>上面的代码首先初始化并配置我们的Flask应用，然后用它来初始化SQLAlchemy处理程序，由于这里采用实例文件夹来配置数据库，所以初始化应用程序中使用<code>instance_relative_config</code>参数，然后使用<code>app.config.from_pyfile</code>加载配置。</p>
+<p>接下来定义模型：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ourapp/models.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> db</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Engine</span><span class="params">(db.Model)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Columns</span></span><br><span class="line"></span><br><span class="line">    id = db.Column(db.Integer, primary_key=<span class="keyword">True</span>, autoincrement=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">    title = db.Column(db.String(<span class="number">128</span>))</span><br><span class="line"></span><br><span class="line">    thrust = db.Column(db.Integer, default=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p><code>Column</code>，<code>Integer</code>，<code>String</code>，<code>Model</code> 以及其它的 <code>SQLAlchemy</code> 类可以从由<code>Flask-SQLAlchemy</code>定义的 <code>db</code> 对象中引用。我们已经定义了一个模型用来存储我们飞行器引擎当前的状态。每一个飞行器引擎有一个 id，一个标题以及一个推力水平。</p>
+<p>将敏感的数据库信息保存到instance/config.py：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># instance/config.py</span></span><br><span class="line"></span><br><span class="line">SQLALCHEMY_DATABASE_URI = <span class="string">"postgresql://user:password@localhost/spaceshipDB"</span></span><br></pre></td></tr></table></figure>
+<p>数据库URI根据不同的数据库引擎而不同。</p>
+<h5 id="初始化数据库"><a href="#初始化数据库" class="headerlink" title="初始化数据库"></a>初始化数据库</h5><p>还剩最后一步，初始化数据库，也就是从模型定义中创建数据库模式。SQLAlchemy提供了一个简洁的方法，来实现这个功能。在版本库根目录下打开PYthon终端。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ pwd</span><br><span class="line">/Users/me/Code/myapp</span><br><span class="line">$ workon myapp</span><br><span class="line">(myapp)$ python</span><br><span class="line">Python <span class="number">2.7</span><span class="number">.5</span> (default, Aug <span class="number">25</span> <span class="number">2013</span>, <span class="number">00</span>:<span class="number">04</span>:<span class="number">04</span>)</span><br><span class="line">[GCC <span class="number">4.2</span><span class="number">.1</span> Compatible Apple LLVM <span class="number">5.0</span> (clang-<span class="number">500.0</span><span class="number">.68</span>)] on darwin</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> <span class="keyword">or</span> <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">from</span> myapp <span class="keyword">import</span> db</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>db.create_all()</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="迁移数据库"><a href="#迁移数据库" class="headerlink" title="迁移数据库"></a>迁移数据库</h5><p>数据库的模式不是一成不变的。例如，我们可能要给我们的飞行器引擎表添加一个 last_fired 字段。如果我们没有任何数据的话，我们只要更新模型和再次运行 db.create_all()。然而，如果我们已经在表中记录了 6 个月的引擎的数据，我们可能不希望从头开始。这就是数据库迁移的工作。</p>
+<p>Alembic 是一个专门为 SQLAlchemy 使用的数据库迁移工具。它能够让我们保持我们的数据库模式的版本历史，以便我们后面可以升级到一个新的模式以及甚至退回到一个旧的版本。</p>
+<p>Alembic 有一个很广泛的教程，大家很容易入门，因此我只给你一个简单的概述并且指出几件需要注意的事项。</p>
+<p>我们将使用 alembic init 命令行创建我们 alembic 的“迁移环境”。一旦我们在我们的仓库/版本库中运行这个命令，我们将会有一个新的文件夹，它有一个很有创意的名字：alembic。下面这个示例改编自 Alembic 教程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ourapp/</span><br><span class="line">    alembic.ini</span><br><span class="line">    alembic/</span><br><span class="line">        env.py</span><br><span class="line">        README</span><br><span class="line">        script.py.mako</span><br><span class="line">        versions/</span><br><span class="line">            <span class="number">3512</span>b954651e_add_account.py</span><br><span class="line">            <span class="number">2</span>b1ae634e5cd_add_order_id.py</span><br><span class="line">            <span class="number">3</span>adcc9a56557_rename_username_field.py</span><br><span class="line">    myapp/</span><br><span class="line">        __init__.py</span><br><span class="line">        views.py</span><br><span class="line">        models.py</span><br><span class="line">        templates/</span><br><span class="line">    run.py</span><br><span class="line">    config.py</span><br><span class="line">    requirements.txt</span><br></pre></td></tr></table></figure>
+<p><code>alembic/</code> 目录下有在不同版本之间我们数据迁移的脚本。同样也有包含配置信息的一个<code>alembic.ini</code> 文件。</p>
+<p>请把<code>alembic.ini</code> 添加到 <code>.gitignore</code> 中！你将会把你的数据库的凭证放在这个文件中，因此你不 要它出现在版本控制中。</p>
+<p>当开始要做出一个模式改变，会有这些步骤要走：首先我们运行<code>alembic revision</code> 来生成一个迁移脚本。接着我们在<code>myapp/alembic/versions/</code> 中打开一个新生成的 <code>Python</code>文件并且使用 <code>Alembic</code> 的 <code>op</code>对象提供的工具填充 <code>upgrade</code> 和 <code>downgrade</code> 函数。</p>
+<p>一旦我们已经准备好我们的迁移脚本，我们可以运行<code>alembic upgrade head</code> 来迁移我们的数据到最新的版本。</p>
+<p>关于配置 Alembic，创建迁移脚本以及运行迁移的细节，请参阅 <a href="http://alembic.readthedocs.org/en/latest/tutorial.html" target="_blank" rel="external">Alembic 教程</a>。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/flask/">flask</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/flask/">flask</a><a href="/tags/python/">python</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2016/02/20/flask10/" data-title="flask学习笔记【9】使用数据库 | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/02/20/flask9/"  title="flask学习笔记【8】静态文件">
+ <strong>下一篇：</strong><br/> 
+ <span>flask学习笔记【8】静态文件
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/02/20/flask10/" data-title="flask学习笔记【9】使用数据库" data-url="http://yoursite.com/2016/02/20/flask10/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#SQLAlchemy"><span class="toc-number">1.</span> <span class="toc-text">SQLAlchemy</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#初始化数据库"><span class="toc-number">1.0.1.</span> <span class="toc-text">初始化数据库</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#迁移数据库"><span class="toc-number">1.0.2.</span> <span class="toc-text">迁移数据库</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="nummy" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/flask/" title="flask">flask<sup>9</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/shell/" title="shell">shell<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/flask/" title="flask">flask<sup>9</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/shell/" title="shell">shell<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/blog/" title="blog">blog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title=" 快速搭建静态博客">Hexo</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://nummy.github.io" target="_blank" title="Nummy&#39;s Blog">Nummy&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1683688031&verifier=4fd81735&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Nummy in UC. <br/>
+			Simple is better than complex.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/1683688031" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/nummy" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:allen_li89@163.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="nummy">nummy</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"nummy"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
