@@ -35,7 +35,7 @@
 组织模式
 单模块将所有代码放置在一个Python文件中，一般为app.py，只适合于小型程序。一般其代码结构如下所示：
 1234">
-<meta property="og:updated_time" content="2016-02-18T10:33:58.000Z">
+<meta property="og:updated_time" content="2016-02-21T12:02:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="flask学习笔记【4】组织代码">
 <meta name="twitter:description" content="定义术语
@@ -123,7 +123,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义术语"><span class="toc-number">1.</span> <span class="toc-text">定义术语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组织模式"><span class="toc-number">2.</span> <span class="toc-text">组织模式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#单模块"><span class="toc-number">2.0.1.</span> <span class="toc-text">单模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#包"><span class="toc-number">2.0.2.</span> <span class="toc-text">包</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#蓝图"><span class="toc-number">2.0.3.</span> <span class="toc-text">蓝图</span></a></li></ol></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义术语"><span class="toc-number">1.</span> <span class="toc-text">定义术语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组织模式"><span class="toc-number">2.</span> <span class="toc-text">组织模式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#单模块"><span class="toc-number">2.0.1.</span> <span class="toc-text">单模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#包"><span class="toc-number">2.0.2.</span> <span class="toc-text">包</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#蓝图"><span class="toc-number">2.0.3.</span> <span class="toc-text">蓝图</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本框架"><span class="toc-number">3.</span> <span class="toc-text">基本框架</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#使服务器支持外部访问"><span class="toc-number">3.0.1.</span> <span class="toc-text">使服务器支持外部访问</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#调试模式"><span class="toc-number">3.0.2.</span> <span class="toc-text">调试模式</span></a></li></ol></li></ol></li></ol>
 		
 		</div>
 		
@@ -153,6 +153,20 @@
 </ul>
 <h5 id="蓝图"><a href="#蓝图" class="headerlink" title="蓝图"></a>蓝图</h5><p>在某些时候你可能发现你有许多相关的路由。如果你像我一样，你首先会想到把 views.py 分离到一个包并且把这些视图分组到模块。当你意识到这一点的时候，是时候把你的应用分解成蓝图。</p>
 <p>蓝图本质上就是以某种独立的方式定义的应用程序的组件。它们在你的应用程序中扮演了应用。你可能针对管理面板，前端以及用户控制面板有着不同的蓝图。这会让你依据组件分组视图，静态文件以及模板，同时会让你在这些组件之间共享你的应用程序的模型，表单以及其它方面。我们将会在后面讨论如何使用蓝图组织你的应用程序。</p>
+<h3 id="基本框架"><a href="#基本框架" class="headerlink" title="基本框架"></a>基本框架</h3><p>一个Flask应用的基本框架如下所示：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="decorator">@app.route('/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello_world</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Hello World!'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure></p>
+<p>将上面的代码保存为run.py，然后执行<code>python run.py</code>。现在就可以浏览<code>http://localhost:5000</code>，然后就能看到欢迎语句了。</p>
+<p>这段代码做了如下工作：</p>
+<ol>
+<li>首先导入<code>Flask</code>，对其进行实例化，得到WSGI应用。第一个参数是应用模块的名称，如果只使用一个模块，第一个参数名就应该为<code>__name__</code>。</li>
+<li>然后使用修饰器<code>route()</code>定义路由，以及视图函数。</li>
+<li>最后使用<code>run()</code>方法</li>
+</ol>
+<p>使用Control-C来停止服务器。</p>
+<h5 id="使服务器支持外部访问"><a href="#使服务器支持外部访问" class="headerlink" title="使服务器支持外部访问"></a>使服务器支持外部访问</h5><p>如果你想让你的服务器对外可用，可以设置参数<code>host=0.0.0.0</code>：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.run(host=<span class="string">"0.0.0.0"</span>)</span><br></pre></td></tr></table></figure></p>
+<h5 id="调试模式"><a href="#调试模式" class="headerlink" title="调试模式"></a>调试模式</h5><p><code>run()</code>方法适合于启动本地开发服务器，但是如果修改代码的话，还必须手动启动服务器，才会加载。如果能够自动加载就好了。别担心，flask的开发者考虑了这点需求，只需要开启调试模式就可以在修改代码的时候服务器自动加载。</p>
+<p>开启调试模式有两种方法：一种是直接操作应用实例对象：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">app.debug = <span class="keyword">True</span></span><br><span class="line">app.run()</span><br></pre></td></tr></table></figure></p>
+<p>另外一种方法是作为参数传递给<code>run()</code>方法:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.run(debug=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -219,7 +233,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义术语"><span class="toc-number">1.</span> <span class="toc-text">定义术语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组织模式"><span class="toc-number">2.</span> <span class="toc-text">组织模式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#单模块"><span class="toc-number">2.0.1.</span> <span class="toc-text">单模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#包"><span class="toc-number">2.0.2.</span> <span class="toc-text">包</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#蓝图"><span class="toc-number">2.0.3.</span> <span class="toc-text">蓝图</span></a></li></ol></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义术语"><span class="toc-number">1.</span> <span class="toc-text">定义术语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组织模式"><span class="toc-number">2.</span> <span class="toc-text">组织模式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#单模块"><span class="toc-number">2.0.1.</span> <span class="toc-text">单模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#包"><span class="toc-number">2.0.2.</span> <span class="toc-text">包</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#蓝图"><span class="toc-number">2.0.3.</span> <span class="toc-text">蓝图</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本框架"><span class="toc-number">3.</span> <span class="toc-text">基本框架</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#使服务器支持外部访问"><span class="toc-number">3.0.1.</span> <span class="toc-text">使服务器支持外部访问</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#调试模式"><span class="toc-number">3.0.2.</span> <span class="toc-text">调试模式</span></a></li></ol></li></ol></li></ol>
  
   </div>
 
