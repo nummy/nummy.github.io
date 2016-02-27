@@ -4,45 +4,29 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>flask学习笔记【3】Flask-DebugToolbar的用法 | Blog Of Nummy</title>
+    <title>flask-bootstrap学习笔记 | Blog Of Nummy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="nummy">
     
 
     
-    <meta name="description" content="这个扩展模块可以给Flask项目中的每个页面都添加一个调试工具栏，里面包含了丰富而有用的调试信息。
-安装使用pip进行安装
-1pip install flask-debugtoolbar
-用法使用方法很简单：
-123456789101112from flask import Flaskfrom flask_debugtoolbar import DebugToolbarExtensionapp =">
+    <meta name="description" content="flask-bootstrap是一个基于Bootstrap框架的Flask扩展。
+基本用法
+首先得导入和加载扩展：12345678910from flask import Flaskfrom flask_bootstrap import Bootstrapdef create_app():  app = Flask(__name__)  Bootstrap(app)  return app# do">
 <meta property="og:type" content="article">
-<meta property="og:title" content="flask学习笔记【3】Flask-DebugToolbar的用法">
-<meta property="og:url" content="http://yoursite.com/2016/02/18/flask3/index.html">
+<meta property="og:title" content="flask-bootstrap学习笔记">
+<meta property="og:url" content="http://yoursite.com/2016/02/27/flask-bootstrap/index.html">
 <meta property="og:site_name" content="Blog Of Nummy">
-<meta property="og:description" content="这个扩展模块可以给Flask项目中的每个页面都添加一个调试工具栏，里面包含了丰富而有用的调试信息。
-安装使用pip进行安装
-1pip install flask-debugtoolbar
-用法使用方法很简单：
-123456789101112from flask import Flaskfrom flask_debugtoolbar import DebugToolbarExtensionapp =">
-<meta property="og:image" content="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/example.gif">
-<meta property="og:image" content="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-time-panel.png">
-<meta property="og:image" content="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-time-panel.png">
-<meta property="og:image" content="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-headers-panel.png">
-<meta property="og:image" content="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-request-vars-panel.png">
-<meta property="og:image" content="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-config-panel.png">
-<meta property="og:image" content="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-template-panel.png">
-<meta property="og:image" content="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-sqlalchemy-panel.png">
-<meta property="og:image" content="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-logger-panel.png">
-<meta property="og:image" content="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-profiler-panel.png">
-<meta property="og:updated_time" content="2016-02-18T10:02:14.000Z">
+<meta property="og:description" content="flask-bootstrap是一个基于Bootstrap框架的Flask扩展。
+基本用法
+首先得导入和加载扩展：12345678910from flask import Flaskfrom flask_bootstrap import Bootstrapdef create_app():  app = Flask(__name__)  Bootstrap(app)  return app# do">
+<meta property="og:updated_time" content="2016-02-27T03:35:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="flask学习笔记【3】Flask-DebugToolbar的用法">
-<meta name="twitter:description" content="这个扩展模块可以给Flask项目中的每个页面都添加一个调试工具栏，里面包含了丰富而有用的调试信息。
-安装使用pip进行安装
-1pip install flask-debugtoolbar
-用法使用方法很简单：
-123456789101112from flask import Flaskfrom flask_debugtoolbar import DebugToolbarExtensionapp =">
+<meta name="twitter:title" content="flask-bootstrap学习笔记">
+<meta name="twitter:description" content="flask-bootstrap是一个基于Bootstrap框架的Flask扩展。
+基本用法
+首先得导入和加载扩展：12345678910from flask import Flaskfrom flask_bootstrap import Bootstrapdef create_app():  app = Flask(__name__)  Bootstrap(app)  return app# do">
 
     
     <link rel="alternative" href="/atom.xml" title="Blog Of Nummy" type="application/atom+xml">
@@ -102,14 +86,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/02/18/flask3/" title="flask学习笔记【3】Flask-DebugToolbar的用法" itemprop="url">flask学习笔记【3】Flask-DebugToolbar的用法</a>
+      <a href="/2016/02/27/flask-bootstrap/" title="flask-bootstrap学习笔记" itemprop="url">flask-bootstrap学习笔记</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="nummy" target="_blank" itemprop="author">nummy</a>
 		
   <p class="article-time">
-    <time datetime="2016-02-18T08:30:50.000Z" itemprop="datePublished"> 发表于 2016-02-18</time>
+    <time datetime="2016-02-27T19:06:24.000Z" itemprop="datePublished"> 发表于 2016-02-27</time>
     
   </p>
 </header>
@@ -118,41 +102,52 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-number">2.</span> <span class="toc-text">用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">3.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内置面板"><span class="toc-number">4.</span> <span class="toc-text">内置面板</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本用法"><span class="toc-number">1.</span> <span class="toc-text">基本用法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#模板"><span class="toc-number">1.0.1.</span> <span class="toc-text">模板</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#示例"><span class="toc-number">1.0.2.</span> <span class="toc-text">示例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#宏"><span class="toc-number">2.</span> <span class="toc-text">宏</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#兼容性支持"><span class="toc-number">2.0.1.</span> <span class="toc-text">兼容性支持</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#实用工具"><span class="toc-number">2.0.2.</span> <span class="toc-text">实用工具</span></a></li></ol></li></ol></li></ol>
 		
 		</div>
 		
-		<p>这个扩展模块可以给Flask项目中的每个页面都添加一个调试工具栏，里面包含了丰富而有用的调试信息。<br><img src="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/example.gif" alt="example"></p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>使用pip进行安装</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> flask-debugtoolbar</span><br></pre></td></tr></table></figure>
-<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><p>使用方法很简单：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_debugtoolbar <span class="keyword">import</span> DebugToolbarExtension</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># the toolbar is only enabled in debug mode:</span></span><br><span class="line">app.debug = <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># set a 'SECRET_KEY' to enable the Flask session cookies</span></span><br><span class="line">app.config[<span class="string">'SECRET_KEY'</span>] = <span class="string">'&lt;replace with a secret key&gt;'</span></span><br><span class="line"></span><br><span class="line">toolbar = DebugToolbarExtension(app)</span><br></pre></td></tr></table></figure>
-<p>当调试模式开启的时候，这个工具栏就会自动插入HTML代码中，在部署环境中，由于debug设置为False，所以不会显示这个工具栏。<br>这个扩展也支持在Flask工厂模式中使用，先独立创建toolbar，然后在a部署到应用中。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">toolbar = DebugToolbarExtension()</span><br><span class="line"><span class="comment"># Then later on.</span></span><br><span class="line">app = create_app(<span class="string">'the-config.cfg'</span>)</span><br><span class="line">toolbar.init_app(app)</span><br></pre></td></tr></table></figure>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>toolbar模块可以进行一下配置：</p>
+		<p><code>flask-bootstrap</code>是一个基于Bootstrap框架的<code>Flask</code>扩展。</p>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><hr>
+<p>首先得导入和加载扩展：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_bootstrap <span class="keyword">import</span> Bootstrap</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_app</span><span class="params">()</span>:</span></span><br><span class="line">  app = Flask(__name__)</span><br><span class="line">  Bootstrap(app)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> app</span><br><span class="line"></span><br><span class="line"><span class="comment"># do something with app...</span></span><br></pre></td></tr></table></figure></p>
+<p>加载之后，在自己的，模板中就可以用预定义的<code>bootstrap</code>模板了。</p>
+<h5 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h5><p>新建一个基于<code>Bootstrap</code>的模板也非常简单。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_bootstrap <span class="keyword">import</span> Bootstrap</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_app</span><span class="params">()</span>:</span></span><br><span class="line">  app = Flask(__name__)</span><br><span class="line">  Bootstrap(app)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> app</span><br><span class="line"></span><br><span class="line"><span class="comment"># do something with app...</span></span><br></pre></td></tr></table></figure></p>
+<p>所有的子模板都是基于<code>block</code>来创建的。如果想继承父模板<code>block</code>中内容，可以使用<code>super()</code>。</p>
+<p>常用的block如下：</p>
 <ul>
-<li>DEBUG_TB_ENABLED: 用来控制工具栏的显示。</li>
-<li>DEBUG_TB_HOST: 可以显示工具栏的主机白名单，默认所有主机均可以显示</li>
-<li>DEBUG_TB_INTERCEPT_REDIRECTS: 是否拦截重定向，默认为拦截。</li>
-<li>DEBUG_TB_PANELS: 工具栏中显示的面板，默认显示所有面板。</li>
-<li>DEBUG_TB_PROFILER_ENABLED: 是否在所有的请求中激活profiler，默认为不激活。</li>
-<li>DEBUG_TB_TEMPLATE_EDITOR_ENABLED: 开启模板编辑器，默认不开启。</li>
+<li>head</li>
+<li>body</li>
+<li>title</li>
+<li>styles</li>
+<li>metas</li>
+<li>navbar</li>
+<li>content</li>
+<li>scripts</li>
 </ul>
-<p>如果需要改变其中的配置选项，可以在flask的配置文件中进行如下设置：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.config[<span class="string">'DEBUG_TB_INTERCEPT_REDIRECTS'</span>] = <span class="keyword">False</span></span><br></pre></td></tr></table></figure>
-<h3 id="内置面板"><a href="#内置面板" class="headerlink" title="内置面板"></a>内置面板</h3><p>工具栏中包括如下面板：</p>
-<ol>
-<li>Versions面板：显示flask的版本信息<br><img src="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-time-panel.png" alt="version"></li>
-<li>Time面板: 显示处理当前请求所耗费的时间，扩展面板可以显示更加详细的信息<br><img src="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-time-panel.png" alt="Time"></li>
-<li>HTTP Headers面板：显示当前请求的HTTP头部信息。<br><img src="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-headers-panel.png" alt="HTTP"></li>
-<li>Request Vars面板：显示当前请求中所包含变量的详细信息，包括视图函数的参数、cookies、sessions以及GET和POST方法所传输的数据等等。<br><img src="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-request-vars-panel.png" alt="Request"></li>
-<li>Config面板：显示flask应用中的配置信息。<br><img src="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-config-panel.png" alt="Config"></li>
-<li>Templates面板：显示当前请求被渲染的模板信息，以及模板参数中提供导入变量。<br><img src="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-template-panel.png" alt="Template"></li>
-<li>SQLAlchemy：显示当前请求中的SQL查询语句。这个面板需要安装Flask-SQLAlchemy。<br><img src="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-sqlalchemy-panel.png" alt="SQL"></li>
-<li>Logging面板：显示当前请求所产生的日志信息。<br><img src="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-logger-panel.png" alt="Logging"></li>
-<li>Route List面板: 显示Flask中的路由表信息。</li>
-<li>Profiler面板：显示当前请求的详细数据分析，由于性能瓶颈，默认不开启这个面板，可以手动激活，再刷新页面，就可以看到分析数据。<br><img src="http://flask-debugtoolbar.readthedocs.org/en/latest/_images/screenshot-profiler-panel.png" alt="Profile"></li>
-</ol>
+<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><ul>
+<li><p>添加css文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;% block styles %&#125;</span><br><span class="line">&#123;&#123;super()&#125;&#125;</span><br><span class="line">&lt;link rel=<span class="string">"stylesheet"</span></span><br><span class="line">      href=<span class="string">"&#123;&#123;url_for('.static', filename='mystyle.css')&#125;&#125;"</span>&gt;</span><br><span class="line">&#123;% endblock %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加js脚本文件</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;% block scripts %&#125;</span><br><span class="line">&lt;script src="&#123;&#123;url_for('.static', filename='myscripts.js')&#125;&#125;"&gt;&lt;/script&gt;</span><br><span class="line">&#123;&#123;super()&#125;&#125;</span><br><span class="line">&#123;% endblock %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加<code>lang=&quot;en&quot;</code>属性</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% block html_attribs %&#125; lang=<span class="string">"en"</span>&#123;% endblock %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="宏"><a href="#宏" class="headerlink" title="宏"></a>宏</h3><p><code>Flask-Bootstrap</code>提供了宏，可以简化编程。导入宏的方式如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;% extends <span class="string">"bootstrap/base.html"</span> %&#125;</span><br><span class="line">&#123;% <span class="keyword">import</span> <span class="string">"bootstrap/wtf.html"</span> <span class="keyword">as</span> wtf %&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码从wtf.html中导入宏，使用wtf作为宏名。</p>
+<h5 id="兼容性支持"><a href="#兼容性支持" class="headerlink" title="兼容性支持"></a>兼容性支持</h5><p><code>Flask-Bootstrap</code>提供了浏览器之间兼容性的解决方案，但是默认不会加载，需要先下载<code>html5shiv</code>以及<code>Respond.js</code>，放在static目录下，然后导入到文件中、。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;% <span class="keyword">import</span> <span class="string">"bootstrap/fixes.html"</span> <span class="keyword">as</span> fixes %&#125;</span><br><span class="line">&#123;% block head %&#125;</span><br><span class="line">  &#123;&#123;super()&#125;&#125;</span><br><span class="line">  &#123;&#123;fixes.ie8()&#125;&#125;</span><br><span class="line">&#123;% endblock %&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="实用工具"><a href="#实用工具" class="headerlink" title="实用工具"></a>实用工具</h5><p>在`bootstrap/utils.html”中还提供了其他一些使用的模板宏，跟表单宏一样，这些宏的目的也在于是提高开发速度。</p>
+<ul>
+<li><p><strong>flash_messages()</strong><br>渲染flask消息，但是这里必须制定消息的类别，而且只能是bootstrap中定义好的类别，如<code>success</code>,<code>info</code>,<code>warning</code>,<code>danger</code>。<br>例如，有如下消息：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flash(<span class="string">'Operation failed'</span>, <span class="string">'danger'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>icon()</strong><br>渲染Glyphicon图标</p>
+</li>
+<li><p><strong>form_button()</strong><br>渲染按钮</p>
+</li>
+</ul>
+<p>简单示例：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;form_button(url_for(<span class="string">'remove_entry'</span>, id=entry_id),</span><br><span class="line">              icon(<span class="string">'remove'</span>) + <span class="string">' Remove entry'</span>)&#125;&#125;</span><br></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -166,7 +161,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/flask/">flask</a><a href="/tags/python/">python</a>
+  <span></span> <a href="/tags/bootstrap/">bootstrap</a><a href="/tags/flask/">flask</a><a href="/tags/python/">python</a>
   </div>
 
 </div>
@@ -175,7 +170,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/02/18/flask3/" data-title="flask学习笔记【3】Flask-DebugToolbar的用法 | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/02/27/flask-bootstrap/" data-title="flask-bootstrap学习笔记 | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -188,19 +183,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/02/18/flask4/" title="flask学习笔记【4】组织代码">
-  <strong>上一篇：</strong><br/>
-  <span>
-  flask学习笔记【4】组织代码</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/02/17/flask2/"  title="flask学习笔记【2】环境配置">
+<a href="/2016/02/25/itertools/"  title="使用itertools模块实现Python函数式编程">
  <strong>下一篇：</strong><br/> 
- <span>flask学习笔记【2】环境配置
+ <span>使用itertools模块实现Python函数式编程
 </span>
 </a>
 </div>
@@ -209,7 +196,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/02/18/flask3/" data-title="flask学习笔记【3】Flask-DebugToolbar的用法" data-url="http://yoursite.com/2016/02/18/flask3/"></div>
+	<div class="ds-thread" data-thread-key="2016/02/27/flask-bootstrap/" data-title="flask-bootstrap学习笔记" data-url="http://yoursite.com/2016/02/27/flask-bootstrap/"></div>
 </section>
 
 
@@ -219,7 +206,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用法"><span class="toc-number">2.</span> <span class="toc-text">用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">3.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内置面板"><span class="toc-number">4.</span> <span class="toc-text">内置面板</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本用法"><span class="toc-number">1.</span> <span class="toc-text">基本用法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#模板"><span class="toc-number">1.0.1.</span> <span class="toc-text">模板</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#示例"><span class="toc-number">1.0.2.</span> <span class="toc-text">示例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#宏"><span class="toc-number">2.</span> <span class="toc-text">宏</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#兼容性支持"><span class="toc-number">2.0.1.</span> <span class="toc-text">兼容性支持</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#实用工具"><span class="toc-number">2.0.2.</span> <span class="toc-text">实用工具</span></a></li></ol></li></ol></li></ol>
  
   </div>
 
