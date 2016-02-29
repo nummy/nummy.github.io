@@ -4,26 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>python 类中方法的区别 | Blog Of Nummy</title>
+    <title>使用MongoDB命令连接远程数据库 | Blog Of Nummy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="nummy">
     
 
     
-    <meta name="description" content="Python 除了拥有实例方法外，还拥有静态方法和类方法，跟Java相比需要理解这个类方法的含义。
-123456789class Foo(object):      def test(self)://定义了实例方法          print(&quot;object&quot;)      @classmethod      def test2(clss)://定义了类方法          print(&quot;cla">
+    <meta name="description" content="连接命令如下：1mongo remote_host:port/database -u user -p password">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python 类中方法的区别">
-<meta property="og:url" content="http://yoursite.com/2016/02/17/python-类中方法的区别/index.html">
+<meta property="og:title" content="使用MongoDB命令连接远程数据库">
+<meta property="og:url" content="http://yoursite.com/2016/02/28/connectmongo/index.html">
 <meta property="og:site_name" content="Blog Of Nummy">
-<meta property="og:description" content="Python 除了拥有实例方法外，还拥有静态方法和类方法，跟Java相比需要理解这个类方法的含义。
-123456789class Foo(object):      def test(self)://定义了实例方法          print(&quot;object&quot;)      @classmethod      def test2(clss)://定义了类方法          print(&quot;cla">
-<meta property="og:updated_time" content="2016-02-18T02:56:01.000Z">
+<meta property="og:description" content="连接命令如下：1mongo remote_host:port/database -u user -p password">
+<meta property="og:updated_time" content="2016-02-29T03:43:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python 类中方法的区别">
-<meta name="twitter:description" content="Python 除了拥有实例方法外，还拥有静态方法和类方法，跟Java相比需要理解这个类方法的含义。
-123456789class Foo(object):      def test(self)://定义了实例方法          print(&quot;object&quot;)      @classmethod      def test2(clss)://定义了类方法          print(&quot;cla">
+<meta name="twitter:title" content="使用MongoDB命令连接远程数据库">
+<meta name="twitter:description" content="连接命令如下：1mongo remote_host:port/database -u user -p password">
 
     
     <link rel="alternative" href="/atom.xml" title="Blog Of Nummy" type="application/atom+xml">
@@ -83,14 +80,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/02/17/python-类中方法的区别/" title="python 类中方法的区别" itemprop="url">python 类中方法的区别</a>
+      <a href="/2016/02/28/connectmongo/" title="使用MongoDB命令连接远程数据库" itemprop="url">使用MongoDB命令连接远程数据库</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="nummy" target="_blank" itemprop="author">nummy</a>
 		
   <p class="article-time">
-    <time datetime="2016-02-18T02:49:04.000Z" itemprop="datePublished"> 发表于 2016-02-17</time>
+    <time datetime="2016-02-29T03:41:26.000Z" itemprop="datePublished"> 发表于 2016-02-28</time>
     
   </p>
 </header>
@@ -103,27 +100,7 @@
 		
 		</div>
 		
-		<p>Python 除了拥有实例方法外，还拥有静态方法和类方法，跟Java相比需要理解这个类方法的含义。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span><span class="params">(object)</span>:</span>  </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(self)</span>:</span>//定义了实例方法  </span><br><span class="line">        print(<span class="string">"object"</span>)  </span><br><span class="line"><span class="decorator">    @classmethod  </span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">(clss)</span>:</span>//定义了类方法  </span><br><span class="line">        print(<span class="string">"class"</span>)  </span><br><span class="line"><span class="decorator">    @staticmethod  </span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test3</span><span class="params">()</span>:</span>//定义了静态方法  </span><br><span class="line">        print(<span class="string">"static"</span>)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>实例方法访问方式：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ff = new Foo()</span><br><span class="line">ff.test();//通过实例调用  </span><br><span class="line">Foo.test(ff)//直接通过类的方式调用，但是需要自己传递实例引用</span><br></pre></td></tr></table></figure>
-<ul>
-<li>类方法访问方式：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Foo.test2();</span><br></pre></td></tr></table></figure>
-<p>如果Foo有了子类并且子类覆盖了这个类方法，最终调用会调用子类的方法并传递的是子类的类对象。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo2</span><span class="params">(Foo)</span>:</span>  </span><br><span class="line"><span class="decorator">    @classmethod  </span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">(self)</span>:</span>  </span><br><span class="line">        print(self)  </span><br><span class="line">        print(<span class="string">"foo2 object"</span>)  </span><br><span class="line">f2=Foo2()  </span><br><span class="line">print(f2.test2())</span><br></pre></td></tr></table></figure>
-<p>输出结果：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;class '__main__.Foo2'&gt;  </span><br><span class="line">foo2 object</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>静态方法调用方式：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ff = Foo()</span><br><span class="line">ff.test3()</span><br><span class="line">Foo.test3()</span><br></pre></td></tr></table></figure>
-<ul>
-<li>总结</li>
-</ul>
-<p>其实通过以上可以看出：<br>实例方法，类方法，静态方法都可以通过实例或者类调用，只不过实例方法通过类调用时需要传递实例的引用（python 3可以传递任意对象，其他版本会报错）。<br>三种方法从不同层次上来对方法进行了描述：实例方法针对的是实例，类方法针对的是类，他们都可以继承和重新定义，静态方法也能继承(NND)，可以认为是全局函数。</p>
+		<p>连接命令如下：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongo remote_host:port/database -u <span class="keyword">user</span> <span class="title">-p</span> password</span><br></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -131,13 +108,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/python/">python</a>
+  <a class="article-category-link" href="/categories/mongodb/">mongodb</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/python/">python</a>
+  <span></span> <a href="/tags/mongodb/">mongodb</a>
   </div>
 
 </div>
@@ -146,7 +123,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/02/17/python-类中方法的区别/" data-title="python 类中方法的区别 | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/02/28/connectmongo/" data-title="使用MongoDB命令连接远程数据库 | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -159,19 +136,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/02/17/python-method/" title="Python:classmethod &amp; staticmethod 的区别">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Python:classmethod &amp; staticmethod 的区别</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/02/17/Hexo创建静态博客/"  title="Hexo搭建静态博客">
+<a href="/2016/02/27/flask-bootstrap/"  title="flask-bootstrap学习笔记">
  <strong>下一篇：</strong><br/> 
- <span>Hexo搭建静态博客
+ <span>flask-bootstrap学习笔记
 </span>
 </a>
 </div>
@@ -180,7 +149,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/02/17/python-类中方法的区别/" data-title="python 类中方法的区别" data-url="http://yoursite.com/2016/02/17/python-类中方法的区别/"></div>
+	<div class="ds-thread" data-thread-key="2016/02/28/connectmongo/" data-title="使用MongoDB命令连接远程数据库" data-url="http://yoursite.com/2016/02/28/connectmongo/"></div>
 </section>
 
 
