@@ -23,7 +23,7 @@
 备份数据库命令格式如下：1mongodump -h host -d database -o storepath
 还可以使用以下命令获取帮助信息1mongodump --help
 恢复数据库使用以下命令进行恢复1mongostore -h h">
-<meta property="og:updated_time" content="2016-02-29T05:49:44.000Z">
+<meta property="og:updated_time" content="2016-02-29T06:36:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MongoDB数据库备份与恢复">
 <meta name="twitter:description" content="使用mongodump进行数据库备份实际上是通过一次查询当前服务器快照，并将快照存进磁盘中，因此实际上并不是实时备份，因为获取快照之后，服务器还会有数据写入。
@@ -117,7 +117,7 @@
 <h3 id="备份集合"><a href="#备份集合" class="headerlink" title="备份集合"></a>备份集合</h3><p>使用<code>mongoexport</code>命令备份集合:<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongoexport -<span class="keyword">h</span> host -<span class="keyword">d</span> database -c collection -o backstore_filename</span><br></pre></td></tr></table></figure></p>
 <p>使用<code>mongoimport --help</code>获取帮助信息</p>
 <h3 id="恢复集合"><a href="#恢复集合" class="headerlink" title="恢复集合"></a>恢复集合</h3><p>使用<code>mongoimport</code>命令恢复集合<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongoimport -<span class="keyword">h</span> host -<span class="keyword">d</span> database -c collectionname --<span class="keyword">file</span> filename</span><br></pre></td></tr></table></figure></p>
-<p>使用<code>mongoimport</code>命令获取帮助信息</p>
+<p>使用<code>mongoimport --help</code>命令获取帮助信息</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -153,6 +153,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2016/02/28/requests/" title="Python Requests 快速入门">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Python Requests 快速入门</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2016/02/28/connectmongo/"  title="使用MongoDB命令连接远程数据库">
@@ -220,7 +228,7 @@
 		  
 		
 		  
-			<li><a href="/categories/python/" title="python">python<sup>9</sup></a></li>
+			<li><a href="/categories/python/" title="python">python<sup>10</sup></a></li>
 		  
 		
 		  
@@ -237,7 +245,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/python/" title="python">python<sup>23</sup></a></li>
+				<li><a href="/tags/python/" title="python">python<sup>24</sup></a></li>
 			
 		
 			
