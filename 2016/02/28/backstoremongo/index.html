@@ -4,27 +4,32 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>正向代理与反向代理 | Blog Of Nummy</title>
+    <title>MongoDB数据库备份与恢复 | Blog Of Nummy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="nummy">
     
 
     
-    <meta name="description" content="正向代理正向代理是位于客户端与原始服务器之间的服务器，相当于一个中介，客户端向代理服务器发送一个请求，并指定目标（原始服务器），然后代理服务器向原始服务器转交请求，并将获得的内容返回给客户端。客户端必须进行一些设置才能使用正向代理。
-反向代理反向代理与正向代理相反，对于客户端而言，它就是原始服务器，所以客户端不需要做任何特别的设置。客户端向反向代理的命名空间（name-space）中的内容发送普通">
+    <meta name="description" content="使用mongodump进行数据库备份实际上是通过一次查询当前服务器快照，并将快照存进磁盘中，因此实际上并不是实时备份，因为获取快照之后，服务器还会有数据写入。
+备份数据库命令格式如下：1mongodump -h host -d database -o storepath
+还可以使用以下命令获取帮助信息1mongodump --help
+恢复数据库使用以下命令进行恢复1mongostore -h h">
 <meta property="og:type" content="article">
-<meta property="og:title" content="正向代理与反向代理">
-<meta property="og:url" content="http://yoursite.com/2016/02/21/proxy/index.html">
+<meta property="og:title" content="MongoDB数据库备份与恢复">
+<meta property="og:url" content="http://yoursite.com/2016/02/28/backstoremongo/index.html">
 <meta property="og:site_name" content="Blog Of Nummy">
-<meta property="og:description" content="正向代理正向代理是位于客户端与原始服务器之间的服务器，相当于一个中介，客户端向代理服务器发送一个请求，并指定目标（原始服务器），然后代理服务器向原始服务器转交请求，并将获得的内容返回给客户端。客户端必须进行一些设置才能使用正向代理。
-反向代理反向代理与正向代理相反，对于客户端而言，它就是原始服务器，所以客户端不需要做任何特别的设置。客户端向反向代理的命名空间（name-space）中的内容发送普通">
-<meta property="og:image" content="http://static.open-open.com/lib/uploadImg/20141202/20141202104859_484.jpg">
-<meta property="og:updated_time" content="2016-02-21T05:52:58.000Z">
+<meta property="og:description" content="使用mongodump进行数据库备份实际上是通过一次查询当前服务器快照，并将快照存进磁盘中，因此实际上并不是实时备份，因为获取快照之后，服务器还会有数据写入。
+备份数据库命令格式如下：1mongodump -h host -d database -o storepath
+还可以使用以下命令获取帮助信息1mongodump --help
+恢复数据库使用以下命令进行恢复1mongostore -h h">
+<meta property="og:updated_time" content="2016-02-29T05:49:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="正向代理与反向代理">
-<meta name="twitter:description" content="正向代理正向代理是位于客户端与原始服务器之间的服务器，相当于一个中介，客户端向代理服务器发送一个请求，并指定目标（原始服务器），然后代理服务器向原始服务器转交请求，并将获得的内容返回给客户端。客户端必须进行一些设置才能使用正向代理。
-反向代理反向代理与正向代理相反，对于客户端而言，它就是原始服务器，所以客户端不需要做任何特别的设置。客户端向反向代理的命名空间（name-space）中的内容发送普通">
+<meta name="twitter:title" content="MongoDB数据库备份与恢复">
+<meta name="twitter:description" content="使用mongodump进行数据库备份实际上是通过一次查询当前服务器快照，并将快照存进磁盘中，因此实际上并不是实时备份，因为获取快照之后，服务器还会有数据写入。
+备份数据库命令格式如下：1mongodump -h host -d database -o storepath
+还可以使用以下命令获取帮助信息1mongodump --help
+恢复数据库使用以下命令进行恢复1mongostore -h h">
 
     
     <link rel="alternative" href="/atom.xml" title="Blog Of Nummy" type="application/atom+xml">
@@ -84,14 +89,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/02/21/proxy/" title="正向代理与反向代理" itemprop="url">正向代理与反向代理</a>
+      <a href="/2016/02/28/backstoremongo/" title="MongoDB数据库备份与恢复" itemprop="url">MongoDB数据库备份与恢复</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="nummy" target="_blank" itemprop="author">nummy</a>
 		
   <p class="article-time">
-    <time datetime="2016-02-21T21:40:40.000Z" itemprop="datePublished"> 发表于 2016-02-21</time>
+    <time datetime="2016-02-29T05:34:45.000Z" itemprop="datePublished"> 发表于 2016-02-28</time>
     
   </p>
 </header>
@@ -100,18 +105,19 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#正向代理"><span class="toc-number">1.</span> <span class="toc-text">正向代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#反向代理"><span class="toc-number">2.</span> <span class="toc-text">反向代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#区别"><span class="toc-number">3.</span> <span class="toc-text">区别</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#备份数据库"><span class="toc-number">1.</span> <span class="toc-text">备份数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#恢复数据库"><span class="toc-number">2.</span> <span class="toc-text">恢复数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#备份集合"><span class="toc-number">3.</span> <span class="toc-text">备份集合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#恢复集合"><span class="toc-number">4.</span> <span class="toc-text">恢复集合</span></a></li></ol>
 		
 		</div>
 		
-		<h3 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h3><p>正向代理是位于客户端与原始服务器之间的服务器，相当于一个中介，客户端向代理服务器发送一个请求，并指定目标（原始服务器），然后代理服务器向原始服务器转交请求，并将获得的内容返回给客户端。客户端必须进行一些设置才能使用正向代理。</p>
-<h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><p>反向代理与正向代理相反，对于客户端而言，它就是原始服务器，所以客户端不需要做任何特别的设置。客户端向反向代理的命名空间（name-space）中的内容发送普通请求，接着反向代理将判断向何处转交请求，并将获得的内容返回客户端，就像这些内容原本是它的一样。<br>下面是反向代理的图解：<br><img src="http://static.open-open.com/lib/uploadImg/20141202/20141202104859_484.jpg" alt="反向代理"></p>
-<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><ul>
-<li><p>从用途来讲：<br>正向代理的典型用途是为在防火墙内的局域网客户端提供访问Internet的途径。正向代理还可以使用缓冲特性减少网络使用率。反向代理的典型用途是将 防火墙后面的服务器提供给Internet用户访问。反向代理还可以为后端的多台服务器提供负载平衡，或为后端较慢的服务器提供缓冲服务。<br>另外，反向代理还可以启用高级URL策略和管理技术，从而使处于不同web服务器</p>
-</li>
-<li><p>从安全性来讲：<br>正向代理允许客户端通过它访问任意网站并且隐藏客户端自身，因此你必须采取安全措施以确保仅为经过授权的客户端提供服务。<br>反向代理对外都是透明的，访问者并不知道自己访问的是一个代理。</p>
-</li>
-</ul>
+		<p>使用mongodump进行数据库备份实际上是通过一次查询当前服务器快照，并将快照存进磁盘中，因此实际上并不是实时备份，因为获取快照之后，服务器还会有数据写入。</p>
+<h3 id="备份数据库"><a href="#备份数据库" class="headerlink" title="备份数据库"></a>备份数据库</h3><p>命令格式如下：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongodump -<span class="keyword">h</span> host -<span class="keyword">d</span> database -o storepath</span><br></pre></td></tr></table></figure></p>
+<p>还可以使用以下命令获取帮助信息<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongodump <span class="comment">--help</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="恢复数据库"><a href="#恢复数据库" class="headerlink" title="恢复数据库"></a>恢复数据库</h3><p>使用以下命令进行恢复<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongostore -<span class="keyword">h</span> host -<span class="keyword">d</span> database --directoryperdb</span><br></pre></td></tr></table></figure></p>
+<p>还可以使用以下命令获取帮助信息<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongostore <span class="comment">--help</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="备份集合"><a href="#备份集合" class="headerlink" title="备份集合"></a>备份集合</h3><p>使用<code>mongoexport</code>命令备份集合:<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongoexport -<span class="keyword">h</span> host -<span class="keyword">d</span> database -c collection -o backstore_filename</span><br></pre></td></tr></table></figure></p>
+<p>使用<code>mongoimport --help</code>获取帮助信息</p>
+<h3 id="恢复集合"><a href="#恢复集合" class="headerlink" title="恢复集合"></a>恢复集合</h3><p>使用<code>mongoimport</code>命令恢复集合<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongoimport -<span class="keyword">h</span> host -<span class="keyword">d</span> database -c collectionname --<span class="keyword">file</span> filename</span><br></pre></td></tr></table></figure></p>
+<p>使用<code>mongoimport</code>命令获取帮助信息</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -119,13 +125,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/linux/">linux</a>
+  <a class="article-category-link" href="/categories/mongodb/">mongodb</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/linux/">linux</a>
+  <span></span> <a href="/tags/database/">database</a><a href="/tags/mongodb/">mongodb</a>
   </div>
 
 </div>
@@ -134,7 +140,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/02/21/proxy/" data-title="正向代理与反向代理 | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/02/28/backstoremongo/" data-title="MongoDB数据库备份与恢复 | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -147,19 +153,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/02/21/importlib/" title="Python运行中动态导入模块">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Python运行中动态导入模块</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/02/21/flask13/"  title="flask学习笔记【12】部署">
+<a href="/2016/02/28/connectmongo/"  title="使用MongoDB命令连接远程数据库">
  <strong>下一篇：</strong><br/> 
- <span>flask学习笔记【12】部署
+ <span>使用MongoDB命令连接远程数据库
 </span>
 </a>
 </div>
@@ -168,7 +166,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/02/21/proxy/" data-title="正向代理与反向代理" data-url="http://yoursite.com/2016/02/21/proxy/"></div>
+	<div class="ds-thread" data-thread-key="2016/02/28/backstoremongo/" data-title="MongoDB数据库备份与恢复" data-url="http://yoursite.com/2016/02/28/backstoremongo/"></div>
 </section>
 
 
@@ -178,7 +176,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#正向代理"><span class="toc-number">1.</span> <span class="toc-text">正向代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#反向代理"><span class="toc-number">2.</span> <span class="toc-text">反向代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#区别"><span class="toc-number">3.</span> <span class="toc-text">区别</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#备份数据库"><span class="toc-number">1.</span> <span class="toc-text">备份数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#恢复数据库"><span class="toc-number">2.</span> <span class="toc-text">恢复数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#备份集合"><span class="toc-number">3.</span> <span class="toc-text">备份集合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#恢复集合"><span class="toc-number">4.</span> <span class="toc-text">恢复集合</span></a></li></ol>
  
   </div>
 
