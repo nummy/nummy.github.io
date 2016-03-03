@@ -4,27 +4,26 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>PyCharm快捷键 | Blog Of Nummy</title>
+    <title>PyMongo集合操作 | Blog Of Nummy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="nummy">
     
 
     
-    <meta name="description" content="提示CTRL Q: 在参数列表位置，显示可以输入的所有参数。CTRL Q: 查看选中方法的文档字符串
-阅读CTRL -: 折叠当前代码CTRL +: 展开当前代码CTRL SHIFT -: 折叠所有代码CTRL SHIFT +: 展开所有代码CTRL SHIFT F7: 将当前单词在整个文件中高亮，F3移动到下一个，ESC取消高亮。CTRL F11 | F11: 设置书签.SHIFT F11: 显">
+    <meta name="description" content="批量写入文档
+bulk_write(requests, ordered=True, bypass_document_validation=False)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PyCharm快捷键">
-<meta property="og:url" content="http://yoursite.com/2016/03/02/pycharm/index.html">
+<meta property="og:title" content="PyMongo集合操作">
+<meta property="og:url" content="http://yoursite.com/2016/03/02/pymongocollection/index.html">
 <meta property="og:site_name" content="Blog Of Nummy">
-<meta property="og:description" content="提示CTRL Q: 在参数列表位置，显示可以输入的所有参数。CTRL Q: 查看选中方法的文档字符串
-阅读CTRL -: 折叠当前代码CTRL +: 展开当前代码CTRL SHIFT -: 折叠所有代码CTRL SHIFT +: 展开所有代码CTRL SHIFT F7: 将当前单词在整个文件中高亮，F3移动到下一个，ESC取消高亮。CTRL F11 | F11: 设置书签.SHIFT F11: 显">
-<meta property="og:image" content="http://images.cnitblog.com/blog/23013/201402/191435131665539.png">
-<meta property="og:updated_time" content="2016-03-02T08:09:49.000Z">
+<meta property="og:description" content="批量写入文档
+bulk_write(requests, ordered=True, bypass_document_validation=False)">
+<meta property="og:updated_time" content="2016-03-03T03:16:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PyCharm快捷键">
-<meta name="twitter:description" content="提示CTRL Q: 在参数列表位置，显示可以输入的所有参数。CTRL Q: 查看选中方法的文档字符串
-阅读CTRL -: 折叠当前代码CTRL +: 展开当前代码CTRL SHIFT -: 折叠所有代码CTRL SHIFT +: 展开所有代码CTRL SHIFT F7: 将当前单词在整个文件中高亮，F3移动到下一个，ESC取消高亮。CTRL F11 | F11: 设置书签.SHIFT F11: 显">
+<meta name="twitter:title" content="PyMongo集合操作">
+<meta name="twitter:description" content="批量写入文档
+bulk_write(requests, ordered=True, bypass_document_validation=False)">
 
     
     <link rel="alternative" href="/atom.xml" title="Blog Of Nummy" type="application/atom+xml">
@@ -84,14 +83,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/03/02/pycharm/" title="PyCharm快捷键" itemprop="url">PyCharm快捷键</a>
+      <a href="/2016/03/02/pymongocollection/" title="PyMongo集合操作" itemprop="url">PyMongo集合操作</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="nummy" target="_blank" itemprop="author">nummy</a>
 		
   <p class="article-time">
-    <time datetime="2016-03-02T08:05:59.000Z" itemprop="datePublished"> 发表于 2016-03-02</time>
+    <time datetime="2016-03-03T03:14:22.000Z" itemprop="datePublished"> 发表于 2016-03-02</time>
     
   </p>
 </header>
@@ -100,21 +99,13 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#提示"><span class="toc-number">1.</span> <span class="toc-text">提示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#阅读"><span class="toc-number">2.</span> <span class="toc-text">阅读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#移动"><span class="toc-number">3.</span> <span class="toc-text">移动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注释"><span class="toc-number">4.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选择"><span class="toc-number">5.</span> <span class="toc-text">选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编辑"><span class="toc-number">6.</span> <span class="toc-text">编辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除"><span class="toc-number">7.</span> <span class="toc-text">删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调试"><span class="toc-number">8.</span> <span class="toc-text">调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其它"><span class="toc-number">9.</span> <span class="toc-text">其它</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#批量写入文档"><span class="toc-number">1.</span> <span class="toc-text">批量写入文档</span></a></li></ol>
 		
 		</div>
 		
-		<h3 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h3><p>CTRL Q: 在参数列表位置，显示可以输入的所有参数。<br>CTRL Q: 查看选中方法的文档字符串</p>
-<h3 id="阅读"><a href="#阅读" class="headerlink" title="阅读"></a>阅读</h3><p>CTRL -: 折叠当前代码<br>CTRL +: 展开当前代码<br>CTRL SHIFT -: 折叠所有代码<br>CTRL SHIFT +: 展开所有代码<br>CTRL SHIFT F7: 将当前单词在整个文件中高亮，F3移动到下一个，ESC取消高亮。<br>CTRL F11 | F11: 设置书签.<br>SHIFT F11: 显示所有书签。<br>CTRL F12: 当一个文件中方法太多，要快速跳到某个方法时，可以用此快捷键打开LIST,<br>除了用上下箭选择外，还可以输入字母。</p>
-<h3 id="移动"><a href="#移动" class="headerlink" title="移动"></a>移动</h3><p>ALT UP: 移到上一个方法<br>ALT DOWN: 移到下一个方法<br>CTRL B | CTRL 单击： 转到方法定义处<br>CTRL SHIFT UP: 将当前行上移一行<br>CTRL SHIFT UP: 将当前行下移一行</p>
-<p>SHIFT ENTER: 在行中间执行时，智能跳到下一行。</p>
-<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p>CTRL /: 注释、取消注释行</p>
-<h3 id="选择"><a href="#选择" class="headerlink" title="选择"></a>选择</h3><p>ALT 左键： 列模式选择<br>CTRL W: 选中当前单词，继续按，选中它所属的行/IF/方法.</p>
-<h3 id="编辑"><a href="#编辑" class="headerlink" title="编辑"></a>编辑</h3><p>CTRL D: 未选中时，复制当前行到下一行，选中时复制粘贴选中部分。<br>CTRL J: 输入模板</p>
-<p>SHIFT F6: 更改变量/方法名字</p>
-<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>CTRY Y: 删除当前行</p>
-<h3 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h3><p>CTRL F8: 设置/取消断点</p>
-<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><p>CTRL E: 最近访问的文件列表<br>ESC: 焦点从其它窗口到编辑窗口<br>SHIFT ESC: 隐藏当前窗口，焦点到编辑窗口<br>F12: 焦点从编辑窗口到上一个使用窗口<br>编辑器右键，local history, show history： 显示本地修改记录<br><img src="http://images.cnitblog.com/blog/23013/201402/191435131665539.png" alt="pycharm快捷键"></p>
+		<h3 id="批量写入文档"><a href="#批量写入文档" class="headerlink" title="批量写入文档"></a>批量写入文档</h3><blockquote>
+<p><strong>bulk_write</strong>(requests, ordered=True, bypass_document_validation=False)</p>
+</blockquote>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -128,7 +119,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/python/">python</a>
+  <span></span> <a href="/tags/mongodb/">mongodb</a><a href="/tags/python/">python</a>
   </div>
 
 </div>
@@ -137,7 +128,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/03/02/pycharm/" data-title="PyCharm快捷键 | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/03/02/pymongocollection/" data-title="PyMongo集合操作 | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -150,19 +141,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/03/02/pymongocollection/" title="PyMongo集合操作">
-  <strong>上一篇：</strong><br/>
-  <span>
-  PyMongo集合操作</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/02/28/requests/"  title="Python Requests 快速入门">
+<a href="/2016/03/02/pycharm/"  title="PyCharm快捷键">
  <strong>下一篇：</strong><br/> 
- <span>Python Requests 快速入门
+ <span>PyCharm快捷键
 </span>
 </a>
 </div>
@@ -171,7 +154,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/03/02/pycharm/" data-title="PyCharm快捷键" data-url="http://yoursite.com/2016/03/02/pycharm/"></div>
+	<div class="ds-thread" data-thread-key="2016/03/02/pymongocollection/" data-title="PyMongo集合操作" data-url="http://yoursite.com/2016/03/02/pymongocollection/"></div>
 </section>
 
 
@@ -181,7 +164,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#提示"><span class="toc-number">1.</span> <span class="toc-text">提示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#阅读"><span class="toc-number">2.</span> <span class="toc-text">阅读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#移动"><span class="toc-number">3.</span> <span class="toc-text">移动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注释"><span class="toc-number">4.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选择"><span class="toc-number">5.</span> <span class="toc-text">选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编辑"><span class="toc-number">6.</span> <span class="toc-text">编辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除"><span class="toc-number">7.</span> <span class="toc-text">删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调试"><span class="toc-number">8.</span> <span class="toc-text">调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其它"><span class="toc-number">9.</span> <span class="toc-text">其它</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#批量写入文档"><span class="toc-number">1.</span> <span class="toc-text">批量写入文档</span></a></li></ol>
  
   </div>
 
