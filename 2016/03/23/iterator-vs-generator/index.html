@@ -39,9 +39,9 @@
 {list, set, dict} 解析式
 
 它们之间的关系如下表所示：">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1677721-ff5b5bb12c51e4c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1677721-9453ca206b60475d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2016-03-23T08:17:48.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1677721-ff5b5bb12c51e4c3.png">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1677721-9453ca206b60475d.png">
+<meta property="og:updated_time" content="2016-03-23T08:24:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iterable vs. iterator vs. generator">
 <meta name="twitter:description" content="版权所有，如需转载，请联系译者原文地址http://nvie.com/posts/iterators-vs-generators/
@@ -148,7 +148,7 @@
 <li>生成器表达式</li>
 <li>{list, set, dict} 解析式</li>
 </ul>
-<p>它们之间的关系如下表所示：<br><img src="http://upload-images.jianshu.io/upload_images/1677721-ff5b5bb12c51e4c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>它们之间的关系如下表所示：<br><img src="http://upload-images.jianshu.io/upload_images/1677721-ff5b5bb12c51e4c3.png" alt=""></p>
 <h3 id="容器（container"><a href="#容器（container" class="headerlink" title="容器（container)"></a>容器（container)</h3><p>容器是用来储存元素的一种数据结构，它支持隶属测试，容器将所有数据保存在内存中，在Python中典型的容器有：</p>
 <ul>
 <li>list， deque, …</li>
@@ -172,7 +172,7 @@
 <blockquote>
 <p><strong>注意</strong>：可迭代的类中，一般实现以下两个方法，<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#24403;&#25105;&#20204;&#36816;&#34892;&#20197;&#19979;&#20195;&#30721;&#30340;&#26102;&#20505;:&#10;```Python&#10;x = [1,2,3]&#10;for elem in x:&#10;     ...</span><br></pre></td></tr></table></figure></p>
 </blockquote>
-<p>实际调用过程如下：<br><img src="http://upload-images.jianshu.io/upload_images/1677721-9453ca206b60475d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>实际调用过程如下：<br><img src="http://upload-images.jianshu.io/upload_images/1677721-9453ca206b60475d.png" alt=""></p>
 <p>当我们反向编译这段代Python码的时候，可以发现它显示调用了 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">```Python&#10;&#62;&#62;&#62; import dis&#10;&#62;&#62;&#62; x = [1, 2, 3]&#10;&#62;&#62;&#62; dis.dis(&#39;for _ in x: pass&#39;) &#10;1     0 SETUP_LOOP                     14 (to 17) &#10;       3 LOAD_NAME                       0 (x) &#10;       6 GET_ITER &#10; &#62;&#62; 7 FOR_ITER                            6 (to 16) &#10;       10 STORE_NAME                    1 (_) &#10;       13 JUMP_ABSOLUTE               7 &#10; &#62;&#62; 16 POP_BLOCK &#10; &#62;&#62; 17 LOAD_CONST                    0 (None) &#10;       20 RETURN_VALUE</span><br></pre></td></tr></table></figure></p>
 <h3 id="迭代器-Iterators"><a href="#迭代器-Iterators" class="headerlink" title="迭代器(Iterators)"></a>迭代器(Iterators)</h3><p>那么什么是迭代器呢？任何具有<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#25152;&#20197;&#36845;&#20195;&#22120;&#26412;&#36136;&#19978;&#26159;&#19968;&#20010;&#20135;&#29983;&#20540;&#30340;&#24037;&#21378;&#65292;&#27599;&#27425;&#21521;&#36845;&#20195;&#22120;&#35831;&#27714;&#19979;&#19968;&#20010;&#20540;&#65292;&#36845;&#20195;&#22120;&#37117;&#20250;&#36827;&#34892;&#35745;&#31639;&#20986;&#30456;&#24212;&#30340;&#20540;&#24182;&#36820;&#22238;&#12290;&#10;&#10;&#36845;&#20195;&#22120;&#30340;&#20363;&#23376;&#24456;&#22810;&#65292;&#20363;&#22914;&#65292;&#25152;&#26377;```itertools ```&#27169;&#22359;&#20013;&#30340;&#20989;&#25968;&#37117;&#20250;&#36820;&#22238;&#19968;&#20010;&#36845;&#20195;&#22120;&#65292;&#26377;&#30340;&#36824;&#21487;&#20197;&#20135;&#29983;&#26080;&#31351;&#30340;&#24207;&#21015;&#12290;&#10;```Python&#10;&#62;&#62;&#62; from itertools import count&#10;&#62;&#62;&#62; counter = count(start=13)&#10;&#62;&#62;&#62; next(counter)&#10;13&#10;&#62;&#62;&#62; next&#65288;counter)&#10;14</span><br></pre></td></tr></table></figure></p>
 <p>有的函数根据有限序列中生成无限序列：<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;</span>&gt; from itertools import cycle</span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; colors = cycle([<span class="string">"red"</span>,<span class="string">"white"</span>,<span class="string">"blue"</span>])</span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; next(colors)</span><br><span class="line"><span class="string">"red"</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; next(colors）</span><br><span class="line"><span class="string">"white"</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; next(colors)</span><br><span class="line"><span class="string">"blue"</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; next(colors)</span><br><span class="line"><span class="string">"red"</span></span><br></pre></td></tr></table></figure></p>
