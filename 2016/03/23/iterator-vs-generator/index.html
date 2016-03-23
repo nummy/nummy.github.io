@@ -1,0 +1,654 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>iterable vs. iterator vs. generator | Blog Of Nummy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="nummy">
+    
+
+    
+    <meta name="description" content="版权所有，如需转载，请联系译者原文地址http://nvie.com/posts/iterators-vs-generators/
+
+在使用Python的过程中，很容易混淆如下几个关联的概念：
+
+容器(container)
+可迭代对象(Iterable)
+迭代器(Iterator)
+生成器(generator)
+生成器表达式
+{list, set, dict} 解析式
+
+它们之间的关系如下表所示：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iterable vs. iterator vs. generator">
+<meta property="og:url" content="http://yoursite.com/2016/03/23/iterator-vs-generator/index.html">
+<meta property="og:site_name" content="Blog Of Nummy">
+<meta property="og:description" content="版权所有，如需转载，请联系译者原文地址http://nvie.com/posts/iterators-vs-generators/
+
+在使用Python的过程中，很容易混淆如下几个关联的概念：
+
+容器(container)
+可迭代对象(Iterable)
+迭代器(Iterator)
+生成器(generator)
+生成器表达式
+{list, set, dict} 解析式
+
+它们之间的关系如下表所示：">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1677721-ff5b5bb12c51e4c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1677721-9453ca206b60475d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-03-23T08:17:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iterable vs. iterator vs. generator">
+<meta name="twitter:description" content="版权所有，如需转载，请联系译者原文地址http://nvie.com/posts/iterators-vs-generators/
+
+在使用Python的过程中，很容易混淆如下几个关联的概念：
+
+容器(container)
+可迭代对象(Iterable)
+迭代器(Iterator)
+生成器(generator)
+生成器表达式
+{list, set, dict} 解析式
+
+它们之间的关系如下表所示：">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Blog Of Nummy" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Blog Of Nummy" title="Blog Of Nummy"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Blog Of Nummy">Blog Of Nummy</a></h1>
+				<h2 class="blog-motto">Less is more</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/03/23/iterator-vs-generator/" title="iterable vs. iterator vs. generator" itemprop="url">iterable vs. iterator vs. generator</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="nummy" target="_blank" itemprop="author">nummy</a>
+		
+  <p class="article-time">
+    <time datetime="2016-03-23T08:15:40.000Z" itemprop="datePublished"> 发表于 2016-03-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#容器（container"><span class="toc-number">1.</span> <span class="toc-text">容器（container)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可迭代对象"><span class="toc-number">2.</span> <span class="toc-text">可迭代对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#迭代器-Iterators"><span class="toc-number">3.</span> <span class="toc-text">迭代器(Iterators)</span></a></li></ol>
+		
+		</div>
+		
+		<blockquote>
+<p>版权所有，如需转载，请联系译者<br>原文地址<a href="http:
+//nvie.com/posts/iterators-vs-generators/" target="_blank" rel="external">http://nvie.com/posts/iterators-vs-generators/</a></p>
+</blockquote>
+<p>在使用Python的过程中，很容易混淆如下几个关联的概念：</p>
+<ul>
+<li>容器(container)</li>
+<li>可迭代对象(Iterable)</li>
+<li>迭代器(Iterator)</li>
+<li>生成器(generator)</li>
+<li>生成器表达式</li>
+<li>{list, set, dict} 解析式</li>
+</ul>
+<p>它们之间的关系如下表所示：<br><img src="http://upload-images.jianshu.io/upload_images/1677721-ff5b5bb12c51e4c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h3 id="容器（container"><a href="#容器（container" class="headerlink" title="容器（container)"></a>容器（container)</h3><p>容器是用来储存元素的一种数据结构，它支持隶属测试，容器将所有数据保存在内存中，在Python中典型的容器有：</p>
+<ul>
+<li>list， deque, …</li>
+<li>set，frozesets，…</li>
+<li>dict, defaultdict, OrderedDict, Counter, …</li>
+<li>tuple, namedtuple, …</li>
+<li>str</li>
+</ul>
+<p>容器相对来说很好理解，因为你可以把它当成生活中的箱子、房子、船等等。<br>一般的，通过判断一个对象是否包含某个元素来确定它是否为一个容器。例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="number">1</span> <span class="keyword">in</span> [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]       <span class="comment"># lists</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="number">4</span> <span class="keyword">not</span> <span class="keyword">in</span> [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="number">1</span> <span class="keyword">in</span> &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;       <span class="comment"># sets</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="number">4</span> <span class="keyword">not</span> <span class="keyword">in</span> &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125; </span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="number">1</span> <span class="keyword">in</span> (<span class="number">12</span>,<span class="number">3</span>)        <span class="comment"># tuples</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="number">4</span> <span class="keyword">not</span> <span class="keyword">in</span> (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<p>字典容器通过检查是否包含键来进行判断：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;&gt; </span>d = &#123;<span class="number">1</span>:<span class="string">"foo"</span>, <span class="number">2</span>:<span class="string">"bar"</span>, <span class="number">3</span>:<span class="string">"qux"</span>&#125;</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="number">1</span> <span class="keyword">in</span> d</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="number">4</span> <span class="keyword">not</span> <span class="keyword">in</span> d</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="string">"foo"</span> <span class="keyword">not</span> <span class="keyword">in</span> d</span><br></pre></td></tr></table></figure>
+<p>字符串通过检查是否包含某个子 串来判断：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;&gt; </span>s =<span class="string">"foobar"</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="string">"b"</span> <span class="keyword">in</span> s</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="string">"x"</span> <span class="keyword">not</span> <span class="keyword">in</span> s</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="string">"foo"</span> <span class="keyword">in</span> s</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> <strong>注意</strong>：并非所有的容器都是可迭代对象。</p>
+</blockquote>
+<h3 id="可迭代对象"><a href="#可迭代对象" class="headerlink" title="可迭代对象"></a>可迭代对象</h3><p>正如前面所提到的，大部分容器都是可迭代的，但是还有其他一些对象也可以迭代，例如，文件对象以及管道对象等等，容器一般来说存储的元素是有限的，同样的，可迭代对象也可以用来表示一个包含有限元素的数据结构。</p>
+<p>可迭代对象可以为任意对象，不一定非得是基本数据结构，只要这个对象可以返回一个<strong>iterator</strong>。听起来可能有点费解，但是可迭代对象与迭代器之间有一个显著的区别。先看下面的例子：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; x = [1,2,3]</span><br><span class="line">&gt;&gt;&gt; y = iter(x）</span><br><span class="line">&gt;&gt;&gt; z = iter(x)</span><br><span class="line">&gt;&gt;&gt; next(y)</span><br><span class="line">1</span><br><span class="line">&gt;&gt;&gt; next(y)</span><br><span class="line">2</span><br><span class="line">&gt;&gt;&gt; next(z)</span><br><span class="line">1</span><br><span class="line">&gt;&gt;&gt; type(x)</span><br><span class="line">&lt;class 'list'&gt;</span><br><span class="line">&gt;&gt;&gt; type(y)</span><br><span class="line">&lt;class 'list_iterator'&gt;</span><br></pre></td></tr></table></figure></p>
+<p>在这里，x是可迭代对象，而y和z都是迭代器，它们从可迭代对象x中获取值。</p>
+<blockquote>
+<p><strong>注意</strong>：可迭代的类中，一般实现以下两个方法，<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#24403;&#25105;&#20204;&#36816;&#34892;&#20197;&#19979;&#20195;&#30721;&#30340;&#26102;&#20505;:&#10;```Python&#10;x = [1,2,3]&#10;for elem in x:&#10;     ...</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>实际调用过程如下：<br><img src="http://upload-images.jianshu.io/upload_images/1677721-9453ca206b60475d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>当我们反向编译这段代Python码的时候，可以发现它显示调用了 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">```Python&#10;&#62;&#62;&#62; import dis&#10;&#62;&#62;&#62; x = [1, 2, 3]&#10;&#62;&#62;&#62; dis.dis(&#39;for _ in x: pass&#39;) &#10;1     0 SETUP_LOOP                     14 (to 17) &#10;       3 LOAD_NAME                       0 (x) &#10;       6 GET_ITER &#10; &#62;&#62; 7 FOR_ITER                            6 (to 16) &#10;       10 STORE_NAME                    1 (_) &#10;       13 JUMP_ABSOLUTE               7 &#10; &#62;&#62; 16 POP_BLOCK &#10; &#62;&#62; 17 LOAD_CONST                    0 (None) &#10;       20 RETURN_VALUE</span><br></pre></td></tr></table></figure></p>
+<h3 id="迭代器-Iterators"><a href="#迭代器-Iterators" class="headerlink" title="迭代器(Iterators)"></a>迭代器(Iterators)</h3><p>那么什么是迭代器呢？任何具有<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#25152;&#20197;&#36845;&#20195;&#22120;&#26412;&#36136;&#19978;&#26159;&#19968;&#20010;&#20135;&#29983;&#20540;&#30340;&#24037;&#21378;&#65292;&#27599;&#27425;&#21521;&#36845;&#20195;&#22120;&#35831;&#27714;&#19979;&#19968;&#20010;&#20540;&#65292;&#36845;&#20195;&#22120;&#37117;&#20250;&#36827;&#34892;&#35745;&#31639;&#20986;&#30456;&#24212;&#30340;&#20540;&#24182;&#36820;&#22238;&#12290;&#10;&#10;&#36845;&#20195;&#22120;&#30340;&#20363;&#23376;&#24456;&#22810;&#65292;&#20363;&#22914;&#65292;&#25152;&#26377;```itertools ```&#27169;&#22359;&#20013;&#30340;&#20989;&#25968;&#37117;&#20250;&#36820;&#22238;&#19968;&#20010;&#36845;&#20195;&#22120;&#65292;&#26377;&#30340;&#36824;&#21487;&#20197;&#20135;&#29983;&#26080;&#31351;&#30340;&#24207;&#21015;&#12290;&#10;```Python&#10;&#62;&#62;&#62; from itertools import count&#10;&#62;&#62;&#62; counter = count(start=13)&#10;&#62;&#62;&#62; next(counter)&#10;13&#10;&#62;&#62;&#62; next&#65288;counter)&#10;14</span><br></pre></td></tr></table></figure></p>
+<p>有的函数根据有限序列中生成无限序列：<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;</span>&gt; from itertools import cycle</span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; colors = cycle([<span class="string">"red"</span>,<span class="string">"white"</span>,<span class="string">"blue"</span>])</span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; next(colors)</span><br><span class="line"><span class="string">"red"</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; next(colors）</span><br><span class="line"><span class="string">"white"</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; next(colors)</span><br><span class="line"><span class="string">"blue"</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; next(colors)</span><br><span class="line"><span class="string">"red"</span></span><br></pre></td></tr></table></figure></p>
+<p>有的函数根据无限序列中生成有限序列：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">from</span> itertools <span class="keyword">import</span> islice</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>colors = cycle([<span class="string">'red'</span>, <span class="string">'white'</span>, <span class="string">'blue'</span>])               <span class="comment"># infinite</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>limited = islice(colors, <span class="number">0</span>, <span class="number">4</span>)                          <span class="comment"># finite</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">for</span> x <span class="keyword">in</span> limited:                                            <span class="comment"># so safe to use for-loop on</span></span><br><span class="line"><span class="prompt">... </span>           print(x)</span><br><span class="line">red</span><br><span class="line">white</span><br><span class="line">blue</span><br><span class="line">red</span><br></pre></td></tr></table></figure></p>
+<p>为了更好的理解迭代器的内部结构，我们先来定义一个生成斐波拉契数的迭代器：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">fib</span>:</span></span><br><span class="line"><span class="prompt">... </span>            <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line"><span class="prompt">... </span>                  self.prev = <span class="number">0</span></span><br><span class="line"><span class="prompt">... </span>                  self.curr = <span class="number">1</span></span><br><span class="line"><span class="prompt">... </span></span><br><span class="line"><span class="prompt">... </span>            <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></span><br><span class="line"><span class="prompt">... </span>                  <span class="keyword">return</span> self</span><br><span class="line"><span class="prompt">... </span></span><br><span class="line"><span class="prompt">... </span>            <span class="function"><span class="keyword">def</span> <span class="title">__next__</span><span class="params">(self)</span>:</span></span><br><span class="line"><span class="prompt">... </span>                  value = self.curr</span><br><span class="line"><span class="prompt">... </span>                  self.curr += self.prev</span><br><span class="line"><span class="prompt">... </span>                  self.prev = value</span><br><span class="line"><span class="prompt">... </span>                  <span class="keyword">return</span> value</span><br><span class="line">...</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>f = fib()</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>list(islice(f, <span class="number">0</span>, <span class="number">10</span>))</span><br><span class="line">[<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">13</span>, <span class="number">21</span>, <span class="number">34</span>, <span class="number">55</span>]</span><br></pre></td></tr></table></figure></p>
+<p>注意这个类既是可迭代的 （因为具有<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#36845;&#20195;&#22120;&#20869;&#37096;&#29366;&#24577;&#20445;&#23384;&#22312;&#24403;&#21069;&#23454;&#20363;&#23545;&#35937;&#30340;```prev```&#20197;&#21450;```cur```&#23646;&#24615;&#20013;&#65292;&#22312;&#19979;&#19968;&#27425;&#35843;&#29992;&#20013;&#23558;&#20351;&#29992;&#36825;&#20004;&#20010;&#23646;&#24615;&#12290;&#27599;&#27425;&#35843;&#29992;```next()```&#26041;&#27861;&#37117;&#20250;&#25191;&#34892;&#20197;&#19979;&#20004;&#27493;&#25805;&#20316;&#65306;&#10;&#10;1. &#20462;&#25913;&#29366;&#24577;&#65292;&#20197;&#20415;&#19979;&#27425;&#35843;&#29992;```next()```&#26041;&#27861;&#10;2. &#35745;&#31639;&#24403;&#21069;&#35843;&#29992;&#30340;&#32467;&#26524;&#10;&#10;&#62; **&#27604;&#21947;**&#65306;&#20174;&#22806;&#37096;&#26469;&#30475;&#65292;&#36845;&#20195;&#22120;&#23601;&#20687;&#25919;&#24220;&#24037;&#20316;&#20154;&#21592;&#19968;&#26679;&#65292;&#27809;&#20154;&#25214;&#20182;&#21150;&#20107;&#30340;&#26102;&#20505;&#65288;&#35831;&#27714;&#20540;&#65289;&#65292;&#24037;&#20316;&#20154;&#21592;&#23601;&#38386;&#30528;&#65292;&#24403;&#26377;&#20154;&#26469;&#25214;&#20182;&#30340;&#26102;&#20505;&#65288;&#35831;&#27714;&#20540;&#65289;&#65292;&#24037;&#20316;&#20154;&#21592;&#23601;&#20250;&#24537;&#19968;&#20250;&#65292;&#25226;&#35831;&#27714;&#30340;&#19996;&#35199;&#25214;&#20986;&#26469;&#20132;&#32473;&#35831;&#27714;&#30340;&#20154;&#12290;&#24537;&#23436;&#20043;&#21518;&#65292;&#21448;&#27809;&#20107;&#20102;&#65292;&#32487;&#32493;&#38386;&#30528;&#12290;&#10;&#10;### &#29983;&#25104;&#22120;&#10;&#10;&#29983;&#25104;&#22120;&#20854;&#23454;&#23601;&#26159;&#19968;&#31181;&#29305;&#27530;&#30340;&#36845;&#20195;&#22120;&#12290;&#23427;&#20351;&#19968;&#31181;&#26356;&#20026;&#39640;&#32423;&#12289;&#26356;&#20026;&#20248;&#38597;&#30340;&#36845;&#20195;&#22120;&#12290;&#10;&#20351;&#29992;&#29983;&#25104;&#22120;&#35753;&#25105;&#20204;&#21487;&#20197;&#20197;&#19968;&#31181;&#26356;&#21152;&#31616;&#27905;&#30340;&#35821;&#27861;&#26469;&#23450;&#20041;&#36845;&#20195;&#22120;&#12290;&#10;&#35753;&#25105;&#20204;&#20808;&#26126;&#30830;&#20197;&#19979;&#20004;&#28857;&#65306;&#10;- &#20219;&#24847;&#29983;&#25104;&#22120;&#37117;&#26159;&#36845;&#20195;&#22120;&#65288;&#21453;&#36807;&#26469;&#19981;&#25104;&#31435;&#65289;&#10;- &#20219;&#24847;&#29983;&#25104;&#22120;&#65292;&#37117;&#26159;&#19968;&#20010;&#21487;&#20197;&#24310;&#36831;&#21019;&#24314;&#20540;&#30340;&#24037;&#21378;&#10;&#10;&#19979;&#38754;&#20063;&#26159;&#19968;&#20010;&#29983;&#25104;&#26000;&#27874;&#37027;&#22865;&#24207;&#21015;&#30340;&#24037;&#21378;&#20989;&#25968;&#65292;&#19981;&#36807;&#26159;&#20197;&#29983;&#25104;&#22120;&#30340;&#26041;&#24335;&#32534;&#20889;&#30340;&#65306;&#10;```Python&#10;&#62;&#62;&#62; def fib():&#10;...            prev, curr = 0, 1&#10;...            while True:&#10;...                     yield curr&#10;...                     prev, curr = curr, prev + curr&#10;...&#10;&#62;&#62;&#62; f = fib()&#10;&#62;&#62;&#62; list(islice(f, 0, 10))&#10;[1, 1, 2, 3, 5, 8, 13, 21, 34, 55]</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码是不是既优雅又简洁？注意其中用到的魔法关键字<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">yield</span></span><br></pre></td></tr></table></figure></p>
+<p>一起来剖析下上面的代码：首先，fib其实是一个很普通的函数，但是函数中没有<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#24403;&#35843;&#29992;```f = fib()```&#26102;&#65292;&#29983;&#25104;&#22120;&#34987;&#23454;&#20363;&#21270;&#24182;&#36820;&#22238;&#65292;&#36825;&#26102;&#24182;&#19981;&#20250;&#25191;&#34892;&#20219;&#20309;&#20195;&#30721;&#65292;&#29983;&#25104;&#22120;&#22788;&#20110;&#31354;&#38386;&#29366;&#24577;&#65292;&#27880;&#24847;&#36825;&#37324;```prev, curr = 0, 1 ```&#24182;&#26410;&#25191;&#34892;&#12290;&#10;&#10;&#28982;&#21518;&#36825;&#20010;&#29983;&#25104;&#22120;&#34987;&#21253;&#21547;&#22312;```isslice()```&#20013;&#65292;&#32780;&#36825;&#21448;&#26159;&#19968;&#20010;&#36845;&#20195;&#22120;&#65292;&#25152;&#20197;&#36824;&#26159;&#27809;&#26377;&#25191;&#34892;&#19978;&#38754;&#30340;&#20195;&#30721;&#12290;&#10;&#10;&#28982;&#21518;&#36825;&#20010;&#36845;&#20195;&#22120;&#21448;&#34987;&#21253;&#21547;&#22312;```list()```&#20013;&#65292;&#23427;&#20250;&#26681;&#25454;&#20256;&#36827;&#26469;&#30340;&#21442;&#25968;&#29983;&#25104;&#19968;&#20010;&#21015;&#34920;&#12290;&#25152;&#20197;&#23427;&#39318;&#20808;&#23545;```isslice()```&#23545;&#35937;&#35843;&#29992;```next()```&#26041;&#27861;&#65292;```isslice()```&#23545;&#35937;&#21448;&#20250;&#23545;&#23454;&#20363;```f```&#35843;&#29992;```next()```&#12290;&#10;&#25105;&#20204;&#26469;&#30475;&#20854;&#20013;&#30340;&#19968;&#27493;&#25805;&#20316;&#65292;&#22312;&#31532;&#19968;&#27425;&#35843;&#29992;&#20013;&#65292;&#20250;&#25191;&#34892;```prev, curr = 0, 1```, &#28982;&#21518;&#36827;&#20837;while&#24490;&#29615;&#65292;&#24403;&#36935;&#21040;```yield curr```&#30340;&#26102;&#20505;&#65292;&#36820;&#22238;&#24403;&#21069;curr&#20540;&#65292;&#28982;&#21518;&#21448;&#36827;&#20837;&#31354;&#38386;&#29366;&#24577;&#12290;&#10;&#29983;&#25104;&#30340;&#20540;&#20256;&#36882;&#32473;&#22806;&#23618;&#30340;```isslice()```&#65292;&#20063;&#30456;&#24212;&#29983;&#25104;&#19968;&#20010;&#20540;&#65292;&#28982;&#21518;&#20256;&#36882;&#32473;&#22806;&#23618;&#30340;```list()```&#65292;&#22806;&#23618;&#30340;list&#23558;&#36825;&#20010;&#20540;1&#28155;&#21152;&#21040;&#21015;&#34920;&#20013;&#12290;&#10;&#28982;&#21518;&#32487;&#32493;&#25191;&#34892;&#21518;&#38754;&#30340;&#20061;&#27493;&#25805;&#20316;&#65292;&#27599;&#27493;&#25805;&#20316;&#30340;&#27969;&#31243;&#37117;&#26159;&#19968;&#26679;&#30340;&#12290;&#10;&#10;&#28982;&#21518;&#25191;&#34892;&#21040;&#24213;11&#27493;&#30340;&#26102;&#20505;&#65292;```isslice()```&#23545;&#35937;&#23601;&#20250;&#25243;&#20986;```StopIteration```&#24322;&#24120;&#65292;&#24847;&#21619;&#30528;&#24050;&#32463;&#21040;&#36798;&#26411;&#23614;&#20102;&#12290;&#27880;&#24847;&#29983;&#25104;&#22120;&#19981;&#20250;&#25509;&#25910;&#21040;&#31532;11&#27425;```next()```&#35831;&#27714;&#65292;&#21518;&#38754;&#20250;&#34987;&#22403;&#22334;&#22238;&#25910;&#25481;&#12290;&#10;&#10;### &#29983;&#25104;&#22120;&#30340;&#31867;&#22411;&#10;&#10;&#22312;Python&#20013;&#20004;&#31181;&#31867;&#22411;&#30340;&#29983;&#25104;&#22120;&#65306;**&#29983;&#25104;&#22120;&#20989;&#25968;**&#20197;&#21450;**&#29983;&#25104;&#22120;&#34920;&#36798;&#24335;**&#12290;&#29983;&#25104;&#22120;&#20989;&#25968;&#23601;&#26159;&#21253;&#21547;```yield```&#21442;&#25968;&#30340;&#20989;&#25968;&#12290;&#29983;&#25104;&#22120;&#34920;&#36798;&#24335;&#19982;&#21015;&#34920;&#35299;&#26512;&#24335;&#31867;&#20284;&#12290;&#10;&#20551;&#35774;&#20351;&#29992;&#22914;&#19979;&#35821;&#27861;&#21019;&#24314;&#19968;&#20010;&#21015;&#34920;&#65306;&#10;```Python&#10;&#62;&#62;&#62; numbers = [1, 2, 3, 4, 5, 6]&#10;&#62;&#62;&#62; [x * x for x in numbers]&#10;[1, 4, 9, 16, 25, 36]</span><br></pre></td></tr></table></figure></p>
+<p>使用set解析式也可以达到同样的目的：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; &#123;x * x <span class="keyword">for</span> x in numbers&#125;&#123;<span class="number">1</span>, <span class="number">4</span>, <span class="number">36</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">25</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>或者dict解析式:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;&gt; </span>&#123;x: x * x <span class="keyword">for</span> x <span class="keyword">in</span> numbers&#125;</span><br><span class="line">&#123;<span class="number">1</span>: <span class="number">1</span>, <span class="number">2</span>: <span class="number">4</span>, <span class="number">3</span>: <span class="number">9</span>, <span class="number">4</span>: <span class="number">16</span>, <span class="number">5</span>: <span class="number">25</span>, <span class="number">6</span>: <span class="number">36</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>还可以使用生成器表达式:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;&gt; </span>lazy_squares = (x * x <span class="keyword">for</span> x <span class="keyword">in</span> numbers)</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>lazy_squares</span><br><span class="line">&lt;generator object &lt;genexpr&gt; at <span class="number">0x10d1f5510</span>&gt;</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>next(lazy_squares)</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>list(lazy_squares)</span><br><span class="line">[<span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">25</span>, <span class="number">36</span>]</span><br></pre></td></tr></table></figure></p>
+<p>注意我们第一次调用<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;### &#24635;&#32467;&#10;&#10;&#29983;&#25104;&#22120;&#26159;Python&#20013;&#19968;&#31181;&#38750;&#24120;&#24378;&#22823;&#30340;&#29305;&#24615;&#65292;&#23427;&#35753;&#25105;&#20204;&#33021;&#22815;&#32534;&#20889;&#26356;&#21152;&#31616;&#27905;&#30340;&#20195;&#30721;&#65292;&#21516;&#26102;&#20063;&#26356;&#21152;&#33410;&#30465;&#20869;&#23384;&#65292;&#20351;&#29992;CPU&#20063;&#26356;&#21152;&#39640;&#25928;&#12290;&#10;&#20351;&#29992;&#29983;&#25104;&#22120;&#30340;&#23567;&#25552;&#31034;&#65306;&#22312;&#20320;&#30340;&#20195;&#30721;&#20013;&#25214;&#21040;&#19982;&#19979;&#38754;&#20195;&#30721;&#31867;&#20284;&#30340;&#22320;&#26041;&#65306;&#10;```Python&#10;def something(): &#10;      result = [] &#10;      for ... in ...: &#10;           result.append(x) &#10;      return result</span><br></pre></td></tr></table></figure></p>
+<p>用以下代码进行替换：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">iter_something</span><span class="params">()</span>:</span> </span><br><span class="line">      <span class="keyword">for</span> ... <span class="keyword">in</span> ...: </span><br><span class="line">            <span class="keyword">yield</span> x</span><br></pre></td></tr></table></figure></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/python/">python</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/python/">python</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2016/03/23/iterator-vs-generator/" data-title="iterable vs. iterator vs. generator | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/03/16/zookeeper/"  title="zookeeper的作用">
+ <strong>下一篇：</strong><br/> 
+ <span>zookeeper的作用
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/03/23/iterator-vs-generator/" data-title="iterable vs. iterator vs. generator" data-url="http://yoursite.com/2016/03/23/iterator-vs-generator/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#容器（container"><span class="toc-number">1.</span> <span class="toc-text">容器（container)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可迭代对象"><span class="toc-number">2.</span> <span class="toc-text">可迭代对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#迭代器-Iterators"><span class="toc-number">3.</span> <span class="toc-text">迭代器(Iterators)</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="nummy" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/flask/" title="flask">flask<sup>15</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/js/" title="js">js<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/mongodb/" title="mongodb">mongodb<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>13</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/shell/" title="shell">shell<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>28</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/flask/" title="flask">flask<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/javascript/" title="javascript">javascript<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mongodb/" title="mongodb">mongodb<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/shell/" title="shell">shell<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/blog/" title="blog">blog<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/bootstrap/" title="bootstrap">bootstrap<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/database/" title="database">database<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title=" 快速搭建静态博客">Hexo</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://nummy.github.io" target="_blank" title="Nummy&#39;s Blog">Nummy&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1683688031&verifier=4fd81735&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Nummy in UC. <br/>
+			Simple is better than complex.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/1683688031" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/nummy" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:allen_li89@163.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="nummy">nummy</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"nummy"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
