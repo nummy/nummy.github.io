@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>what is a metaclass in Python | Blog Of Nummy</title>
+    <title>Blog Of Nummy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="nummy">
@@ -13,13 +13,13 @@
     
     <meta name="description" content="类即对象在理解元类之前，需要先掌握Python中的类，Python中类的概念与SmallTalk中类的概念相似。在大多数语言中，类是用来描述如何创建对象的代码段，这在Python中也是成立的：1234567&amp;gt;&amp;gt;&amp;gt; class ObjectCreator(object):...       pass... &amp;gt;&amp;gt;&amp;gt; my_object = ObjectCreator">
 <meta property="og:type" content="article">
-<meta property="og:title" content="what is a metaclass in Python">
+<meta property="og:title" content="Blog Of Nummy">
 <meta property="og:url" content="http://yoursite.com/2016/04/12/what-is-a-metaclass-in-Python/index.html">
 <meta property="og:site_name" content="Blog Of Nummy">
 <meta property="og:description" content="类即对象在理解元类之前，需要先掌握Python中的类，Python中类的概念与SmallTalk中类的概念相似。在大多数语言中，类是用来描述如何创建对象的代码段，这在Python中也是成立的：1234567&amp;gt;&amp;gt;&amp;gt; class ObjectCreator(object):...       pass... &amp;gt;&amp;gt;&amp;gt; my_object = ObjectCreator">
-<meta property="og:updated_time" content="2016-04-12T06:13:01.000Z">
+<meta property="og:updated_time" content="2016-04-12T06:17:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="what is a metaclass in Python">
+<meta name="twitter:title" content="Blog Of Nummy">
 <meta name="twitter:description" content="类即对象在理解元类之前，需要先掌握Python中的类，Python中类的概念与SmallTalk中类的概念相似。在大多数语言中，类是用来描述如何创建对象的代码段，这在Python中也是成立的：1234567&amp;gt;&amp;gt;&amp;gt; class ObjectCreator(object):...       pass... &amp;gt;&amp;gt;&amp;gt; my_object = ObjectCreator">
 
     
@@ -80,14 +80,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/04/12/what-is-a-metaclass-in-Python/" title="what is a metaclass in Python" itemprop="url">what is a metaclass in Python</a>
+      <a href="/2016/04/12/what-is-a-metaclass-in-Python/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="nummy" target="_blank" itemprop="author">nummy</a>
 		
   <p class="article-time">
-    <time datetime="2016-04-12T02:31:52.000Z" itemprop="datePublished"> 发表于 2016-04-12</time>
+    <time datetime="2016-04-12T06:17:11.000Z" itemprop="datePublished"> 发表于 2016-04-12</time>
     
   </p>
 </header>
@@ -115,7 +115,7 @@
 <p>例如：<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;</span>&gt; print(<span class="constant">ObjectCreator</span>) <span class="comment"># you can print a class because it's an object</span></span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">__main__</span>.<span class="title">ObjectCreator</span>'&gt;</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; <span class="function"><span class="keyword">def</span> <span class="title">echo</span><span class="params">(o)</span>:</span></span><br><span class="line">...       print(o)</span><br><span class="line">... </span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; echo(<span class="constant">ObjectCreator</span>) <span class="comment"># you can pass a class as a parameter</span></span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">__main__</span>.<span class="title">ObjectCreator</span>'&gt;</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; print(hasattr(<span class="constant">ObjectCreator</span>, <span class="string">'new_attribute'</span>))</span><br><span class="line"><span class="constant">False</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; <span class="constant">ObjectCreator</span>.new_attribute = <span class="string">'foo'</span> <span class="comment"># you can add attributes to a class</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; print(hasattr(<span class="constant">ObjectCreator</span>, <span class="string">'new_attribute'</span>))</span><br><span class="line"><span class="constant">True</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; print(<span class="constant">ObjectCreator</span>.new_attribute)</span><br><span class="line">foo</span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; <span class="constant">ObjectCreatorMirror</span> = <span class="constant">ObjectCreator</span> <span class="comment"># you can assign a class to a variable</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; print(<span class="constant">ObjectCreatorMirror</span>.new_attribute)</span><br><span class="line">foo</span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; print(<span class="constant">ObjectCreatorMirror</span>())</span><br><span class="line">&lt;__main_<span class="number">_</span>.<span class="constant">ObjectCreator</span> object at <span class="number">0x8997b4c</span>&gt;</span><br></pre></td></tr></table></figure></p>
 <h3 id="动态创建类"><a href="#动态创建类" class="headerlink" title="动态创建类"></a>动态创建类</h3><p>既然类就是对象，那我们就可以像创建其他对象一样飞快的创建类。<br>首先，在函数中使用class创建一个类：</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;</span>&gt; <span class="function"><span class="keyword">def</span> <span class="title">choose_class</span><span class="params">(name)</span>:</span></span><br><span class="line">...     <span class="keyword">if</span> name == <span class="string">'foo'</span><span class="symbol">:</span></span><br><span class="line">...         <span class="class"><span class="keyword">class</span> <span class="title">Foo</span>(<span class="title">object</span>):</span></span><br><span class="line">...             pass</span><br><span class="line">...         <span class="keyword">return</span> <span class="constant">Foo</span> <span class="comment"># return the class, not an instance</span></span><br><span class="line">...     <span class="symbol">else:</span></span><br><span class="line">...         <span class="class"><span class="keyword">class</span> <span class="title">Bar</span>(<span class="title">object</span>):</span></span><br><span class="line">...             pass</span><br><span class="line">...         <span class="keyword">return</span> <span class="constant">Bar</span></span><br><span class="line">...     </span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; <span class="constant">MyClass</span> = choose_class(<span class="string">'foo'</span>) </span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; print(<span class="constant">MyClass</span>) <span class="comment"># the function returns a class, not an instance</span></span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">__main__</span>.<span class="title">Foo</span>'&gt;</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; print(<span class="constant">MyClass</span>()) <span class="comment"># you can create an object from this class</span></span><br><span class="line">&lt;__main_<span class="number">_</span>.<span class="constant">Foo</span> object at <span class="number">0x89c6d4c</span>&gt;</span><br></pre></td></tr></table></figure>
-<p>但是上面的例子也称不上是完全动态的创建类，因为我们还需要在其中编写整个类的代码。<br>既然类就是对象，那么它们肯定是通过某个东西来创建的。当使用<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#36824;&#35760;&#24471;```type()```&#20989;&#25968;&#21527;&#65311;&#36825;&#20010;&#20989;&#25968;&#21487;&#20197;&#33719;&#21462;&#23545;&#35937;&#30340;&#31867;&#22411;&#12290;</span><br></pre></td></tr></table></figure></p>
+<p>但是上面的例子也称不上是完全动态的创建类，因为我们还需要在其中编写整个类的代码。<br>既然类就是对象，那么它们肯定是通过某个东西来创建的。当使用<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#36824;&#35760;&#24471;**type()**&#20989;&#25968;&#21527;&#65311;&#36825;&#20010;&#20989;&#25968;&#21487;&#20197;&#33719;&#21462;&#23545;&#35937;&#30340;&#31867;&#22411;&#12290;</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <blockquote>
 <blockquote>
@@ -149,7 +149,7 @@
 </blockquote>
 </blockquote>
 <p>MyClass = MetaClass()<br>MyObject = MyClass()<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">你已经知道使用<span class="escape">``</span><span class="escape">`t</span>ype<span class="escape">``</span><span class="escape">`可</span>以创建类：</span><br></pre></td></tr></table></figure></p>
-<p>MyClass = type(‘MyClass’, (), {})<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">那是因为<span class="escape">``</span><span class="escape">`t</span>ype<span class="escape">``</span><span class="escape">`函</span>数实际上就是一个元类，Python在背后使用<span class="escape">``</span><span class="escape">`t</span>ype<span class="escape">``</span><span class="escape">`作</span>为元类来创建所有的类。</span><br><span class="line">通过检查<span class="escape">``</span><span class="escape">`_</span>_class__<span class="escape">``</span><span class="escape">`属</span>性，我们可以知道，其实Python中任何数据类型都是对象，包括整型、字符串、函数以及类，它们都是对象。它们都是从类中创建的。</span><br></pre></td></tr></table></figure></p>
+<p>MyClass = type(‘MyClass’, (), {})<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">那是因为<span class="keyword">*</span><span class="keyword">*</span>type<span class="keyword">*</span><span class="keyword">*</span>函数实际上就是一个元类，Python在背后使用<span class="keyword">*</span><span class="keyword">*</span>type<span class="keyword">*</span><span class="keyword">*</span>作为元类来创建所有的类。</span><br><span class="line">通过检查<span class="keyword">*</span><span class="keyword">*</span>__class__<span class="keyword">*</span><span class="keyword">*</span>属性，我们可以知道，其实Python中任何数据类型都是对象，包括整型、字符串、函数以及类，它们都是对象。它们都是从类中创建的。</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <blockquote>
 <blockquote>
@@ -162,11 +162,11 @@
 <p><type 'type'=""><br>name.<strong>class</strong>.<strong>class</strong></type></p>
 <p><type 'type'=""><br>foo.<strong>class</strong>.<strong>class</strong></type></p>
 <p><type 'type'=""><br>b.<strong>class</strong>.<strong>class</strong></type></p>
-<p><type 'type'=""><br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">所以类其实就是通过元类来创建的，你可以将元类称之为类工厂。</span><br><span class="line"><span class="strong">**type**</span>是内置的元类，Python默认使用它来创建类。当然，我们也可以定义属于我们自己的元类。</span><br><span class="line"></span><br><span class="line"><span class="header">### **__metaclass__**属性</span></span><br><span class="line"></span><br><span class="line">当我们创建类的时候，可以给它添加<span class="code">```</span><span class="strong">__metaclass__</span><span class="code">```</span>属性:</span><br></pre></td></tr></table></figure></type></p>
+<p><type 'type'=""><br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">所以类其实就是通过元类来创建的，你可以将元类称之为类工厂。</span><br><span class="line"><span class="keyword">*</span><span class="keyword">*</span>type<span class="keyword">*</span><span class="keyword">*</span>是内置的元类，Python默认使用它来创建类。当然，我们也可以定义属于我们自己的元类。</span><br><span class="line"></span><br><span class="line"><span class="comment">### **__metaclass__**属性</span></span><br><span class="line"></span><br><span class="line">当我们创建类的时候，可以给它添加<span class="keyword">*</span><span class="keyword">*</span>__metaclass__<span class="keyword">*</span><span class="keyword">*</span>属性:</span><br></pre></td></tr></table></figure></type></p>
 </blockquote>
 </blockquote>
 </blockquote>
-<p>class Foo(object):<br>  <strong>metaclass</strong> = something…<br>  […]<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">如果我们定义了<span class="escape">``</span><span class="escape">`_</span>_metaclass__<span class="escape">``</span><span class="escape">`属</span>性，Python就会使用这个元类来创建类Foo。</span><br><span class="line">注意，编译器首先读取<span class="escape">``</span><span class="escape">`c</span>lass Foo(object)<span class="escape">``</span><span class="escape">`，</span>这时并不会在内存中创建Foo类。Python会继续查找类定义中的<span class="escape">``</span><span class="escape">`_</span>_meatclass__<span class="escape">``</span><span class="escape">`，</span>如果找到了，就使用它来创建类Foo，如果没有找到，就使用<span class="escape">``</span><span class="escape">`t</span>ype<span class="escape">``</span><span class="escape">`来</span>创建类。</span><br><span class="line">所以对于以下代码：</span><br></pre></td></tr></table></figure></p>
+<p>class Foo(object):<br>  <strong>metaclass</strong> = something…<br>  […]<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">如果我们定义了**__metaclass__**属性，Python就会使用这个元类来创建类Foo。</span><br><span class="line">注意，编译器首先读取<span class="escape">``</span><span class="escape">`c</span>lass Foo(object)<span class="escape">``</span><span class="escape">`，</span>这时并不会在内存中创建Foo类。Python会继续查找类定义中的<span class="escape">``</span><span class="escape">`_</span>_meatclass__<span class="escape">``</span><span class="escape">`，</span>如果找到了，就使用它来创建类Foo，如果没有找到，就使用**type**来创建类。</span><br><span class="line">所以对于以下代码：</span><br></pre></td></tr></table></figure></p>
 <p>class Foo(Bar):<br>  pass<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Python工作流程如下：</span><br><span class="line">首先检查<span class="escape">``</span><span class="escape">`F</span>oo<span class="escape">``</span><span class="escape">`中</span>是否具有属性<span class="escape">``</span><span class="escape">`_</span>_metaclass__<span class="escape">``</span><span class="escape">`？</span></span><br><span class="line">如果找到，就使用<span class="escape">``</span><span class="escape">`_</span>_metaclass__<span class="escape">``</span><span class="escape">`定</span>义的元类在内存中创建一个类对象。</span><br><span class="line">如果在类定义中没有找到这个属性，就再模块级别中进行查找。</span><br><span class="line">如果还是没有找到，就会使用父类Bar中的元类来创建类。</span><br><span class="line">注意：类中的<span class="escape">``</span><span class="escape">`_</span>_metaclass__<span class="escape">``</span><span class="escape">`属</span>性不会被子类继承，但是父类中的<span class="escape">``</span><span class="escape">`_</span>_class__<span class="escape">``</span><span class="escape">`会</span>被继承。</span><br><span class="line"></span><br><span class="line">### 自定义元类</span><br><span class="line"></span><br><span class="line">元类的主要作用是在创建类的时候自动改变类。</span><br><span class="line">例如，想要实现模块中所有的类属性都是大写格式。可以定义模块级别的<span class="escape">``</span><span class="escape">`_</span>_metaclass__<span class="escape">``</span><span class="escape">`来</span>实现。</span><br><span class="line">这样模块中所有的类都是通过这个元类来创建的。</span><br></pre></td></tr></table></figure></p>
 <h1 id="the-metaclass-will-automatically-get-passed-the-same-argument"><a href="#the-metaclass-will-automatically-get-passed-the-same-argument" class="headerlink" title="the metaclass will automatically get passed the same argument"></a>the metaclass will automatically get passed the same argument</h1><h1 id="that-you-usually-pass-to-type"><a href="#that-you-usually-pass-to-type" class="headerlink" title="that you usually pass to type"></a>that you usually pass to <code>type</code></h1><p>def upper_attr(future_class_name, future_class_parents, future_class_attr):<br>  “””<br>    Return a class object, with the list of its attribute turned<br>    into uppercase.<br>  “””</p>
 <h1 id="pick-up-any-attribute-that-doesn’t-start-with-‘-’-and-uppercase-it"><a href="#pick-up-any-attribute-that-doesn’t-start-with-‘-’-and-uppercase-it" class="headerlink" title="pick up any attribute that doesn’t start with ‘__’ and uppercase it"></a>pick up any attribute that doesn’t start with ‘__’ and uppercase it</h1><p>  uppercase_attr = {}<br>  for name, val in future_class_attr.items():<br>      if not name.startswith(‘__’):<br>          uppercase_attr[name.upper()] = val<br>      else:<br>          uppercase_attr[name] = val</p>
@@ -200,7 +200,7 @@ def __new__(upperattr_metaclass, future_class_name,
             uppercase_attr[name] = val
 
     return type(future_class_name, future_class_parents, uppercase_attr)
-</code></pre><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">但是上面的做法并不符合OOP的思想，因为它直接调用了<span class="escape">``</span><span class="escape">`t</span>ype<span class="escape">``</span><span class="escape">`方</span>法，实际上可以调用<span class="escape">``</span><span class="escape">`t</span>ype<span class="escape">``</span><span class="escape">`的</span><span class="escape">``</span><span class="escape">`_</span>_new__<span class="escape">``</span><span class="escape">`方</span>法。</span><br></pre></td></tr></table></figure>
+</code></pre><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">但是上面的做法并不符合OOP的思想，因为它直接调用了<span class="keyword">*</span><span class="keyword">*</span>type<span class="keyword">*</span><span class="keyword">*</span>方法，实际上可以调用<span class="keyword">*</span><span class="keyword">*</span>type<span class="keyword">*</span><span class="keyword">*</span>的```__new__```方法。</span><br></pre></td></tr></table></figure>
 <p>class UpperAttrMetaclass(type): </p>
 <pre><code>def __new__(upperattr_metaclass, future_class_name, 
             future_class_parents, future_class_attr):
@@ -246,8 +246,7 @@ def __new__(upperattr_metaclass, future_class_name,
 <blockquote>
 <blockquote>
 <blockquote>
-<p>class Foo(object): pass<br>id(Foo)<br>142630324<br><code>Python中所有数据类型都是对象，它们要么是类的实例要么是元类的实例。
-除了</code>type```，它实际上是自身的元类。这一点没法再Python中重现，因为它是在编译阶段实现的。</p>
+<p>class Foo(object): pass<br>id(Foo)<br>142630324<br>```<br>Python中所有数据类型都是对象，它们要么是类的实例要么是元类的实例。<br>除了<strong>type</strong>，它实际上是自身的元类。这一点没法再Python中重现，因为它是在编译阶段实现的。</p>
 </blockquote>
 </blockquote>
 </blockquote>
@@ -262,16 +261,6 @@ def __new__(upperattr_metaclass, future_class_name,
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Python/">Python</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Python/">Python</a>
-  </div>
 
 </div>
 
@@ -279,7 +268,7 @@ def __new__(upperattr_metaclass, future_class_name,
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/04/12/what-is-a-metaclass-in-Python/" data-title="what is a metaclass in Python | Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/04/12/what-is-a-metaclass-in-Python/" data-title="Blog Of Nummy" data-tsina="1683688031" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -305,7 +294,7 @@ def __new__(upperattr_metaclass, future_class_name,
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/04/12/what-is-a-metaclass-in-Python/" data-title="what is a metaclass in Python" data-url="http://yoursite.com/2016/04/12/what-is-a-metaclass-in-Python/"></div>
+	<div class="ds-thread" data-thread-key="2016/04/12/what-is-a-metaclass-in-Python/" data-title="" data-url="http://yoursite.com/2016/04/12/what-is-a-metaclass-in-Python/"></div>
 </section>
 
 
@@ -342,8 +331,6 @@ def __new__(upperattr_metaclass, future_class_name,
 			<li><a href="/categories/Linux/" title="Linux">Linux<sup>3</sup></a></li>
 		  
 		
-		  
-			<li><a href="/categories/Python/" title="Python">Python<sup>1</sup></a></li>
 		  
 		
 		  
@@ -420,7 +407,7 @@ def __new__(upperattr_metaclass, future_class_name,
 			
 		
 			
-				<li><a href="/tags/Python/" title="Python">Python<sup>1</sup></a></li>
+				<li><a href="/tags/database/" title="database">database<sup>1</sup></a></li>
 			
 		
 			
@@ -432,11 +419,9 @@ def __new__(upperattr_metaclass, future_class_name,
 			
 		
 			
-				<li><a href="/tags/database/" title="database">database<sup>1</sup></a></li>
+				<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
 			
 		
-			
-				<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
 			
 		
 		</ul>
