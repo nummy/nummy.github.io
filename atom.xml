@@ -1,0 +1,910 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Nummy</title>
+  <subtitle>Less is more</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://nummy.github.io/"/>
+  <updated>2016-02-17T06:21:07.000Z</updated>
+  <id>http://nummy.github.io/</id>
+  
+  <author>
+    <name>Nummy Lee</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://nummy.github.io/2016/08/02/hello-world/"/>
+    <id>http://nummy.github.io/2016/08/02/hello-world/</id>
+    <published>2016-08-02T00:18:19.774Z</published>
+    <updated>2016-02-17T06:21:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;http://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;http://hexo.io
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>iterable vs. iterator vs. generator</title>
+    <link href="http://nummy.github.io/2016/03/23/iterator-vs-generator/"/>
+    <id>http://nummy.github.io/2016/03/23/iterator-vs-generator/</id>
+    <published>2016-03-23T08:15:40.000Z</published>
+    <updated>2016-03-23T08:27:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>版权所有，如需转载，请联系译者<br>原文地址<a href="http:
+//nvie.com/posts/iterators-vs-generators/" target="_blank" rel="external">http://nvie.com/posts/iterators-vs-generators/</a></p>
+</blockquote>
+<p>在使用Python的过程中，很容易混淆如下几个关联的概念：</p>
+<ul>
+<li>容器(container)</li>
+<li>可迭代对象(Iterable)</li>
+<li>迭代器(Iterator)</li>
+<li>生成器(generator)</li>
+<li>生成器表达式</li>
+<li>{list, set, dict} 解析式</li>
+</ul>
+<p>它们之间的关系如下表所示：<br><img src="http://upload-images.jianshu.io/upload_images/1677721-ff5b5bb12c51e4c3.png" alt=""></p>
+<h3 id="容器（container"><a href="#容器（container" class="headerlink" title="容器（container)"></a>容器（container)</h3><p>容器是用来储存元素的一种数据结构，它支持隶属测试，容器将所有数据保存在内存中，在Python中典型的容器有：</p>
+<ul>
+<li>list， deque, …</li>
+<li>set，frozesets，…</li>
+<li>dict, defaultdict, OrderedDict, Counter, …</li>
+<li>tuple, namedtuple, …</li>
+<li>str</li>
+</ul>
+<p>容器相对来说很好理解，因为你可以把它当成生活中的箱子、房子、船等等。<br>一般的，通过判断一个对象是否包含某个元素来确定它是否为一个容器。例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="number">1</span> <span class="keyword">in</span> [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]       <span class="comment"># lists</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="number">4</span> <span class="keyword">not</span> <span class="keyword">in</span> [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="number">1</span> <span class="keyword">in</span> &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;       <span class="comment"># sets</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="number">4</span> <span class="keyword">not</span> <span class="keyword">in</span> &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125; </div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="number">1</span> <span class="keyword">in</span> (<span class="number">12</span>,<span class="number">3</span>)        <span class="comment"># tuples</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="number">4</span> <span class="keyword">not</span> <span class="keyword">in</span> (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</div></pre></td></tr></table></figure>
+<p>字典容器通过检查是否包含键来进行判断：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>d = &#123;<span class="number">1</span>:<span class="string">"foo"</span>, <span class="number">2</span>:<span class="string">"bar"</span>, <span class="number">3</span>:<span class="string">"qux"</span>&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="number">1</span> <span class="keyword">in</span> d</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="number">4</span> <span class="keyword">not</span> <span class="keyword">in</span> d</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="string">"foo"</span> <span class="keyword">not</span> <span class="keyword">in</span> d</div></pre></td></tr></table></figure>
+<p>字符串通过检查是否包含某个子 串来判断：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>s =<span class="string">"foobar"</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="string">"b"</span> <span class="keyword">in</span> s</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="string">"x"</span> <span class="keyword">not</span> <span class="keyword">in</span> s</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">assert</span> <span class="string">"foo"</span> <span class="keyword">in</span> s</div></pre></td></tr></table></figure>
+<blockquote>
+<p> <strong>注意</strong>：并非所有的容器都是可迭代对象。</p>
+</blockquote>
+<h3 id="可迭代对象"><a href="#可迭代对象" class="headerlink" title="可迭代对象"></a>可迭代对象</h3><p>正如前面所提到的，大部分容器都是可迭代的，但是还有其他一些对象也可以迭代，例如，文件对象以及管道对象等等，容器一般来说存储的元素是有限的，同样的，可迭代对象也可以用来表示一个包含有限元素的数据结构。</p>
+<p>可迭代对象可以为任意对象，不一定非得是基本数据结构，只要这个对象可以返回一个<strong>iterator</strong>。听起来可能有点费解，但是可迭代对象与迭代器之间有一个显著的区别。先看下面的例子：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; x = [1,2,3]</div><div class="line">&gt;&gt;&gt; y = iter(x）</div><div class="line">&gt;&gt;&gt; z = iter(x)</div><div class="line">&gt;&gt;&gt; next(y)</div><div class="line">1</div><div class="line">&gt;&gt;&gt; next(y)</div><div class="line">2</div><div class="line">&gt;&gt;&gt; next(z)</div><div class="line">1</div><div class="line">&gt;&gt;&gt; type(x)</div><div class="line">&lt;class 'list'&gt;</div><div class="line">&gt;&gt;&gt; type(y)</div><div class="line">&lt;class 'list_iterator'&gt;</div></pre></td></tr></table></figure></p>
+<p>在这里，x是可迭代对象，而y和z都是迭代器，它们从可迭代对象x中获取值。</p>
+<blockquote>
+<p><strong>注意</strong>：可迭代的类中，一般实现以下两个方法，<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">当我们运行以下代码的时候:</div><div class="line">```Python</div><div class="line">x = [1,2,3]</div><div class="line">for elem in x:</div><div class="line">     ...</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>实际调用过程如下：<br><img src="http://upload-images.jianshu.io/upload_images/1677721-9453ca206b60475d.png" alt=""><br>当我们反向编译这段代Python码的时候，可以发现它显示调用了 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">```Python</div><div class="line">&gt;&gt;&gt; import dis</div><div class="line">&gt;&gt;&gt; x = [1, 2, 3]</div><div class="line">&gt;&gt;&gt; dis.dis(&apos;for _ in x: pass&apos;) </div><div class="line">1     0 SETUP_LOOP                     14 (to 17) </div><div class="line">       3 LOAD_NAME                       0 (x) </div><div class="line">       6 GET_ITER </div><div class="line"> &gt;&gt; 7 FOR_ITER                            6 (to 16) </div><div class="line">       10 STORE_NAME                    1 (_) </div><div class="line">       13 JUMP_ABSOLUTE               7 </div><div class="line"> &gt;&gt; 16 POP_BLOCK </div><div class="line"> &gt;&gt; 17 LOAD_CONST                    0 (None) </div><div class="line">       20 RETURN_VALUE</div></pre></td></tr></table></figure></p>
+<h3 id="迭代器-Iterators"><a href="#迭代器-Iterators" class="headerlink" title="迭代器(Iterators)"></a>迭代器(Iterators)</h3><p>那么什么是迭代器呢？任何具有<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">所以迭代器本质上是一个产生值的工厂，每次向迭代器请求下一个值，迭代器都会进行计算出相应的值并返回。</div><div class="line"></div><div class="line">迭代器的例子很多，例如，所有```itertools ```模块中的函数都会返回一个迭代器，有的还可以产生无穷的序列。</div><div class="line">```Python</div><div class="line">&gt;&gt;&gt; from itertools import count</div><div class="line">&gt;&gt;&gt; counter = count(start=13)</div><div class="line">&gt;&gt;&gt; next(counter)</div><div class="line">13</div><div class="line">&gt;&gt;&gt; next（counter)</div><div class="line">14</div></pre></td></tr></table></figure></p>
+<p>有的函数根据有限序列中生成无限序列：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; from itertools import cycle</div><div class="line">&gt;&gt;&gt; colors = cycle([&quot;red&quot;,&quot;white&quot;,&quot;blue&quot;])</div><div class="line">&gt;&gt;&gt; next(colors)</div><div class="line">&quot;red&quot;</div><div class="line">&gt;&gt;&gt; next(colors）</div><div class="line">&quot;white&quot;</div><div class="line">&gt;&gt;&gt; next(colors)</div><div class="line">&quot;blue&quot;</div><div class="line">&gt;&gt;&gt; next(colors)</div><div class="line">&quot;red&quot;</div></pre></td></tr></table></figure></p>
+<p>有的函数根据无限序列中生成有限序列：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> itertools <span class="keyword">import</span> islice</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>colors = cycle([<span class="string">'red'</span>, <span class="string">'white'</span>, <span class="string">'blue'</span>])               <span class="comment"># infinite</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>limited = islice(colors, <span class="number">0</span>, <span class="number">4</span>)                          <span class="comment"># finite</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> x <span class="keyword">in</span> limited:                                            <span class="comment"># so safe to use for-loop on</span></div><div class="line"><span class="meta">... </span>           print(x)</div><div class="line">red</div><div class="line">white</div><div class="line">blue</div><div class="line">red</div></pre></td></tr></table></figure></p>
+<p>为了更好的理解迭代器的内部结构，我们先来定义一个生成斐波拉契数的迭代器：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">fib</span>:</span></div><div class="line"><span class="meta">... </span>            <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line"><span class="meta">... </span>                  self.prev = <span class="number">0</span></div><div class="line"><span class="meta">... </span>                  self.curr = <span class="number">1</span></div><div class="line"><span class="meta">... </span></div><div class="line"><span class="meta">... </span>            <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></div><div class="line"><span class="meta">... </span>                  <span class="keyword">return</span> self</div><div class="line"><span class="meta">... </span></div><div class="line"><span class="meta">... </span>            <span class="function"><span class="keyword">def</span> <span class="title">__next__</span><span class="params">(self)</span>:</span></div><div class="line"><span class="meta">... </span>                  value = self.curr</div><div class="line"><span class="meta">... </span>                  self.curr += self.prev</div><div class="line"><span class="meta">... </span>                  self.prev = value</div><div class="line"><span class="meta">... </span>                  <span class="keyword">return</span> value</div><div class="line">...</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f = fib()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>list(islice(f, <span class="number">0</span>, <span class="number">10</span>))</div><div class="line">[<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">13</span>, <span class="number">21</span>, <span class="number">34</span>, <span class="number">55</span>]</div></pre></td></tr></table></figure></p>
+<p>注意这个类既是可迭代的 （因为具有<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">迭代器内部状态保存在当前实例对象的```prev```以及```cur```属性中，在下一次调用中将使用这两个属性。每次调用```next()```方法都会执行以下两步操作：</div><div class="line"></div><div class="line">1. 修改状态，以便下次调用```next()```方法</div><div class="line">2. 计算当前调用的结果</div><div class="line"></div><div class="line">&gt; **比喻**：从外部来看，迭代器就像政府工作人员一样，没人找他办事的时候（请求值），工作人员就闲着，当有人来找他的时候（请求值），工作人员就会忙一会，把请求的东西找出来交给请求的人。忙完之后，又没事了，继续闲着。</div><div class="line"></div><div class="line">### 生成器</div><div class="line"></div><div class="line">生成器其实就是一种特殊的迭代器。它使一种更为高级、更为优雅的迭代器。</div><div class="line">使用生成器让我们可以以一种更加简洁的语法来定义迭代器。</div><div class="line">让我们先明确以下两点：</div><div class="line">- 任意生成器都是迭代器（反过来不成立）</div><div class="line">- 任意生成器，都是一个可以延迟创建值的工厂</div><div class="line"></div><div class="line">下面也是一个生成斐波那契序列的工厂函数，不过是以生成器的方式编写的：</div><div class="line">```Python</div><div class="line">&gt;&gt;&gt; def fib():</div><div class="line">...            prev, curr = 0, 1</div><div class="line">...            while True:</div><div class="line">...                     yield curr</div><div class="line">...                     prev, curr = curr, prev + curr</div><div class="line">...</div><div class="line">&gt;&gt;&gt; f = fib()</div><div class="line">&gt;&gt;&gt; list(islice(f, 0, 10))</div><div class="line">[1, 1, 2, 3, 5, 8, 13, 21, 34, 55]</div></pre></td></tr></table></figure></p>
+<p>上面的代码是不是既优雅又简洁？注意其中用到的魔法关键字<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">yield</span></div></pre></td></tr></table></figure></p>
+<p>一起来剖析下上面的代码：首先，fib其实是一个很普通的函数，但是函数中没有<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">当调用```f = fib()```时，生成器被实例化并返回，这时并不会执行任何代码，生成器处于空闲状态，注意这里```prev, curr = 0, 1 ```并未执行。</div><div class="line"></div><div class="line">然后这个生成器被包含在```isslice()```中，而这又是一个迭代器，所以还是没有执行上面的代码。</div><div class="line"></div><div class="line">然后这个迭代器又被包含在```list()```中，它会根据传进来的参数生成一个列表。所以它首先对```isslice()```对象调用```next()```方法，```isslice()```对象又会对实例```f```调用```next()```。</div><div class="line">我们来看其中的一步操作，在第一次调用中，会执行```prev, curr = 0, 1```, 然后进入while循环，当遇到```yield curr```的时候，返回当前curr值，然后又进入空闲状态。</div><div class="line">生成的值传递给外层的```isslice()```，也相应生成一个值，然后传递给外层的```list()```，外层的list将这个值1添加到列表中。</div><div class="line">然后继续执行后面的九步操作，每步操作的流程都是一样的。</div><div class="line"></div><div class="line">然后执行到底11步的时候，```isslice()```对象就会抛出```StopIteration```异常，意味着已经到达末尾了。注意生成器不会接收到第11次```next()```请求，后面会被垃圾回收掉。</div><div class="line"></div><div class="line">### 生成器的类型</div><div class="line"></div><div class="line">在Python中两种类型的生成器：**生成器函数**以及**生成器表达式**。生成器函数就是包含```yield```参数的函数。生成器表达式与列表解析式类似。</div><div class="line">假设使用如下语法创建一个列表：</div><div class="line">```Python</div><div class="line">&gt;&gt;&gt; numbers = [1, 2, 3, 4, 5, 6]</div><div class="line">&gt;&gt;&gt; [x * x for x in numbers]</div><div class="line">[1, 4, 9, 16, 25, 36]</div></pre></td></tr></table></figure></p>
+<p>使用set解析式也可以达到同样的目的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; &#123;x * x for x in numbers&#125;&#123;1, 4, 36, 9, 16, 25&#125;</div></pre></td></tr></table></figure></p>
+<p>或者dict解析式:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>&#123;x: x * x <span class="keyword">for</span> x <span class="keyword">in</span> numbers&#125;</div><div class="line">&#123;<span class="number">1</span>: <span class="number">1</span>, <span class="number">2</span>: <span class="number">4</span>, <span class="number">3</span>: <span class="number">9</span>, <span class="number">4</span>: <span class="number">16</span>, <span class="number">5</span>: <span class="number">25</span>, <span class="number">6</span>: <span class="number">36</span>&#125;</div></pre></td></tr></table></figure></p>
+<p>还可以使用生成器表达式:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>lazy_squares = (x * x <span class="keyword">for</span> x <span class="keyword">in</span> numbers)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>lazy_squares</div><div class="line">&lt;generator object &lt;genexpr&gt; at <span class="number">0x10d1f5510</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>next(lazy_squares)</div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>list(lazy_squares)</div><div class="line">[<span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">25</span>, <span class="number">36</span>]</div></pre></td></tr></table></figure></p>
+<p>注意我们第一次调用<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### 总结</div><div class="line"></div><div class="line">生成器是Python中一种非常强大的特性，它让我们能够编写更加简洁的代码，同时也更加节省内存，使用CPU也更加高效。</div><div class="line">使用生成器的小提示：在你的代码中找到与下面代码类似的地方：</div><div class="line">```Python</div><div class="line">def something(): </div><div class="line">      result = [] </div><div class="line">      for ... in ...: </div><div class="line">           result.append(x) </div><div class="line">      return result</div></pre></td></tr></table></figure></p>
+<p>用以下代码进行替换：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">iter_something</span><span class="params">()</span>:</span> </div><div class="line">      <span class="keyword">for</span> ... <span class="keyword">in</span> ...: </div><div class="line">            <span class="keyword">yield</span> x</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;版权所有，如需转载，请联系译者&lt;br&gt;原文地址&lt;a href=&quot;http:
+//nvie.com/posts/iterators-vs-generators/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://nvie.
+    
+    </summary>
+    
+      <category term="python" scheme="http://nummy.github.io/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://nummy.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>zookeeper的作用</title>
+    <link href="http://nummy.github.io/2016/03/16/zookeeper/"/>
+    <id>http://nummy.github.io/2016/03/16/zookeeper/</id>
+    <published>2016-03-16T09:27:25.000Z</published>
+    <updated>2016-03-16T09:32:53.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在Zookeeper的官 网上有这么一句话：</p>
+<blockquote>
+<p>ZooKeeper is a centralized service for maintaining configuration information, naming, providing distributed synchronization, and providing group services. </p>
+</blockquote>
+<p>这大概描述了Zookeeper主要可以干哪些事情：配置管理，名字服务，提供分布式同步以及集群管理。那这些服务又到底是什么呢？我们为什么需要这样的服务？我们又为什么要使用Zookeeper来实现呢，使用Zookeeper有什么优势？接下来我会挨个介绍这些到底是什么，以及有哪些开源系统中使用了。</p>
+<h3 id="配置管理"><a href="#配置管理" class="headerlink" title="配置管理"></a>配置管理</h3><p>在我们的应用中除了代码外，还有一些就是各种配置。比如数据库连接等。一般我们都是使用配置文件的方式，在代码中引入这些配置文件。但是当我们只有一种配置，只有一台服务器，并且不经常修改的时候，使用配置文件是一个很好的做法，但是如果我们配置非常多，有很多服务器都需要这个配置，而且还可能是动态的话使用配置文件就不是个好主意了。这个时候往往需要寻找一种集中管理配置的方法，我们在这个集中的地方修改了配置，所有对这个配置感兴趣的都可以获得变更。比如我们可以把配置放在数据库里，然后所有需要配置的服务都去这个数据库读取配置。但是，因为很多服务的正常运行都非常依赖这个配置，所以需要这个集中提供配置服务的服务具备很高的可靠性。一般我们可以用一个集群来提供这个配置服务，但是用集群提升可靠性，那如何保证配置在集群中的一致性呢？ 这个时候就需要使用一种实现了一致性协议的服务了。Zookeeper就是这种服务，它使用Zab这种一致性协议来提供一致性。现在有很多开源项目使用Zookeeper来维护配置，比如在HBase中，客户端就是连接一个Zookeeper，获得必要的HBase集群的配置信息，然后才可以进一步操作。还有在开源的消息队列Kafka中，也使用Zookeeper来维护broker的信息。在Alibaba开源的SOA框架Dubbo中也广泛的使用Zookeeper管理一些配置来实现服务治理。</p>
+<h3 id="名字服务"><a href="#名字服务" class="headerlink" title="名字服务"></a>名字服务</h3><p>名字服务这个就很好理解了。比如为了通过网络访问一个系统，我们得知道对方的IP地址，但是IP地址对人非常不友好，这个时候我们就需要使用域名来访问。但是计算机是不能识别域名的。怎么办呢？如果我们每台机器里都备有一份域名到IP地址的映射，这个倒是能解决一部分问题，但是如果域名对应的IP发生变化了又该怎么办呢？于是我们有了DNS这个东西。我们只需要访问一个大家熟知的(known)的点，它就会告诉你这个域名对应的IP是什么。在我们的应用中也会存在很多这类问题，特别是在我们的服务特别多的时候，如果我们在本地保存服务的地址的时候将非常不方便，但是如果我们只需要访问一个大家都熟知的访问点，这里提供统一的入口，那么维护起来将方便得多了。</p>
+<h3 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h3><p>Zookeeper是一个分布式协调服务。这样我们就可以利用Zookeeper来协调多个分布式进程之间的活动。比如在一个分布式环境中，为了提高可靠性，我们的集群的每台服务器上都部署着同样的服务。但是，一件事情如果集群中的每个服务器都进行的话，那相互之间就要协调，编程起来将非常复杂。而如果我们只让一个服务进行操作，那又存在单点。通常还有一种做法就是使用分布式锁，在某个时刻只让一个服务去干活，当这台服务出问题的时候锁释放，立即fail over到另外的服务。这在很多分布式系统中都是这么做，这种设计有一个更好听的名字叫Leader Election(leader选举)。比如HBase的Master就是采用这种机制。但要注意的是分布式锁跟同一个进程的锁还是有区别的，所以使用的时候要比同一个进程里的锁更谨慎的使用。</p>
+<h3 id="集群管理"><a href="#集群管理" class="headerlink" title="集群管理"></a>集群管理</h3><p>在分布式的集群中，经常会由于各种原因，比如硬件故障，软件故障，网络问题，有些节点会进进出出。有新的节点加入进来，也有老的节点退出集群。这个时候，集群中其他机器需要感知到这种变化，然后根据这种变化做出对应的决策。比如我们是一个分布式存储系统，有一个中央控制节点负责存储的分配，当有新的存储进来的时候我们要根据现在集群目前的状态来分配存储节点。这个时候我们就需要动态感知到集群目前的状态。还有，比如一个分布式的SOA架构中，服务是一个集群提供的，当消费者访问某个服务时，就需要采用某种机制发现现在有哪些节点可以提供该服务(这也称之为服务发现，比如Alibaba开源的SOA框架Dubbo就采用了Zookeeper作为服务发现的底层机制)。还有开源的Kafka队列就采用了Zookeeper作为Cosnumer的上下线管理。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在Zookeeper的官 网上有这么一句话：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ZooKeeper is a centralized service for maintaining configuration information, naming, providin
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://nummy.github.io/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://nummy.github.io/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HTML data属性</title>
+    <link href="http://nummy.github.io/2016/03/09/html-data-attribute/"/>
+    <id>http://nummy.github.io/2016/03/09/html-data-attribute/</id>
+    <published>2016-03-08T16:26:26.000Z</published>
+    <updated>2016-03-09T08:47:52.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>新的HTML5标准允许你在普通的元素标签里，嵌入类似data-*的属性，来实现一些简单数据的存取。它的数量不受限制，并且也能由javascript动态修改，也支持CSS选择器进行样式设置。这使得data属性特别灵活，也非常强大。有了这样的属性我们能够更加有序直观的进行数据预设或存储。</p>
+<h3 id="使用data属性的简单示例"><a href="#使用data属性的简单示例" class="headerlink" title="使用data属性的简单示例"></a>使用data属性的简单示例</h3><p>例如，给一个<code>span</code>元素添加<code>data-date</code>属性，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;span data-date=&quot;2016.3.9&quot; id=&quot;demo&quot;&gt;Song&lt;/span&gt;</div></pre></td></tr></table></figure></p>
+<p>由上可以看出，给HTML元素添加自定义属性，只需要使用<code>data-</code>前缀加上自定义属性名即可。</p>
+<p>那么在JavaScript中如何操作自定义的属性值了，有以下四种方法。</p>
+<h3 id="使用getAttribute以及setAttribute"><a href="#使用getAttribute以及setAttribute" class="headerlink" title="使用getAttribute以及setAttribute"></a>使用getAttribute以及setAttribute</h3><p>作为HTML元素的标签，dataset的存取也服从getAttribute、setAttribute，而且这两个方法兼容性也最广。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//获取属性</div><div class="line">var date = document.getElementById(&quot;demo&quot;).getAttribute(&quot;data-date&quot;);</div><div class="line"></div><div class="line">//设置属性</div><div class="line">document.getElementById(&quot;demo&quot;).setAttribute(&quot;data-date&quot;,&quot;2016.3.6&quot;);</div></pre></td></tr></table></figure></p>
+<h3 id="使用dataset-API"><a href="#使用dataset-API" class="headerlink" title="使用dataset API"></a>使用dataset API</h3><p>通过.dataset API，我们可以更方便的获取元素的所有data字段，并以对象的方式，方便存取和遍历。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//获取属性</div><div class="line">var date = document.getElementById(&quot;demo&quot;).dataset.date;</div><div class="line">console.log(date);</div><div class="line"></div><div class="line">//设置属性</div><div class="line">document.getElementById(&quot;demo&quot;).dataset.date = &quot;2016.3.8&quot;;</div><div class="line"></div><div class="line">//增加属性</div><div class="line">document.getElementById(&quot;demo&quot;).dataset.time = &quot;19:30&quot;;</div></pre></td></tr></table></figure></p>
+<p>这时候我们在访问data时，就不需要”data-“关键词了，直接利用.dataset.name就可以访问到。这比上面的方法更方便。所做出的任何更改，都是可以实时反映到元素data属性上的。</p>
+<p>如果涉及到连字符”-“，可以采取驼峰化的方法来存取：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;span id=&quot;en&quot; data-user-name=&quot;nummy&quot;&gt;&lt;/span&gt;</div></pre></td></tr></table></figure></p>
+<p>其中的<code>user-name</code>要写成<code>userName</code>。</p>
+<h3 id="使用jQuery-attr方法"><a href="#使用jQuery-attr方法" class="headerlink" title="使用jQuery.attr方法"></a>使用jQuery.attr方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//获取属性</div><div class="line">var date = $(&quot;#demo&quot;).attr(&quot;data-date&quot;);</div><div class="line"></div><div class="line">//设置属性</div><div class="line">$(&quot;#demo&quot;).attr(&quot;data-date&quot;,&quot;2016.3.7&quot;);</div></pre></td></tr></table></figure>
+<p>这与jQuery.attr运用在其他属性上时的情况完全一样，并且所做出的任何更改，都是可以实时反映到元素data属性上的。</p>
+<h3 id="使用jQuery-data方法"><a href="#使用jQuery-data方法" class="headerlink" title="使用jQuery.data方法"></a>使用jQuery.data方法</h3><p>这个方法不需要使用<code>data-</code>关键字。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//获取属性</div><div class="line">var date = $(&quot;#demo&quot;).data(&quot;date&quot;);</div><div class="line"></div><div class="line">//设置属性</div><div class="line">$(&quot;#demo&quot;).data(&quot;date&quot;,&quot;2016.3.7&quot;);</div></pre></td></tr></table></figure></p>
+<p>这样的方法也能出色的存取data属性，但是需要注意，jQuery.data对data数据做出的更改，不会反映到HTML元素data属性上。也就是说在jQuery中<code>data-date</code>属性的值为<code>2016.3.7</code>，但是在HTML元素中还是为<code>2016.3.6</code>。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;新的HTML5标准允许你在普通的元素标签里，嵌入类似data-*的属性，来实现一些简单数据的存取。它的数量不受限制，并且也能由javascript动态修改，也支持CSS选择器进行样式设置。这使得data属性特别灵活，也非常强大。有了这样的属性我们能够更加有序直观的进行数据预
+    
+    </summary>
+    
+      <category term="js" scheme="http://nummy.github.io/categories/js/"/>
+    
+    
+      <category term="javascript" scheme="http://nummy.github.io/tags/javascript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>jQuery通知提示插件toastr用法</title>
+    <link href="http://nummy.github.io/2016/03/07/toastr/"/>
+    <id>http://nummy.github.io/2016/03/07/toastr/</id>
+    <published>2016-03-07T15:15:04.000Z</published>
+    <updated>2016-03-08T07:20:51.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>toastr是一款非常棒的基于jquery库的非阻塞通知提示插件，toastr可设定四种通知模式：成功，出错，警告，提示，而提示窗口的位置，动画效果都可以通过能数来设置，在官方站可以通过勾选参数来生成JS，非常的方便使用。<br><img src="http://www.jqcool.net/wp-content/uploads/2014/06/2014-06-2812.png" alt=""></p>
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><p>引入核心文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;link href=&quot;toastr.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</div><div class="line">&lt;script src=&quot;http://libs.baidu.com/jquery/1.9.1/jquery.min.js&quot;&gt;&lt;/script&gt;</div><div class="line">&lt;script src=&quot;toastr.js&quot;&gt;&lt;/script&gt;</div></pre></td></tr></table></figure></p>
+<p>写入html代码，这里只需写入触发事件的按钮。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;input type=&quot;button&quot; name=&quot;success&quot; id=&quot;success&quot; value=&quot;成功&quot;/&gt;</div><div class="line">&lt;input type=&quot;button&quot; name=&quot;info&quot; id=&quot;info&quot; value=&quot;提示&quot;/&gt;</div><div class="line">&lt;input type=&quot;button&quot; name=&quot;warning&quot; id=&quot;warning&quot; value=&quot;警告&quot;/&gt;</div><div class="line">&lt;input type=&quot;button&quot; name=&quot;error&quot; id=&quot;error&quot; value=&quot;错误&quot;/&gt;</div><div class="line">&lt;input type=&quot;button&quot; name=&quot;clear&quot; id=&quot;clear&quot; value=&quot;清除&quot;/&gt;</div></pre></td></tr></table></figure></p>
+<p>给按钮绑定事件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">$(function()&#123;</div><div class="line">    //参数设置，若用默认值可以省略以下面代</div><div class="line">    toastr.options = &#123;</div><div class="line">        &quot;closeButton&quot;: false, //是否显示关闭按钮</div><div class="line">        &quot;debug&quot;: false, //是否使用debug模式</div><div class="line">        &quot;positionClass&quot;: &quot;toast-top-full-width&quot;,//弹出窗的位置</div><div class="line">        &quot;showDuration&quot;: &quot;300&quot;,//显示的动画时间</div><div class="line">        &quot;hideDuration&quot;: &quot;1000&quot;,//消失的动画时间</div><div class="line">        &quot;timeOut&quot;: &quot;5000&quot;, //展现时间</div><div class="line">        &quot;extendedTimeOut&quot;: &quot;1000&quot;,//加长展示时间</div><div class="line">        &quot;showEasing&quot;: &quot;swing&quot;,//显示时的动画缓冲方式</div><div class="line">        &quot;hideEasing&quot;: &quot;linear&quot;,//消失时的动画缓冲方式</div><div class="line">        &quot;showMethod&quot;: &quot;fadeIn&quot;,//显示时的动画方式</div><div class="line">        &quot;hideMethod&quot;: &quot;fadeOut&quot; //消失时的动画方式</div><div class="line">        &#125;;</div><div class="line"> </div><div class="line">        //成功提示绑定</div><div class="line">        $(&quot;#success&quot;).click(function()&#123;</div><div class="line">        toastr.success(&quot;祝贺你成功了&quot;);</div><div class="line">        &#125;)</div><div class="line">         </div><div class="line">        //信息提示绑定</div><div class="line">        $(&quot;#info&quot;).click(function()&#123;</div><div class="line">        toastr.info(&quot;这是一个提示信息&quot;);</div><div class="line">        &#125;)</div><div class="line">         </div><div class="line">        //敬告提示绑定</div><div class="line">        $(&quot;#warning&quot;).click(function()&#123;</div><div class="line">        toastr.warning(&quot;警告你别来烦我了&quot;);</div><div class="line">        &#125;)</div><div class="line">         </div><div class="line">        //错语提示绑定</div><div class="line">        $(&quot;#error&quot;).click(function()&#123;</div><div class="line">        toastr.error(&quot;出现错误，请更改&quot;);</div><div class="line">        &#125;)</div><div class="line">         </div><div class="line">        //清除窗口绑定</div><div class="line">        $(&quot;#clear&quot;).click(function()&#123;</div><div class="line">        toastr.clear();</div><div class="line">        &#125;)</div><div class="line">    &#125;)</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;toastr是一款非常棒的基于jquery库的非阻塞通知提示插件，toastr可设定四种通知模式：成功，出错，警告，提示，而提示窗口的位置，
+    
+    </summary>
+    
+      <category term="js" scheme="http://nummy.github.io/categories/js/"/>
+    
+    
+      <category term="javascript" scheme="http://nummy.github.io/tags/javascript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PyMongo集合操作</title>
+    <link href="http://nummy.github.io/2016/03/02/pymongocollection/"/>
+    <id>http://nummy.github.io/2016/03/02/pymongocollection/</id>
+    <published>2016-03-02T11:14:22.000Z</published>
+    <updated>2016-03-03T03:41:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="批量执行写操作"><a href="#批量执行写操作" class="headerlink" title="批量执行写操作"></a>批量执行写操作</h3><blockquote>
+<p><strong>bulk_write</strong>(requests, ordered=True, bypass_document_validation=False)</p>
+</blockquote>
+<p>使用列表的形式将请求发送给服务器：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> doc <span class="keyword">in</span> db.test.find(&#123;&#125;):</div><div class="line"><span class="meta">... </span>    print(doc)</div><div class="line">...</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: ObjectId(<span class="string">'54f62e60fba5226811f634ef'</span>)&#125;</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: ObjectId(<span class="string">'54f62e60fba5226811f634f0'</span>)&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="comment"># DeleteMany, UpdateOne, and UpdateMany are also available.</span></div><div class="line">...</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> pymongo <span class="keyword">import</span> InsertOne, DeleteOne, ReplaceOne</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>requests = [InsertOne(&#123;<span class="string">'y'</span>: <span class="number">1</span>&#125;), DeleteOne(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;),</div><div class="line"><span class="meta">... </span>            ReplaceOne(&#123;<span class="string">'w'</span>: <span class="number">1</span>&#125;, &#123;<span class="string">'z'</span>: <span class="number">1</span>&#125;, upsert=<span class="keyword">True</span>)]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result = db.test.bulk_write(requests)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result.inserted_count</div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result.deleted_count</div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result.modified_count</div><div class="line"><span class="number">0</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result.upserted_ids</div><div class="line">&#123;<span class="number">2</span>: ObjectId(<span class="string">'54f62ee28891e756a6e1abd5'</span>)&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> doc <span class="keyword">in</span> db.test.find(&#123;&#125;):</div><div class="line"><span class="meta">... </span>    print(doc)</div><div class="line">...</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: ObjectId(<span class="string">'54f62e60fba5226811f634f0'</span>)&#125;</div><div class="line">&#123;<span class="string">u'y'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: ObjectId(<span class="string">'54f62ee2fba5226811f634f1'</span>)&#125;</div><div class="line">&#123;<span class="string">u'z'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: ObjectId(<span class="string">'54f62ee28891e756a6e1abd5'</span>)&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="插入单个文档"><a href="#插入单个文档" class="headerlink" title="插入单个文档"></a>插入单个文档</h3><blockquote>
+<p><strong>insert_one</strong>(document, bypass_document_validation=False)</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>db.test.count(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;)</div><div class="line"><span class="number">0</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result = db.test.insert_one(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result.inserted_id</div><div class="line">ObjectId(<span class="string">'54f112defba522406c9cc208'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>db.test.find_one(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;)</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: ObjectId(<span class="string">'54f112defba522406c9cc208'</span>)&#125;</div></pre></td></tr></table></figure>
+<h3 id="插入多个文档"><a href="#插入多个文档" class="headerlink" title="插入多个文档"></a>插入多个文档</h3><blockquote>
+<p><strong>insert_many</strong>(documents, ordered=True, bypass_document_validation=False)</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>db.test.count()</div><div class="line"><span class="number">0</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result = db.test.insert_many([&#123;<span class="string">'x'</span>: i&#125; <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>)])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result.inserted_ids</div><div class="line">[ObjectId(<span class="string">'54f113fffba522406c9cc20e'</span>), ObjectId(<span class="string">'54f113fffba522406c9cc20f'</span>)]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>db.test.count()</div><div class="line"><span class="number">2</span></div></pre></td></tr></table></figure>
+<h3 id="替换某个文档"><a href="#替换某个文档" class="headerlink" title="替换某个文档"></a>替换某个文档</h3><blockquote>
+<p><strong>replace_one</strong>(filter, replacement, upsert=False, bypass_document_validation=False)</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> doc <span class="keyword">in</span> db.test.find(&#123;&#125;):</div><div class="line"><span class="meta">... </span>    print(doc)</div><div class="line">...</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: ObjectId(<span class="string">'54f4c5befba5220aa4d6dee7'</span>)&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result = db.test.replace_one(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;, &#123;<span class="string">'y'</span>: <span class="number">1</span>&#125;)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result.matched_count</div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result.modified_count</div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> doc <span class="keyword">in</span> db.test.find(&#123;&#125;):</div><div class="line"><span class="meta">... </span>    print(doc)</div><div class="line">...</div><div class="line">&#123;<span class="string">u'y'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: ObjectId(<span class="string">'54f4c5befba5220aa4d6dee7'</span>)&#125;</div></pre></td></tr></table></figure>
+<p>如果设置upsert为True的话，当没有找到匹配文档的时候，会直接插入新的文档。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>result = db.test.replace_one(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;, &#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;, <span class="keyword">True</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result.matched_count</div><div class="line"><span class="number">0</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result.modified_count</div><div class="line"><span class="number">0</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result.upserted_id</div><div class="line">ObjectId(<span class="string">'54f11e5c8891e756a6e1abd4'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>db.test.find_one(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;)</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: ObjectId(<span class="string">'54f11e5c8891e756a6e1abd4'</span>)&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="更新某个文档"><a href="#更新某个文档" class="headerlink" title="更新某个文档"></a>更新某个文档</h3><blockquote>
+<p><strong>update_one</strong>(filter, update, upsert=False, bypass_document_validation=False)</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> doc <span class="keyword">in</span> db.test.find():</div><div class="line"><span class="meta">... </span>    print(doc)</div><div class="line">...</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: <span class="number">0</span>&#125;</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: <span class="number">1</span>&#125;</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: <span class="number">2</span>&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result = db.test.update_one(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;, &#123;<span class="string">'$inc'</span>: &#123;<span class="string">'x'</span>: <span class="number">3</span>&#125;&#125;)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result.matched_count</div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result.modified_count</div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> doc <span class="keyword">in</span> db.test.find():</div><div class="line"><span class="meta">... </span>    print(doc)</div><div class="line">...</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">4</span>, <span class="string">u'_id'</span>: <span class="number">0</span>&#125;</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: <span class="number">1</span>&#125;</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: <span class="number">2</span>&#125;</div></pre></td></tr></table></figure>
+<p>同样的，如果upsert为True的话，匹配文档不存在的时候会直接创建新的文档。</p>
+<h3 id="更新多个文档"><a href="#更新多个文档" class="headerlink" title="更新多个文档"></a>更新多个文档</h3><blockquote>
+<p><strong>update_many</strong>(filter, update, upsert=False, bypass_document_validation=False)</p>
+</blockquote>
+<p>同时更新多个满足匹配条件的文档<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> doc <span class="keyword">in</span> db.test.find():</div><div class="line"><span class="meta">... </span>    print(doc)</div><div class="line">...</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: <span class="number">0</span>&#125;</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: <span class="number">1</span>&#125;</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: <span class="number">2</span>&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result = db.test.update_many(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;, &#123;<span class="string">'$inc'</span>: &#123;<span class="string">'x'</span>: <span class="number">3</span>&#125;&#125;)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result.matched_count</div><div class="line"><span class="number">3</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result.modified_count</div><div class="line"><span class="number">3</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> doc <span class="keyword">in</span> db.test.find():</div><div class="line"><span class="meta">... </span>    print(doc)</div><div class="line">...</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">4</span>, <span class="string">u'_id'</span>: <span class="number">0</span>&#125;</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">4</span>, <span class="string">u'_id'</span>: <span class="number">1</span>&#125;</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">4</span>, <span class="string">u'_id'</span>: <span class="number">2</span>&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="删除单个文档"><a href="#删除单个文档" class="headerlink" title="删除单个文档"></a>删除单个文档</h3><blockquote>
+<p><strong>delete_one</strong>(filter)</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>db.test.count(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;)</div><div class="line"><span class="number">3</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result = db.test.delete_one(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result.deleted_count</div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>db.test.count(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;)</div><div class="line"><span class="number">2</span></div></pre></td></tr></table></figure>
+<h3 id="删除多个文档"><a href="#删除多个文档" class="headerlink" title="删除多个文档"></a>删除多个文档</h3><blockquote>
+<p><em>*delete_many</em>(filter)</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>db.test.count(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;)</div><div class="line"><span class="number">3</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result = db.test.delete_many(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>result.deleted_count</div><div class="line"><span class="number">3</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>db.test.count(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;)</div><div class="line"><span class="number">0</span></div></pre></td></tr></table></figure>
+<h3 id="查询文档"><a href="#查询文档" class="headerlink" title="查询文档"></a>查询文档</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>db.test.find(&#123;<span class="string">"hello"</span>: <span class="string">"world"</span>&#125;)</div></pre></td></tr></table></figure>
+<h3 id="查询单个文档"><a href="#查询单个文档" class="headerlink" title="查询单个文档"></a>查询单个文档</h3><p>使用<code>find_one()</code>进行查询，如果找到则返回，如果没找到则返回None。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>find_one(max_time_ms=<span class="number">100</span>)</div></pre></td></tr></table></figure></p>
+<h3 id="查询某个文档并执行删除操作"><a href="#查询某个文档并执行删除操作" class="headerlink" title="查询某个文档并执行删除操作"></a>查询某个文档并执行删除操作</h3><blockquote>
+<p><strong>find_one_and_delete</strong>(filter, projection=None, sort=None, **kwargs)</p>
+</blockquote>
+<p>返回查询到的文档</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>db.test.count(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;)</div><div class="line"><span class="number">2</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>db.test.find_one_and_delete(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;)</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: ObjectId(<span class="string">'54f4e12bfba5220aa4d6dee8'</span>)&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>db.test.count(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;)</div><div class="line"><span class="number">1</span></div></pre></td></tr></table></figure>
+<h3 id="查询某个文档并将其替换成新文档"><a href="#查询某个文档并将其替换成新文档" class="headerlink" title="查询某个文档并将其替换成新文档"></a>查询某个文档并将其替换成新文档</h3><blockquote>
+<p><strong>find_one_and_replace</strong>()</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> doc <span class="keyword">in</span> db.test.find(&#123;&#125;):</div><div class="line"><span class="meta">... </span>    print(doc)</div><div class="line">...</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: <span class="number">0</span>&#125;</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: <span class="number">1</span>&#125;</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: <span class="number">2</span>&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>db.test.find_one_and_replace(&#123;<span class="string">'x'</span>: <span class="number">1</span>&#125;, &#123;<span class="string">'y'</span>: <span class="number">1</span>&#125;)</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: <span class="number">0</span>&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> doc <span class="keyword">in</span> db.test.find(&#123;&#125;):</div><div class="line"><span class="meta">... </span>    print(doc)</div><div class="line">...</div><div class="line">&#123;<span class="string">u'y'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: <span class="number">0</span>&#125;</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: <span class="number">1</span>&#125;</div><div class="line">&#123;<span class="string">u'x'</span>: <span class="number">1</span>, <span class="string">u'_id'</span>: <span class="number">2</span>&#125;</div></pre></td></tr></table></figure>
+<h3 id="查询某个文档并进行更新"><a href="#查询某个文档并进行更新" class="headerlink" title="查询某个文档并进行更新"></a>查询某个文档并进行更新</h3><blockquote>
+<p><strong>find_one_and_update</strong>()</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>db.test.find_one_and_update(</div><div class="line"><span class="meta">... </span>   &#123;<span class="string">'_id'</span>: <span class="number">665</span>&#125;, &#123;<span class="string">'$inc'</span>: &#123;<span class="string">'count'</span>: <span class="number">1</span>&#125;, <span class="string">'$set'</span>: &#123;<span class="string">'done'</span>: <span class="keyword">True</span>&#125;&#125;)</div><div class="line">&#123;<span class="string">u'_id'</span>: <span class="number">665</span>, <span class="string">u'done'</span>: <span class="keyword">False</span>, <span class="string">u'count'</span>: <span class="number">25</span>&#125;&#125;</div></pre></td></tr></table></figure>
+<p>如果upsert设置为True，则当匹配文档不存在的时候，创建新的文档。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>db.example.delete_many(&#123;&#125;).deleted_count</div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>db.example.find_one_and_update(</div><div class="line"><span class="meta">... </span>    &#123;<span class="string">'_id'</span>: <span class="string">'userid'</span>&#125;,</div><div class="line"><span class="meta">... </span>    &#123;<span class="string">'$inc'</span>: &#123;<span class="string">'seq'</span>: <span class="number">1</span>&#125;&#125;,</div><div class="line"><span class="meta">... </span>    projection=&#123;<span class="string">'seq'</span>: <span class="keyword">True</span>, <span class="string">'_id'</span>: <span class="keyword">False</span>&#125;,</div><div class="line"><span class="meta">... </span>    upsert=<span class="keyword">True</span>,</div><div class="line"><span class="meta">... </span>    return_document=ReturnDocument.AFTER)</div><div class="line">&#123;<span class="string">u'seq'</span>: <span class="number">1</span>&#125;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;批量执行写操作&quot;&gt;&lt;a href=&quot;#批量执行写操作&quot; class=&quot;headerlink&quot; title=&quot;批量执行写操作&quot;&gt;&lt;/a&gt;批量执行写操作&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;bulk_write&lt;/strong&gt;(requests,
+    
+    </summary>
+    
+      <category term="python" scheme="http://nummy.github.io/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://nummy.github.io/tags/python/"/>
+    
+      <category term="mongodb" scheme="http://nummy.github.io/tags/mongodb/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PyCharm快捷键</title>
+    <link href="http://nummy.github.io/2016/03/02/pycharm/"/>
+    <id>http://nummy.github.io/2016/03/02/pycharm/</id>
+    <published>2016-03-01T16:05:59.000Z</published>
+    <updated>2016-03-02T08:09:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h3><p>CTRL Q: 在参数列表位置，显示可以输入的所有参数。<br>CTRL Q: 查看选中方法的文档字符串</p>
+<h3 id="阅读"><a href="#阅读" class="headerlink" title="阅读"></a>阅读</h3><p>CTRL -: 折叠当前代码<br>CTRL +: 展开当前代码<br>CTRL SHIFT -: 折叠所有代码<br>CTRL SHIFT +: 展开所有代码<br>CTRL SHIFT F7: 将当前单词在整个文件中高亮，F3移动到下一个，ESC取消高亮。<br>CTRL F11 | F11: 设置书签.<br>SHIFT F11: 显示所有书签。<br>CTRL F12: 当一个文件中方法太多，要快速跳到某个方法时，可以用此快捷键打开LIST,<br>除了用上下箭选择外，还可以输入字母。</p>
+<h3 id="移动"><a href="#移动" class="headerlink" title="移动"></a>移动</h3><p>ALT UP: 移到上一个方法<br>ALT DOWN: 移到下一个方法<br>CTRL B | CTRL 单击： 转到方法定义处<br>CTRL SHIFT UP: 将当前行上移一行<br>CTRL SHIFT UP: 将当前行下移一行</p>
+<p>SHIFT ENTER: 在行中间执行时，智能跳到下一行。</p>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p>CTRL /: 注释、取消注释行</p>
+<h3 id="选择"><a href="#选择" class="headerlink" title="选择"></a>选择</h3><p>ALT 左键： 列模式选择<br>CTRL W: 选中当前单词，继续按，选中它所属的行/IF/方法.</p>
+<h3 id="编辑"><a href="#编辑" class="headerlink" title="编辑"></a>编辑</h3><p>CTRL D: 未选中时，复制当前行到下一行，选中时复制粘贴选中部分。<br>CTRL J: 输入模板</p>
+<p>SHIFT F6: 更改变量/方法名字</p>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>CTRY Y: 删除当前行</p>
+<h3 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h3><p>CTRL F8: 设置/取消断点</p>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><p>CTRL E: 最近访问的文件列表<br>ESC: 焦点从其它窗口到编辑窗口<br>SHIFT ESC: 隐藏当前窗口，焦点到编辑窗口<br>F12: 焦点从编辑窗口到上一个使用窗口<br>编辑器右键，local history, show history： 显示本地修改记录<br><img src="http://images.cnitblog.com/blog/23013/201402/191435131665539.png" alt="pycharm快捷键"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;提示&quot;&gt;&lt;a href=&quot;#提示&quot; class=&quot;headerlink&quot; title=&quot;提示&quot;&gt;&lt;/a&gt;提示&lt;/h3&gt;&lt;p&gt;CTRL Q: 在参数列表位置，显示可以输入的所有参数。&lt;br&gt;CTRL Q: 查看选中方法的文档字符串&lt;/p&gt;
+&lt;h3 id=&quot;阅读&quot;&gt;&lt;
+    
+    </summary>
+    
+      <category term="python" scheme="http://nummy.github.io/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://nummy.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python Requests 快速入门</title>
+    <link href="http://nummy.github.io/2016/02/28/requests/"/>
+    <id>http://nummy.github.io/2016/02/28/requests/</id>
+    <published>2016-02-28T14:00:41.000Z</published>
+    <updated>2016-02-29T06:32:05.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>使用pip进行安装<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install Requests</div></pre></td></tr></table></figure></p>
+<h3 id="发送请求"><a href="#发送请求" class="headerlink" title="发送请求"></a>发送请求</h3><p>使用Requests发送网络请求非常简单，一开始要导入Requests模块:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> requests</div></pre></td></tr></table></figure></p>
+<p>然后，尝试获取某个网页。本例子中，我们来获取Github的公共时间线<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.get(<span class="string">'https://github.com/timeline.json'</span>)</div></pre></td></tr></table></figure></p>
+<p>现在，我们有一个名为 r 的 Response 对象。可以从这个对象中获取所有我们想要的信息。<br>Requests简便的API意味着所有HTTP请求类型都是显而易见的。例如，你可以这样发送一个HTTP POST请求:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.post(<span class="string">"http://httpbin.org/post"</span>)</div></pre></td></tr></table></figure></p>
+<p>漂亮，对吧？那么其他HTTP请求类型：PUT， DELETE， HEAD以及OPTIONS又是如何的呢？都是一样的简单:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.put(<span class="string">"http://httpbin.org/put"</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.delete(<span class="string">"http://httpbin.org/delete"</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.head(<span class="string">"http://httpbin.org/get"</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.options(<span class="string">"http://httpbin.org/get"</span>)</div></pre></td></tr></table></figure></p>
+<p>都很不错吧，但这也仅是Requests的冰山一角呢。</p>
+<h3 id="为URL传递参数"><a href="#为URL传递参数" class="headerlink" title="为URL传递参数"></a>为URL传递参数</h3><p>你也许经常想为URL的查询字符串(query string)传递某种数据。如果你是手工构建URL，那么数据会以键/值 对的形式置于URL中，跟在一个问号的后面。例如，<code>httpbin.org/get?key=val</code> 。 <code>Requests</code>允许你使用 <code>params</code> 关键字参数，以一个字典来提供这些参数。举例来说，如果你想传递 <code>key1=value1</code> 和 <code>key2=value2</code> 到 <code>httpbin.org/get</code> ，那么你可以使用如下代码:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>payload = &#123;<span class="string">'key1'</span>: <span class="string">'value1'</span>, <span class="string">'key2'</span>: <span class="string">'value2'</span>&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.get(<span class="string">"http://httpbin.org/get"</span>, params=payload)</div></pre></td></tr></table></figure></p>
+<p>通过打印输出该URL，你能看到URL已被正确编码:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> r.url</div><div class="line"><span class="string">u'http://httpbin.org/get?key2=value2&amp;key1=value1'</span></div></pre></td></tr></table></figure></p>
+<h3 id="响应内容"><a href="#响应内容" class="headerlink" title="响应内容"></a>响应内容</h3><p>我们能读取服务器响应的内容。再次以Github时间线为例:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> requests</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.get(<span class="string">'https://github.com/timeline.json'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.text</div><div class="line"><span class="string">'[&#123;"repository":&#123;"open_issues":0,"url":"https://github.com/"...'</span></div></pre></td></tr></table></figure></p>
+<p>Requests会自动解码来自服务器的内容。大多数unicode字符集都能被无缝地解码。<br>请求发出后，Requests会基于HTTP头部对响应的编码作出有根据的推测。当你访问r.text 之时，Requests会使用其推测的文本编码。你可以找出Requests使用了什么编码，并且能够使用 r.encoding 属性来改变它:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.encoding</div><div class="line"><span class="string">'utf-8'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.encoding = <span class="string">'ISO-8859-1'</span></div></pre></td></tr></table></figure></p>
+<p>如果你改变了编码，每当你访问 r.text ，Request都将会使用 r.encoding 的新值。<br>在你需要的情况下，Requests也可以使用定制的编码。如果你创建了自己的编码，并使用codecs 模块进行注册，你就可以轻松地使用这个解码器名称作为 r.encoding 的值， 然后由Requests来为你处理编码。</p>
+<h3 id="二进制响应内容"><a href="#二进制响应内容" class="headerlink" title="二进制响应内容"></a>二进制响应内容</h3><p>你也能以字节的方式访问请求响应体，对于非文本请求:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.content</div><div class="line"><span class="string">b'[&#123;"repository":&#123;"open_issues":0,"url":"https://github.com/...'</span></div></pre></td></tr></table></figure></p>
+<p>Requests会自动为你解码 gzip 和 deflate 传输编码的响应数据。<br>例如，以请求返回的二进制数据创建一张图片，你可以使用如下代码:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> StringIO <span class="keyword">import</span> StringIO</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>i = Image.open(StringIO(r.content))</div></pre></td></tr></table></figure></p>
+<h3 id="JSON响应内容"><a href="#JSON响应内容" class="headerlink" title="JSON响应内容"></a>JSON响应内容</h3><p>Requests中也有一个内置的JSON解码器，助你处理JSON数据:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> requests</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.get(<span class="string">'https://github.com/timeline.json'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.json()</div><div class="line">[&#123;<span class="string">u'repository'</span>: &#123;<span class="string">u'open_issues'</span>: <span class="number">0</span>, <span class="string">u'url'</span>: <span class="string">'https://github.com/...'</span>&#125;]</div></pre></td></tr></table></figure></p>
+<p>如果JSON解码失败， r.json 就会抛出一个异常。</p>
+<h3 id="原始响应内容"><a href="#原始响应内容" class="headerlink" title="原始响应内容"></a>原始响应内容</h3><p>在罕见的情况下你可能想获取来自服务器的原始套接字响应，那么你可以访问 <code>r.raw</code> 。 如果你确实想这么干，那请你确保在初始请求中设置了 <code>stream=True</code> 。具体的你可以这么做:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.get(<span class="string">'https://github.com/timeline.json'</span>, stream=<span class="keyword">True</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.raw</div><div class="line">&lt;requests.packages.urllib3.response.HTTPResponse object at <span class="number">0x101194810</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.raw.read(<span class="number">10</span>)</div><div class="line"><span class="string">'\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\x03'</span></div></pre></td></tr></table></figure></p>
+<h3 id="定制请求头"><a href="#定制请求头" class="headerlink" title="定制请求头"></a>定制请求头</h3><p>如果你想为请求添加HTTP头部，只要简单地传递一个 dict 给 headers 参数就可以了。<br>例如，在前一个示例中我们没有指定content-type:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> json</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>url = <span class="string">'https://api.github.com/some/endpoint'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>payload = &#123;<span class="string">'some'</span>: <span class="string">'data'</span>&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>headers = &#123;<span class="string">'content-type'</span>: <span class="string">'application/json'</span>&#125;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.post(url, data=json.dumps(payload), headers=headers)</div></pre></td></tr></table></figure></p>
+<h3 id="更加复杂的POST请求"><a href="#更加复杂的POST请求" class="headerlink" title="更加复杂的POST请求"></a>更加复杂的POST请求</h3><p>通常，你想要发送一些编码为表单形式的数据—非常像一个HTML表单。 要实现这个，只需简单地传递一个字典给 data 参数。你的数据字典 在发出请求时会自动编码为表单形式:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>payload = &#123;<span class="string">'key1'</span>: <span class="string">'value1'</span>, <span class="string">'key2'</span>: <span class="string">'value2'</span>&#125;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.post(<span class="string">"http://httpbin.org/post"</span>, data=payload)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> r.text</div><div class="line">&#123;</div><div class="line">  ...</div><div class="line">  <span class="string">"form"</span>: &#123;</div><div class="line">    <span class="string">"key2"</span>: <span class="string">"value2"</span>,</div><div class="line">    <span class="string">"key1"</span>: <span class="string">"value1"</span></div><div class="line">  &#125;,</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>很多时候你想要发送的数据并非编码为表单形式的。如果你传递一个 string 而不是一个dict ，那么数据会被直接发布出去。<br>例如，Github API v3接受编码为JSON的POST/PATCH数据:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> json</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>url = <span class="string">'https://api.github.com/some/endpoint'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>payload = &#123;<span class="string">'some'</span>: <span class="string">'data'</span>&#125;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.post(url, data=json.dumps(payload))</div></pre></td></tr></table></figure>
+<h3 id="POST一个文件"><a href="#POST一个文件" class="headerlink" title="POST一个文件"></a>POST一个文件</h3><p>Requests使得上传文件变得很简单:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>url = <span class="string">'http://httpbin.org/post'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>files = &#123;<span class="string">'file'</span>: open(<span class="string">'report.xls'</span>, <span class="string">'rb'</span>)&#125;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.post(url, files=files)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.text</div><div class="line">&#123;</div><div class="line">  ...</div><div class="line">  <span class="string">"files"</span>: &#123;</div><div class="line">    <span class="string">"file"</span>: <span class="string">"&lt;censored...binary...data&gt;"</span></div><div class="line">  &#125;,</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>你可以显式地设置文件名:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>url = <span class="string">'http://httpbin.org/post'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>files = &#123;<span class="string">'file'</span>: (<span class="string">'report.xls'</span>, open(<span class="string">'report.xls'</span>, <span class="string">'rb'</span>))&#125;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.post(url, files=files)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.text</div><div class="line">&#123;</div><div class="line">  ...</div><div class="line">  <span class="string">"files"</span>: &#123;</div><div class="line">    <span class="string">"file"</span>: <span class="string">"&lt;censored...binary...data&gt;"</span></div><div class="line">  &#125;,</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果你想，你也可以发送作为文件来接收的字符串:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>url = <span class="string">'http://httpbin.org/post'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>files = &#123;<span class="string">'file'</span>: (<span class="string">'report.csv'</span>, <span class="string">'some,data,to,send\nanother,row,to,send\n'</span>)&#125;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.post(url, files=files)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.text</div><div class="line">&#123;</div><div class="line">  ...</div><div class="line">  <span class="string">"files"</span>: &#123;</div><div class="line">    <span class="string">"file"</span>: <span class="string">"some,data,to,send\\nanother,row,to,send\\n"</span></div><div class="line">  &#125;,</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="响应状态码"><a href="#响应状态码" class="headerlink" title="响应状态码"></a>响应状态码</h3><p>我们可以检测响应状态码:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.get(<span class="string">'http://httpbin.org/get'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.status_code</div><div class="line"><span class="number">200</span></div></pre></td></tr></table></figure></p>
+<p>为方便引用，Requests还附带了一个内置的状态码查询对象:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.status_code == requests.codes.ok</div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure></p>
+<p>如果发送了一个失败请求(非200响应)，我们可以通过 Response.raise_for_status() 来抛出异常:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>bad_r = requests.get(<span class="string">'http://httpbin.org/status/404'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>bad_r.status_code</div><div class="line"><span class="number">404</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>bad_r.raise_for_status()</div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"requests/models.py"</span>, line <span class="number">832</span>, <span class="keyword">in</span> raise_for_status</div><div class="line">    <span class="keyword">raise</span> http_error</div><div class="line">requests.exceptions.HTTPError: <span class="number">404</span> Client Error</div></pre></td></tr></table></figure></p>
+<p>但是，由于我们的例子中 r 的 status_code 是 200 ，当我们调用 raise_for_status() 时，得到的是:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.raise_for_status()</div><div class="line"><span class="keyword">None</span></div></pre></td></tr></table></figure></p>
+<h3 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h3><p>我们可以查看以一个Python字典形式展示的服务器响应头:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.headers</div><div class="line">&#123;</div><div class="line">    <span class="string">'status'</span>: <span class="string">'200 OK'</span>,</div><div class="line">    <span class="string">'content-encoding'</span>: <span class="string">'gzip'</span>,</div><div class="line">    <span class="string">'transfer-encoding'</span>: <span class="string">'chunked'</span>,</div><div class="line">    <span class="string">'connection'</span>: <span class="string">'close'</span>,</div><div class="line">    <span class="string">'server'</span>: <span class="string">'nginx/1.0.4'</span>,</div><div class="line">    <span class="string">'x-runtime'</span>: <span class="string">'148ms'</span>,</div><div class="line">    <span class="string">'etag'</span>: <span class="string">'"e1ca502697e5c9317743dc078f67693f"'</span>,</div><div class="line">    <span class="string">'content-type'</span>: <span class="string">'application/json; charset=utf-8'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>但是这个字典比较特殊：它是仅为HTTP头部而生的。根据 RFC 2616 ， HTTP头部是大小写不敏感的。<br>因此，我们可以使用任意大写形式来访问这些响应头字段:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.headers[<span class="string">'Content-Type'</span>]</div><div class="line"><span class="string">'application/json; charset=utf-8'</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.headers.get(<span class="string">'content-type'</span>)</div><div class="line"><span class="string">'application/json; charset=utf-8'</span></div></pre></td></tr></table></figure></p>
+<p>如果某个响应头字段不存在，那么它的默认值为 None<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.headers[<span class="string">'X-Random'</span>]</div><div class="line"><span class="keyword">None</span></div></pre></td></tr></table></figure></p>
+<h3 id="Cookies"><a href="#Cookies" class="headerlink" title="Cookies"></a>Cookies</h3><p>如果某个响应中包含一些Cookie，你可以快速访问它们:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>url = <span class="string">'http://example.com/some/cookie/setting/url'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.get(url)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.cookies[<span class="string">'example_cookie_name'</span>]</div><div class="line"><span class="string">'example_cookie_value'</span></div></pre></td></tr></table></figure></p>
+<p>要想发送你的cookies到服务器，可以使用 cookies 参数:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>url = <span class="string">'http://httpbin.org/cookies'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>cookies = dict(cookies_are=<span class="string">'working'</span>)</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.get(url, cookies=cookies)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.text</div><div class="line"><span class="string">'&#123;"cookies": &#123;"cookies_are": "working"&#125;&#125;'</span></div></pre></td></tr></table></figure></p>
+<h3 id="重定向与请求历史"><a href="#重定向与请求历史" class="headerlink" title="重定向与请求历史"></a>重定向与请求历史</h3><p>使用<code>GET</code>或<code>OPTIONS</code>时，<code>Requests</code>会自动处理位置重定向。<br><code>Github</code>将所有的<code>HTTP</code>请求重定向到<code>HTTPS</code>。可以使用响应对象的 <code>history</code> 方法来追踪重定向。 我们来看看<code>Github</code>做了什么:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.get(<span class="string">'http://github.com'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.url</div><div class="line"><span class="string">'https://github.com/'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.status_code</div><div class="line"><span class="number">200</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.history</div><div class="line">[&lt;Response [<span class="number">301</span>]&gt;]</div></pre></td></tr></table></figure></p>
+<p><code>Response.history</code> 是一个<code>:class:Request</code> 对象的列表，为了完成请求而创建了这些对象。这个对象列表按照从最老到最近的请求进行排序。<br>如果你使用的是GET或OPTIONS，那么你可以通过<code>allow_redirects</code>参数禁用重定向处理:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.get(<span class="string">'http://github.com'</span>, allow_redirects=<span class="keyword">False</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.status_code</div><div class="line"><span class="number">301</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.history</div><div class="line">[]</div></pre></td></tr></table></figure></p>
+<p>如果你使用的是POST，PUT，PATCH，DELETE或HEAD，你也可以启用重定向:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.post(<span class="string">'http://github.com'</span>, allow_redirects=<span class="keyword">True</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.url</div><div class="line"><span class="string">'https://github.com/'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.history</div><div class="line">[&lt;Response [<span class="number">301</span>]&gt;]</div></pre></td></tr></table></figure></p>
+<h3 id="超时"><a href="#超时" class="headerlink" title="超时"></a>超时</h3><p>你可以告诉<code>requests</code>在经过以 <code>timeout</code> 参数设定的秒数时间之后停止等待响应:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>requests.get(<span class="string">'http://github.com'</span>, timeout=<span class="number">0.001</span>)</div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</div><div class="line">requests.exceptions.Timeout: HTTPConnectionPool(host=<span class="string">'github.com'</span>, port=<span class="number">80</span>): Request timed out. (timeout=<span class="number">0.001</span>)</div></pre></td></tr></table></figure></p>
+<p><code>timeout</code> 仅对连接过程有效，与响应体的下载无关。</p>
+<h3 id="错误与异常"><a href="#错误与异常" class="headerlink" title="错误与异常"></a>错误与异常</h3><p>遇到网络问题（如：DNS查询失败、拒绝连接等）时，<code>Requests</code>会抛出一个<code>ConnectionError</code> 异常。<br>遇到罕见的无效HTTP响应时，<code>Requests</code>则会抛出一个 <code>HTTPError</code> 异常。<br>若请求超时，则抛出一个 <code>Timeout</code> 异常。<br>若请求超过了设定的最大重定向次数，则会抛出一个 <code>TooManyRedirects</code> 异常。<br>所有<code>Requests</code>显式抛出的异常都继承自<code>requests.exceptions.RequestException</code> 。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h3&gt;&lt;p&gt;使用pip进行安装&lt;br&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gu
+    
+    </summary>
+    
+      <category term="python" scheme="http://nummy.github.io/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://nummy.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MongoDB数据库备份与恢复</title>
+    <link href="http://nummy.github.io/2016/02/28/backstoremongo/"/>
+    <id>http://nummy.github.io/2016/02/28/backstoremongo/</id>
+    <published>2016-02-28T13:34:45.000Z</published>
+    <updated>2016-02-29T06:36:46.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>使用mongodump进行数据库备份实际上是通过一次查询当前服务器快照，并将快照存进磁盘中，因此实际上并不是实时备份，因为获取快照之后，服务器还会有数据写入。</p>
+<h3 id="备份数据库"><a href="#备份数据库" class="headerlink" title="备份数据库"></a>备份数据库</h3><p>命令格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mongodump -h host -d database -o storepath</div></pre></td></tr></table></figure></p>
+<p>还可以使用以下命令获取帮助信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mongodump --help</div></pre></td></tr></table></figure></p>
+<h3 id="恢复数据库"><a href="#恢复数据库" class="headerlink" title="恢复数据库"></a>恢复数据库</h3><p>使用以下命令进行恢复<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mongostore -h host -d database --directoryperdb</div></pre></td></tr></table></figure></p>
+<p>还可以使用以下命令获取帮助信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mongostore --help</div></pre></td></tr></table></figure></p>
+<h3 id="备份集合"><a href="#备份集合" class="headerlink" title="备份集合"></a>备份集合</h3><p>使用<code>mongoexport</code>命令备份集合:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mongoexport -h host -d database -c collection -o backstore_filename</div></pre></td></tr></table></figure></p>
+<p>使用<code>mongoimport --help</code>获取帮助信息</p>
+<h3 id="恢复集合"><a href="#恢复集合" class="headerlink" title="恢复集合"></a>恢复集合</h3><p>使用<code>mongoimport</code>命令恢复集合<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mongoimport -h host -d database -c collectionname --file filename</div></pre></td></tr></table></figure></p>
+<p>使用<code>mongoimport --help</code>命令获取帮助信息</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;使用mongodump进行数据库备份实际上是通过一次查询当前服务器快照，并将快照存进磁盘中，因此实际上并不是实时备份，因为获取快照之后，服务器还会有数据写入。&lt;/p&gt;
+&lt;h3 id=&quot;备份数据库&quot;&gt;&lt;a href=&quot;#备份数据库&quot; class=&quot;headerlink&quot; ti
+    
+    </summary>
+    
+      <category term="mongodb" scheme="http://nummy.github.io/categories/mongodb/"/>
+    
+    
+      <category term="mongodb" scheme="http://nummy.github.io/tags/mongodb/"/>
+    
+      <category term="database" scheme="http://nummy.github.io/tags/database/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用MongoDB命令连接远程数据库</title>
+    <link href="http://nummy.github.io/2016/02/28/connectmongo/"/>
+    <id>http://nummy.github.io/2016/02/28/connectmongo/</id>
+    <published>2016-02-28T11:41:26.000Z</published>
+    <updated>2016-02-29T03:43:36.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>连接命令如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mongo remote_host:port/database -u user -p password</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;连接命令如下：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;
+    
+    </summary>
+    
+      <category term="mongodb" scheme="http://nummy.github.io/categories/mongodb/"/>
+    
+    
+      <category term="mongodb" scheme="http://nummy.github.io/tags/mongodb/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用itertools模块实现Python函数式编程</title>
+    <link href="http://nummy.github.io/2016/02/25/itertools/"/>
+    <id>http://nummy.github.io/2016/02/25/itertools/</id>
+    <published>2016-02-25T06:42:16.000Z</published>
+    <updated>2016-02-25T06:54:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>itertools提供的函数是受函数式编程语言中类似特性的启发，其目的是保证快速，并且高效的使用内存，而且可以联接在一起表述更为复杂的基于迭代的算法。</p>
+<p>与使用列表的算法相比，基于迭代器的算法可以提供更好的内存使用特性。在真正需要数据之前，并不从迭代器生成数据，由于这个原因，不需要将所有数据都同时存储在内存中。这种懒处理模型可以减少内存的使用，相应的可以减少交换以及大数据集的其他副作用，从而改善性能。</p>
+<h3 id="合并和分解迭代器"><a href="#合并和分解迭代器" class="headerlink" title="合并和分解迭代器"></a>合并和分解迭代器</h3><p><code>chain()</code>函数取多个迭代器作为参数，最后返回一个迭代器，它能生成所有输入迭代器的内容，就好像这些迭代器来自一个迭代器一样。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> itertools improt *</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> chain([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]):</div><div class="line">    <span class="keyword">print</span> i,</div><div class="line"><span class="keyword">print</span></div></pre></td></tr></table></figure></p>
+<p>结果将输出<code>1 2 3 4 5 6</code>。利用<code>chain()</code>可以轻松处理多个序列而不必构造一个大的列表。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;itertools提供的函数是受函数式编程语言中类似特性的启发，其目的是保证快速，并且高效的使用内存，而且可以联接在一起表述更为复杂的基于迭代的算法。&lt;/p&gt;
+&lt;p&gt;与使用列表的算法相比，基于迭代器的算法可以提供更好的内存使用特性。在真正需要数据之前，并不从迭代器生成数据，
+    
+    </summary>
+    
+      <category term="python" scheme="http://nummy.github.io/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://nummy.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python操作Solr</title>
+    <link href="http://nummy.github.io/2016/02/25/pysolr/"/>
+    <id>http://nummy.github.io/2016/02/25/pysolr/</id>
+    <published>2016-02-25T06:09:38.000Z</published>
+    <updated>2016-02-25T06:31:39.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Solr是什么？"><a href="#Solr是什么？" class="headerlink" title="Solr是什么？"></a><code>Solr</code>是什么？</h3><p><code>Solr</code>是一个开源的企业级搜索服务器，底层使用易于扩展和修改的<code>Java</code>来实现。服务器通信使用标准的<code>HTTP</code>和<code>XML</code>，所以如果使用<code>Solr</code> 了解<code>Java</code> 技术会有用却不是必须的要求。</p>
+<p><code>Solr</code> 主要特性有：强大的全文检索功能，高亮显示检索结果，动态集群，数据库接口和电子文档（Word ，PDF 等）的处理。而且<code>Solr</code> 具有高度的可扩展，支持分布搜索和索引的复制。</p>
+<h3 id="Solr的Python库pysolr"><a href="#Solr的Python库pysolr" class="headerlink" title="Solr的Python库pysolr"></a>Solr的Python库pysolr</h3><p>pysolr是一个对Solr服务进行了封装的Python库，它提供了一个执行solr查询服务的接口。</p>
+<p>它支持solr的以下几种操作：</p>
+<ul>
+<li>基本的查询、修改、删除操作</li>
+<li>索引优化</li>
+<li>超时支持</li>
+</ul>
+<h3 id="pysolr的基本用法"><a href="#pysolr的基本用法" class="headerlink" title="pysolr的基本用法"></a>pysolr的基本用法</h3><p>通过一个例子来展示其基本用法：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pysolr</div><div class="line"></div><div class="line"><span class="comment"># 创建一个solr实例，timeout为可选参数</span></div><div class="line">solr = pysolr.Solr(<span class="string">'http://localhost:8983/solr/'</span>, timeout=<span class="number">10</span>)</div><div class="line"></div><div class="line"><span class="comment"># 添加数据</span></div><div class="line">solr.add([</div><div class="line">    &#123;</div><div class="line">        <span class="string">"id"</span>: <span class="string">"doc_1"</span>,</div><div class="line">        <span class="string">"title"</span>: <span class="string">"A test document"</span>,</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">        <span class="string">"id"</span>: <span class="string">"doc_2"</span>,</div><div class="line">        <span class="string">"title"</span>: <span class="string">"The Banana: Tasty or Dangerous?"</span>,</div><div class="line">    &#125;,</div><div class="line">])</div><div class="line"></div><div class="line"><span class="comment"># 优化索引，以加快查询速度</span></div><div class="line">solr.optimize()</div><div class="line"></div><div class="line"><span class="comment"># 进行查询</span></div><div class="line">results = solr.search(<span class="string">'bananas'</span>)</div><div class="line"></div><div class="line"><span class="comment"># 存储结果保存在results中 </span></div><div class="line">print(<span class="string">"Saw &#123;0&#125; result(s)."</span>.format(len(results)))</div><div class="line"></div><div class="line"><span class="comment"># 循环获取结果</span></div><div class="line"><span class="keyword">for</span> result <span class="keyword">in</span> results:</div><div class="line">    print(<span class="string">"The title is '&#123;0&#125;'."</span>.format(result[<span class="string">'title'</span>]))</div><div class="line"></div><div class="line"><span class="comment"># 更加高级的查询</span></div><div class="line">results = solr.search(<span class="string">'bananas'</span>, **&#123;</div><div class="line">    <span class="string">'hl'</span>: <span class="string">'true'</span>,</div><div class="line">    <span class="string">'hl.fragsize'</span>: <span class="number">10</span>,</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment"># 也可以进行模糊查询</span></div><div class="line">similar = solr.more_like_this(q=<span class="string">'id:doc_2'</span>, mltfl=<span class="string">'text'</span>)</div><div class="line"></div><div class="line"><span class="comment"># 删除文档</span></div><div class="line">solr.delete(id=<span class="string">'doc_1'</span>)</div><div class="line"></div><div class="line"><span class="comment"># 删除所有文档</span></div><div class="line">solr.delete(q=<span class="string">'*:*'</span>)</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Solr是什么？&quot;&gt;&lt;a href=&quot;#Solr是什么？&quot; class=&quot;headerlink&quot; title=&quot;Solr是什么？&quot;&gt;&lt;/a&gt;&lt;code&gt;Solr&lt;/code&gt;是什么？&lt;/h3&gt;&lt;p&gt;&lt;code&gt;Solr&lt;/code&gt;是一个开源的企业级搜索服务器，底
+    
+    </summary>
+    
+      <category term="python" scheme="http://nummy.github.io/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://nummy.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python操作Redis</title>
+    <link href="http://nummy.github.io/2016/02/24/Redis/"/>
+    <id>http://nummy.github.io/2016/02/24/Redis/</id>
+    <published>2016-02-24T10:01:41.000Z</published>
+    <updated>2016-02-25T02:19:56.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>首先，确保系统中已经安装并运行了redis服务器，。然后安装Redis的Python库，使用pip进行安装。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install redis</div></pre></td></tr></table></figure></p>
+<h3 id="连接数据库进行操作"><a href="#连接数据库进行操作" class="headerlink" title="连接数据库进行操作"></a>连接数据库进行操作</h3><p>下面是简单示例:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> redis</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = redis.StrictRedis(host=<span class="string">'localhost'</span>, port=<span class="number">6379</span>, db=<span class="number">0</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.set(<span class="string">'foo'</span>, <span class="string">'bar'</span>)</div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r.get(<span class="string">'foo'</span>)</div><div class="line"><span class="string">'bar'</span></div></pre></td></tr></table></figure></p>
+<p>redis的Python库提供了两个客户端类来操作数据库，其中一个就是上面的StrictRedis类，Strict严格遵守Redis的相关命令格式，但是也有一些例外。</p>
+<ul>
+<li>SELECT 没有实现</li>
+<li>DEL 用于del是个保留字，所以使用delete替代</li>
+<li>CONFIG SET | GET 使用config_set、config_get来代替</li>
+<li>MULTI|EXEC 在Pipline类中实现</li>
+<li>SUBSCRIBE|LISTEN 单独作为一个类实现</li>
+</ul>
+<h3 id="连接池"><a href="#连接池" class="headerlink" title="连接池"></a>连接池</h3><p>redis库使用连接池来管理与Redis服务器之间的连接，默认情况下，每个创建的Redis实例都会创建它自己的连接池，但是我们可以通过以下方式修改这种默认行为，先创建一个连接池，然后将它传递给Redis类的<code>connection_pool</code>参数。这样就可以共享连接池了。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>pool = redis.ConnectionPool(host=<span class="string">'localhost'</span>, port=<span class="number">6379</span>, db=<span class="number">0</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = redis.Redis(connection_pool=pool)</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;首先，确保系统中已经安装并运行了redis服务器，。然后安装Redis的Python库，使用pip进行安装。&lt;br&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=
+    
+    </summary>
+    
+      <category term="python" scheme="http://nummy.github.io/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://nummy.github.io/tags/python/"/>
+    
+      <category term="redis" scheme="http://nummy.github.io/tags/redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python并发编程</title>
+    <link href="http://nummy.github.io/2016/02/21/process/"/>
+    <id>http://nummy.github.io/2016/02/21/process/</id>
+    <published>2016-02-21T15:01:47.000Z</published>
+    <updated>2016-02-22T02:21:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>让计算机程序并发的运行是一个经常被讨论的话题，今天我想讨论一下Python下的各种并发方式。</p>
+<h2 id="一-并发方式"><a href="#一-并发方式" class="headerlink" title="一.并发方式"></a>一.并发方式</h2><hr>
+<h5 id="1-线程（Thread）"><a href="#1-线程（Thread）" class="headerlink" title="1.线程（Thread）"></a>1.线程（Thread）</h5><p>多线程几乎是每一个程序猿在使用每一种语言时都会首先想到用于解决并发的工具（JS程序员请回避），使用多线程可以有效的利用CPU资源（Python例外）。然而多线程所带来的程序的复杂度也不可避免，尤其是对竞争资源的同步问题。</p>
+<p>然而在python中由于使用了全局解释锁（GIL）的原因，代码并不能同时在多核上并发的运行，也就是说，Python的多线程不能并发，很多人会发现使<br>用多线程来改进自己的Python代码后，程序的运行效率却下降了，这是多么蛋疼的一件事呀！如果想了解更多细节，推荐阅读这篇文章。实际上使用多线程的编程模型是很困难的，程序员很容易犯错，这并不是程序员的错误，因为并行思维是反人类的，我们大多数人的思维是串行（精神分裂不讨论），而且冯诺依曼设计的计算机架构也是以顺序执行为基础的。所以如果你总是不能把你的多线程程序搞定，恭喜你，你是个思维正常的程序猿：）</p>
+<p>Python提供两组线程的接口，一组是thread模块，提供基础的，低等级（Low Level）接口，使用Function作为线程的运行体。还有一组是threading模块，提供更容易使用的基于对象的接口（类似于Java），可以继承Thread对象来实现线程，还提供了其它一些线程相关的对象，例如Timer，Lock</p>
+<p>使用thread模块的例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> thread</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">worker</span><span class="params">()</span>:</span></div><div class="line">  <span class="string">"""thread worker function"""</span></div><div class="line">  <span class="keyword">print</span> <span class="string">'Worker'</span></div><div class="line"></div><div class="line">thread.start_new_thread(worker)</div></pre></td></tr></table></figure>
+<p>使用threading模块的例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">worker</span><span class="params">()</span>:</span></div><div class="line">  <span class="string">"""thread worker function"""</span></div><div class="line">  <span class="keyword">print</span> <span class="string">'Worker'</span></div><div class="line"></div><div class="line">t = threading.Thread(target=worker)</div><div class="line">t.start()</div></pre></td></tr></table></figure>
+<p>或者Java风格：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">worker</span><span class="params">(threading.Thread)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">      <span class="keyword">pass</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></div><div class="line">      <span class="string">"""thread worker function"""</span></div><div class="line">      <span class="keyword">print</span> <span class="string">'Worker'</span></div><div class="line">   </div><div class="line">t = worker()</div><div class="line">t.start()</div></pre></td></tr></table></figure>
+<h4 id="2-进程-（Process）"><a href="#2-进程-（Process）" class="headerlink" title="2.进程 （Process）"></a>2.进程 （Process）</h4><p>由于前文提到的全局解释锁的问题，Python下比较好的并行方式是使用多进程，这样可以非常有效的使用CPU资源，并实现真正意义上的并发。当然，进程的开销比线程要大，也就是说如果你要创建数量惊人的并发进程的话，需要考虑一下你的机器是不是有一颗强大的心。</p>
+<p>Python的mutliprocess模块和threading具有类似的接口。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">worker</span><span class="params">()</span>:</span></div><div class="line">  <span class="string">"""thread worker function"""</span></div><div class="line">  <span class="keyword">print</span> <span class="string">'Worker'</span></div><div class="line"></div><div class="line">p = Process(target=worker)</div><div class="line">p.start()</div><div class="line">p.join()</div></pre></td></tr></table></figure>
+<p>由于线程共享相同的地址空间和内存，所以线程之间的通信是非常容易的，然而进程之间的通信就要复杂一些了。常见的进程间通信有，管道，消息队列，Socket接口（TCP/IP）等等。</p>
+<p>Python的mutliprocess模块提供了封装好的管道和队列，可以方便的在进程间传递消息。</p>
+<p>Python进程间的同步使用锁，这一点和线程是一样的。</p>
+<p>另外，Python还提供了进程池Pool对象，可以方便的管理和控制线程。</p>
+<h4 id="3-远程分布式主机-（Distributed-Node）"><a href="#3-远程分布式主机-（Distributed-Node）" class="headerlink" title="3.远程分布式主机 （Distributed Node）"></a>3.远程分布式主机 （Distributed Node）</h4><p>随着大数据时代的到临，摩尔定理在单机上似乎已经失去了效果，数据的计算和处理需要分布式的计算机网络来运行，程序并行的运行在多个主机节点上，已经是现在的软件架构所必需考虑的问题。</p>
+<p>远程主机间的进程间通信有几种常见的方式：</p>
+<p><strong>TCP／IP</strong></p>
+<p>TCP／IP是所有远程通信的基础，然而API比较低级别，使用起来比较繁琐，所以一般不会考虑</p>
+<p><strong> 远程方法调用 Remote Function Call</strong></p>
+<p>RPC是早期的远程进程间通信的手段。Python下有一个开源的实现RPyC</p>
+<h4 id="远程对象-Remote-Object"><a href="#远程对象-Remote-Object" class="headerlink" title="远程对象 Remote Object"></a>远程对象 Remote Object</h4><p>远程对象是更高级别的封装，程序可以想操作本地对象一样去操作一个远程对象在本地的代理。远程对象最广为使用的规范CORBA，CORBA最大的好处是可以在不同语言和平台中进行通信。当让不用的语言和平台还有一些各自的远程对象实现，例如Java的RMI，MS的DCOM</p>
+<p>Python的开源实现，有许多对远程对象的支持：</p>
+<ul>
+<li>Dopy</li>
+<li>Fnorb(CORBA)</li>
+<li>ICE</li>
+<li>omniORB</li>
+<li>Pyro</li>
+<li>YAMI</li>
+</ul>
+<h4 id="消息队列-Message-Queue"><a href="#消息队列-Message-Queue" class="headerlink" title="消息队列 Message Queue"></a>消息队列 Message Queue</h4><p>比起RPC或者远程对象，消息是一种更为灵活的通信手段，常见的支持Python接口的消息机制有:</p>
+<ul>
+<li>RabbitMQ</li>
+<li>ZeroMQ</li>
+<li>Kafka</li>
+<li>AWS SQS ＋ BOTO</li>
+</ul>
+<p>在远程主机上执行并发和本地的多进程并没有非常大的差异，都需要解决进程间通信的问题。当然对远程进程的管理和协调比起本地要复杂。</p>
+<p>Python下有许多开源的框架来支持分布式的并发，提供有效的管理手段包括：</p>
+<p><strong>Celery</strong><br>Celery是一个非常成熟的Python分布式框架，可以在分布式的系统中，异步的执行任务，并提供有效的管理和调度功能。</p>
+<p><strong>SCOOP</strong><br>SCOOP （Scalable COncurrent Operations in Python）提供简单易用的分布式调用接口，使用Future接口来进行并发。</p>
+<p><strong>Dispy</strong><br>相比起Celery和SCOOP，Dispy提供更为轻量级的分布式并行服务</p>
+<p><strong>PP</strong><br>PP （Parallel Python）是另外一个轻量级的Python并行服务</p>
+<p><strong>Asyncoro</strong><br>Asyncoro是另一个利用Generator实现分布式并发的Python框架，</p>
+<p>当然还有许多其它的系统，我没有一一列出,另外，许多的分布式系统多提供了对Python接口的支持，例如Spark。<br>待续</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;让计算机程序并发的运行是一个经常被讨论的话题，今天我想讨论一下Python下的各种并发方式。&lt;/p&gt;
+&lt;h2 id=&quot;一-并发方式&quot;&gt;&lt;a href=&quot;#一-并发方式&quot; class=&quot;headerlink&quot; title=&quot;一.并发方式&quot;&gt;&lt;/a&gt;一.并发方式&lt;/h2&gt;&lt;hr
+    
+    </summary>
+    
+      <category term="python" scheme="http://nummy.github.io/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://nummy.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python运行中动态导入模块</title>
+    <link href="http://nummy.github.io/2016/02/21/importlib/"/>
+    <id>http://nummy.github.io/2016/02/21/importlib/</id>
+    <published>2016-02-21T11:38:38.000Z</published>
+    <updated>2016-02-22T03:48:17.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>有时候，需要在运行Python的过程中根据动态参数来导入具体的模块，这可以通过importlib模块来实现。</p>
+<p>importlib模块只有一个方法import_module(),它可以接受一个参数或者两个参数，一个参数，说明通过绝对路径来导入模块，如果是两个参数，说明通过相对路径来导入模块，这时第一个参数为相对路径，第二个参数为基准路径。</p>
+<p>例如pkg包下面有一个模块mod，还有一个子包subpkg,目录结构如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">/pkg</div><div class="line">    __init__.py</div><div class="line">    mod.py</div><div class="line">    /subpkg</div><div class="line">	__init__.py</div><div class="line">	...</div></pre></td></tr></table></figure></p>
+<p>那么通过绝对路径到导入模块的代码如下所示：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">importlib.import_module(<span class="string">"pkg.mod"</span>)</div></pre></td></tr></table></figure></p>
+<p>而通过相对路径导入模块的代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">importlib.import_module(<span class="string">"..mod"</span>, <span class="string">"pkg.subpkg"</span>)</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;有时候，需要在运行Python的过程中根据动态参数来导入具体的模块，这可以通过importlib模块来实现。&lt;/p&gt;
+&lt;p&gt;importlib模块只有一个方法import_module(),它可以接受一个参数或者两个参数，一个参数，说明通过绝对路径来导入模块，如果是两个参数
+    
+    </summary>
+    
+      <category term="python" scheme="http://nummy.github.io/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://nummy.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>正向代理与反向代理</title>
+    <link href="http://nummy.github.io/2016/02/21/proxy/"/>
+    <id>http://nummy.github.io/2016/02/21/proxy/</id>
+    <published>2016-02-21T05:40:40.000Z</published>
+    <updated>2016-02-21T05:52:58.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h3><p>正向代理是位于客户端与原始服务器之间的服务器，相当于一个中介，客户端向代理服务器发送一个请求，并指定目标（原始服务器），然后代理服务器向原始服务器转交请求，并将获得的内容返回给客户端。客户端必须进行一些设置才能使用正向代理。</p>
+<h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><p>反向代理与正向代理相反，对于客户端而言，它就是原始服务器，所以客户端不需要做任何特别的设置。客户端向反向代理的命名空间（name-space）中的内容发送普通请求，接着反向代理将判断向何处转交请求，并将获得的内容返回客户端，就像这些内容原本是它的一样。<br>下面是反向代理的图解：<br><img src="http://static.open-open.com/lib/uploadImg/20141202/20141202104859_484.jpg" alt="反向代理"></p>
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><ul>
+<li><p>从用途来讲：<br>正向代理的典型用途是为在防火墙内的局域网客户端提供访问Internet的途径。正向代理还可以使用缓冲特性减少网络使用率。反向代理的典型用途是将 防火墙后面的服务器提供给Internet用户访问。反向代理还可以为后端的多台服务器提供负载平衡，或为后端较慢的服务器提供缓冲服务。<br>另外，反向代理还可以启用高级URL策略和管理技术，从而使处于不同web服务器</p>
+</li>
+<li><p>从安全性来讲：<br>正向代理允许客户端通过它访问任意网站并且隐藏客户端自身，因此你必须采取安全措施以确保仅为经过授权的客户端提供服务。<br>反向代理对外都是透明的，访问者并不知道自己访问的是一个代理。</p>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;正向代理&quot;&gt;&lt;a href=&quot;#正向代理&quot; class=&quot;headerlink&quot; title=&quot;正向代理&quot;&gt;&lt;/a&gt;正向代理&lt;/h3&gt;&lt;p&gt;正向代理是位于客户端与原始服务器之间的服务器，相当于一个中介，客户端向代理服务器发送一个请求，并指定目标（原始服务器），然后
+    
+    </summary>
+    
+      <category term="linux" scheme="http://nummy.github.io/categories/linux/"/>
+    
+    
+      <category term="linux" scheme="http://nummy.github.io/tags/linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>U盘启动盘安装Win10&amp;CentOS所遇到的坑</title>
+    <link href="http://nummy.github.io/2016/02/20/centos/"/>
+    <id>http://nummy.github.io/2016/02/20/centos/</id>
+    <published>2016-02-20T03:03:53.000Z</published>
+    <updated>2016-02-20T03:38:12.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>之前一直在Win10上用虚拟机装的CentOS，很不爽，想自己再装个Win10&amp;CentOS双系统，无可用光盘，只好自己制作一个U盘启动盘。具体过程就不描述了，网上教程一大把。</p>
+<p>现在说一下安装之后所遇到的问题以及解决办法。</p>
+<ol>
+<li><p>问题1：U盘安装启动出现press the enter key to begin the installation process 就不动弹了。<br>解决办法：<br>替换U盘中，/syslinux/vesamenu.c32文件，<a href="http://vdisk.weibo.com/s/dDpCP-5ht4wdC" target="_blank" rel="external">共享地址</a></p>
+</li>
+<li><p>问题2：由于我的系统是Win10，之前的分区情况是两个主分区，一个扩展分区，扩展分区下两个逻辑分区。我首先使用其中一个空的主分区进行安装，结果无法安装。<br>解决办法：<br>使用DiskGenius先将空的主分区删除，然后将剩余空间扩展到其中一个逻辑分区，此处时间较长，最后再压缩这个逻辑分区，再次创建一个逻辑分区，我大概压缩出80GB的样子，用这个逻辑分区来安装CentOS。</p>
+</li>
+<li><p>问题3：安装过程中又提示没有找到安装光盘映像。<br>解决办法：<br>将CentOS的iso映像拷贝到u盘中。</p>
+</li>
+<li><p>问题4：继续安装，安装成功，拔掉U盘再启动，却发现无法启动系统。<br>解决办法：<br>分区之后，进入下面的界面，点击更改设备<br><img src="http://www.osyunwei.com/wp-content/uploads/2012/02/492.jpg" alt="更改设备"><br>然后选择BIOS启动顺序，将第一启动器选择为本地磁盘，第二启动器改为U盘。因为默认情况下，会把启动引导安装到U盘中，所以拔掉U盘就会无法启动。</p>
+</li>
+<li><p>问题5：无法连接无线网络<br>解决办法：<br>这是因为CentOS安装过程中不会主动安装无线网卡驱动，所以不能通过无线上网，由于条件限制，我这没有有线网络，所以最终还是决定抛弃CentOS了，选用更加人性化的Ubuntu。</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;之前一直在Win10上用虚拟机装的CentOS，很不爽，想自己再装个Win10&amp;amp;CentOS双系统，无可用光盘，只好自己制作一个U盘启动盘。具体过程就不描述了，网上教程一大把。&lt;/p&gt;
+&lt;p&gt;现在说一下安装之后所遇到的问题以及解决办法。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://nummy.github.io/categories/Linux/"/>
+    
+    
+      <category term="linux" scheme="http://nummy.github.io/tags/linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>APSchedule定时任务框架实例学习</title>
+    <link href="http://nummy.github.io/2016/02/19/aps-example/"/>
+    <id>http://nummy.github.io/2016/02/19/aps-example/</id>
+    <published>2016-02-19T14:55:12.000Z</published>
+    <updated>2016-02-20T07:06:14.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>上一篇日志我们学习了APSchedule定时任务框架的大致用法，现在再来实战练习下。</p>
+<h3 id="实例1：最简单的例子"><a href="#实例1：最简单的例子" class="headerlink" title="实例1：最简单的例子"></a>实例1：最简单的例子</h3><p>每个三秒输出次tick</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"></div><div class="line"><span class="keyword">from</span> apscheduler.schedulers.blocking <span class="keyword">import</span> BlockingScheduler</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    scheduler = BlockingScheduler()</div><div class="line">    scheduler.add_job(<span class="string">'sys:stdout.write'</span>, <span class="string">'interval'</span>, seconds=<span class="number">3</span>, args=[<span class="string">'tick\n'</span>])</div><div class="line">    print(<span class="string">'Press Ctrl+&#123;0&#125; to exit'</span>.format(<span class="string">'Break'</span> <span class="keyword">if</span> os.name == <span class="string">'nt'</span> <span class="keyword">else</span> <span class="string">'C'</span>))</div><div class="line"></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        scheduler.start()</div><div class="line">    <span class="keyword">except</span> (KeyboardInterrupt, SystemExit):</div><div class="line">        <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<h3 id="实例2：使用ProcessPoolExecutor"><a href="#实例2：使用ProcessPoolExecutor" class="headerlink" title="实例2：使用ProcessPoolExecutor"></a>实例2：使用ProcessPoolExecutor</h3><p>这个例子中我们将任务放在进程池中，这个任务每隔三秒输出一次当前时间：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="string">"""</span></div><div class="line">Demonstrates how to schedule a job to be run in a process pool on 3 second intervals.</div><div class="line">"""</div><div class="line"></div><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div><div class="line"><span class="keyword">import</span> os</div><div class="line"></div><div class="line"><span class="keyword">from</span> apscheduler.schedulers.blocking <span class="keyword">import</span> BlockingScheduler</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">tick</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'Tick! The time is: %s'</span> % datetime.now())</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    scheduler = BlockingScheduler()</div><div class="line">    scheduler.add_executor(<span class="string">'processpool'</span>)</div><div class="line">    scheduler.add_job(tick, <span class="string">'interval'</span>, seconds=<span class="number">3</span>)</div><div class="line">    print(<span class="string">'Press Ctrl+&#123;0&#125; to exit'</span>.format(<span class="string">'Break'</span> <span class="keyword">if</span> os.name == <span class="string">'nt'</span> <span class="keyword">else</span> <span class="string">'C'</span>))</div><div class="line"></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        scheduler.start()</div><div class="line">    <span class="keyword">except</span> (KeyboardInterrupt, SystemExit):</div><div class="line">        <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<h3 id="实例3：使用任务仓库"><a href="#实例3：使用任务仓库" class="headerlink" title="实例3：使用任务仓库"></a>实例3：使用任务仓库</h3><p>下面的例子使用SQLAlchemy任务仓库，每次执行执行任务时，都会添加一个新的alarm任务，你可以退出程序，然后重启，查看之前没有执行的alarm，也可以使用数据库的url作为参数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="string">"""</span></div><div class="line">This example demonstrates the use of the SQLAlchemy job store.</div><div class="line">On each run, it adds a new alarm that fires after ten seconds.</div><div class="line">You can exit the program, restart it and observe that any previous alarms that have not fired yet</div><div class="line">are still active. You can also give it the database URL as an argument.</div><div class="line">See the SQLAlchemy documentation on how to construct those.</div><div class="line">"""</div><div class="line"></div><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> os</div><div class="line"></div><div class="line"><span class="keyword">from</span> apscheduler.schedulers.blocking <span class="keyword">import</span> BlockingScheduler</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">alarm</span><span class="params">(time)</span>:</span></div><div class="line">    print(<span class="string">'Alarm! This alarm was scheduled at %s.'</span> % time)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    scheduler = BlockingScheduler()</div><div class="line">    url = sys.argv[<span class="number">1</span>] <span class="keyword">if</span> len(sys.argv) &gt; <span class="number">1</span> <span class="keyword">else</span> <span class="string">'sqlite:///example.sqlite'</span></div><div class="line">    scheduler.add_jobstore(<span class="string">'sqlalchemy'</span>, url=url)</div><div class="line">    alarm_time = datetime.now() + timedelta(seconds=<span class="number">10</span>)</div><div class="line">    scheduler.add_job(alarm, <span class="string">'date'</span>, run_date=alarm_time, args=[datetime.now()])</div><div class="line">    print(<span class="string">'To clear the alarms, delete the example.sqlite file.'</span>)</div><div class="line">    print(<span class="string">'Press Ctrl+&#123;0&#125; to exit'</span>.format(<span class="string">'Break'</span> <span class="keyword">if</span> os.name == <span class="string">'nt'</span> <span class="keyword">else</span> <span class="string">'C'</span>))</div><div class="line"></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        scheduler.start()</div><div class="line">    <span class="keyword">except</span> (KeyboardInterrupt, SystemExit):</div><div class="line">        <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;上一篇日志我们学习了APSchedule定时任务框架的大致用法，现在再来实战练习下。&lt;/p&gt;
+&lt;h3 id=&quot;实例1：最简单的例子&quot;&gt;&lt;a href=&quot;#实例1：最简单的例子&quot; class=&quot;headerlink&quot; title=&quot;实例1：最简单的例子&quot;&gt;&lt;/a&gt;实例1：最简
+    
+    </summary>
+    
+      <category term="python" scheme="http://nummy.github.io/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://nummy.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python定时任务框架APScheduler（译）</title>
+    <link href="http://nummy.github.io/2016/02/19/aps/"/>
+    <id>http://nummy.github.io/2016/02/19/aps/</id>
+    <published>2016-02-19T09:35:10.000Z</published>
+    <updated>2016-02-20T06:34:01.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><hr>
+<p><code>APScheduler</code>(以下简称APS)框架可以让用户定时执行或者周期性执行Python任务。既可以添加任务也可以删除任务，还可以将任务存储在数据库中。当APS重启之后，还会继续执行之前设置的任务。<br>APS是跨平台的，注意APS既不是守护进程也不是服务，更不是命令行程序。APS是进程内的调度器，也就是说它的实现原理是在进程内产生内置的阻塞来创建定时服务，以便在预定的时间内执行某个任务。<br>APS支持以下三种定时任务：</p>
+<ul>
+<li><code>crontab</code>类型任务</li>
+<li>固定时间间隔任务</li>
+<li>基于日期时间的一次性任务</li>
+</ul>
+<p>你可以使用上面任意一种定时任务或者组合任务。<br>APS支持以下面几种方式保存：</p>
+<ul>
+<li>内存</li>
+<li>SQLAlchemy</li>
+<li>MongoDB</li>
+<li>Redis</li>
+</ul>
+<p>APS也可以整合进其他几个Python框架：</p>
+<ul>
+<li>asyncio</li>
+<li>gevent</li>
+<li>Tornado</li>
+<li>Twisted</li>
+<li>Qt</li>
+</ul>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><hr>
+<p>使用pip进行安装：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ pip install apscheduler</div></pre></td></tr></table></figure></p>
+<p>如果你没有安装pip，可以通过下面链接进行安装<a href="https://bootstrap.pypa.io/get-pip.py" target="_blank" rel="external">get-pip.py</a><br>如果不能通过pip下载，也可以直接下载<a href="://pypi.python.org/pypi/APScheduler/">APS安装包</a>，解压再进行安装<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ python setup.py install</div></pre></td></tr></table></figure></p>
+<h3 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h3><p>APS由以下几部分组成：</p>
+<ul>
+<li>触发器（triggers）</li>
+<li>任务仓库（job stores）</li>
+<li>执行器（executors）</li>
+<li>调度器（schedulers）</li>
+</ul>
+<p>触发器包含了所有定时任务逻辑，每个任务都有一个对应的触发器，触发器决定任何的何时执行，初始配置情况下，触发器是无状态的。</p>
+<p>任务仓库保存要执行的任务，其中一个默认的任务仓库将任务保存在内存中，而另外几个任务仓库将任务保存在数据库中。在将任务保存到任务仓库前，会对任务执行序列化操作，当重新读取任务时，再执行反序列化操作。除了默认的任务仓库，其他任务仓库都不会在内存中保存任务，而是作为任务保存、加载、更新以及搜索的一个中间件。任务仓库在定时器之间不能共享。</p>
+<p>执行器用来执行定时任务，它只是将要执行的任务放在新的线程或者线程池中运行。执行完毕之后，再通知定时器。</p>
+<p>调度器将其它几个组件联系在一起，一般在应用中只有一个调度器，程序开发者不会直接操作触发器、任务仓库或执行器，相反，调度器提供了这个接口。任务仓库以及执行器的配置都是通过调度器来实现的。</p>
+<h3 id="选择合适的调度器、执行器以及任务仓库"><a href="#选择合适的调度器、执行器以及任务仓库" class="headerlink" title="选择合适的调度器、执行器以及任务仓库"></a>选择合适的调度器、执行器以及任务仓库</h3><p>选择调度器是根据我们的开发环境与实际应用来决定的，下面是一些常用调度器：</p>
+<ul>
+<li><a href="http://apscheduler.readthedocs.org/en/latest/modules/schedulers/blocking.html#apscheduler.schedulers.blocking.BlockingScheduler" target="_blank" rel="external">BlockingScheduler</a>：适合于只在进程中运行单个任务的情况</li>
+<li><a href="http://apscheduler.readthedocs.org/en/latest/modules/schedulers/background.html#apscheduler.schedulers.background.BackgroundScheduler" target="_blank" rel="external">BackgroundScheduler</a>: 适合于要求任何在程序后台运行的情况</li>
+<li><code>AsyncIOScheduler</code>：适合于使用asyncio框架的情况</li>
+<li><code>GeventScheduler</code>: 适合于使用gevent框架的情况</li>
+<li><a href="http://apscheduler.readthedocs.org/en/latest/modules/schedulers/tornado.html#apscheduler.schedulers.tornado.TornadoScheduler" target="_blank" rel="external">TornadoScheduler</a>: 适合于使用Tornado框架的应用</li>
+<li><code>TwistedScheduler</code>: 适合使用Twisted框架的应用</li>
+<li><code>QtScheduler</code>: 适合使用QT的情况</li>
+</ul>
+<p>而任务仓库，如果是非持久任务，使用<code>MemoryStore</code>就可以了，如果是持久性任务，那么久需要根据编程环境进行选择了。</p>
+<p>大多数情况下，执行器选择<code>ThreadPoolExecutor</code>就可以了，但是如果涉及到比较耗CPU的任务，就可以选择<code>ProcessPoolExecutor</code>，以充分利用多核CPU。，当然也可以同时使用两个执行器。</p>
+<p>可以在相应的API中找到对应的任务仓库以及执行器。</p>
+<h3 id="配置任务调度器"><a href="#配置任务调度器" class="headerlink" title="配置任务调度器"></a>配置任务调度器</h3><p>APS提供了多种调度器配置方法，既可以使用配置字典，也可以直接传递配置参数给调度器，还可以先初始化调度器，添加完任务之后，最后再来配置调度器。<br>相关的配置参数可以参考API文档。<br>举个简单例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> apscheduler.schedulers.background <span class="keyword">import</span> BackgroundScheduler</div><div class="line">scheduler = BackgroundScheduler()</div><div class="line"><span class="comment"># Initialize the rest of the application here, or before the scheduler initialization</span></div></pre></td></tr></table></figure>
+<p>上面的代码生成一个后台调度器，使用默认名为<code>default</code>的<code>MemoryJobStore</code>，以及默认名为<code>default</code>的<code>ThreadPoolExecutor</code>，最大线程数为10。</p>
+<p>现在假设你想使用两个任务仓库以及两个执行器，并且还想调整下任务的默认参数。可以使用下面三种方法，所完成的功能是一样的。</p>
+<p>方法1：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pytz <span class="keyword">import</span> utc</div><div class="line"></div><div class="line"><span class="keyword">from</span> apscheduler.schedulers.background <span class="keyword">import</span> BackgroundScheduler</div><div class="line"><span class="keyword">from</span> apscheduler.jobstores.mongodb <span class="keyword">import</span> MongoDBJobStore</div><div class="line"><span class="keyword">from</span> apscheduler.jobstores.sqlalchemy <span class="keyword">import</span> SQLAlchemyJobStore</div><div class="line"><span class="keyword">from</span> apscheduler.executors.pool <span class="keyword">import</span> ThreadPoolExecutor, ProcessPoolExecutor</div><div class="line"></div><div class="line"></div><div class="line">jobstores = &#123;</div><div class="line">    <span class="string">'mongo'</span>: MongoDBJobStore(),</div><div class="line">    <span class="string">'default'</span>: SQLAlchemyJobStore(url=<span class="string">'sqlite:///jobs.sqlite'</span>)</div><div class="line">&#125;</div><div class="line">executors = &#123;</div><div class="line">    <span class="string">'default'</span>: ThreadPoolExecutor(<span class="number">20</span>),</div><div class="line">    <span class="string">'processpool'</span>: ProcessPoolExecutor(<span class="number">5</span>)</div><div class="line">&#125;</div><div class="line">job_defaults = &#123;</div><div class="line">    <span class="string">'coalesce'</span>: <span class="keyword">False</span>,</div><div class="line">    <span class="string">'max_instances'</span>: <span class="number">3</span></div><div class="line">&#125;</div><div class="line">scheduler = BackgroundScheduler(jobstores=jobstores, executors=executors, job_defaults=job_defaults, timezone=utc)</div></pre></td></tr></table></figure>
+<p>方法2：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> apscheduler.schedulers.background <span class="keyword">import</span> BackgroundScheduler</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># The "apscheduler." prefix is hard coded</span></div><div class="line">scheduler = BackgroundScheduler(&#123;</div><div class="line">    <span class="string">'apscheduler.jobstores.mongo'</span>: &#123;</div><div class="line">         <span class="string">'type'</span>: <span class="string">'mongodb'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="string">'apscheduler.jobstores.default'</span>: &#123;</div><div class="line">        <span class="string">'type'</span>: <span class="string">'sqlalchemy'</span>,</div><div class="line">        <span class="string">'url'</span>: <span class="string">'sqlite:///jobs.sqlite'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="string">'apscheduler.executors.default'</span>: &#123;</div><div class="line">        <span class="string">'class'</span>: <span class="string">'apscheduler.executors.pool:ThreadPoolExecutor'</span>,</div><div class="line">        <span class="string">'max_workers'</span>: <span class="string">'20'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="string">'apscheduler.executors.processpool'</span>: &#123;</div><div class="line">        <span class="string">'type'</span>: <span class="string">'processpool'</span>,</div><div class="line">        <span class="string">'max_workers'</span>: <span class="string">'5'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="string">'apscheduler.job_defaults.coalesce'</span>: <span class="string">'false'</span>,</div><div class="line">    <span class="string">'apscheduler.job_defaults.max_instances'</span>: <span class="string">'3'</span>,</div><div class="line">    <span class="string">'apscheduler.timezone'</span>: <span class="string">'UTC'</span>,</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>方法3：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pytz <span class="keyword">import</span> utc</div><div class="line"></div><div class="line"><span class="keyword">from</span> apscheduler.schedulers.background <span class="keyword">import</span> BackgroundScheduler</div><div class="line"><span class="keyword">from</span> apscheduler.jobstores.sqlalchemy <span class="keyword">import</span> SQLAlchemyJobStore</div><div class="line"><span class="keyword">from</span> apscheduler.executors.pool <span class="keyword">import</span> ProcessPoolExecutor</div><div class="line"></div><div class="line"></div><div class="line">jobstores = &#123;</div><div class="line">    <span class="string">'mongo'</span>: &#123;<span class="string">'type'</span>: <span class="string">'mongodb'</span>&#125;,</div><div class="line">    <span class="string">'default'</span>: SQLAlchemyJobStore(url=<span class="string">'sqlite:///jobs.sqlite'</span>)</div><div class="line">&#125;</div><div class="line">executors = &#123;</div><div class="line">    <span class="string">'default'</span>: &#123;<span class="string">'type'</span>: <span class="string">'threadpool'</span>, <span class="string">'max_workers'</span>: <span class="number">20</span>&#125;,</div><div class="line">    <span class="string">'processpool'</span>: ProcessPoolExecutor(max_workers=<span class="number">5</span>)</div><div class="line">&#125;</div><div class="line">job_defaults = &#123;</div><div class="line">    <span class="string">'coalesce'</span>: <span class="keyword">False</span>,</div><div class="line">    <span class="string">'max_instances'</span>: <span class="number">3</span></div><div class="line">&#125;</div><div class="line">scheduler = BackgroundScheduler()</div><div class="line"></div><div class="line"><span class="comment"># .. do something else here, maybe add jobs etc.</span></div><div class="line"></div><div class="line">scheduler.configure(jobstores=jobstores, executors=executors, job_defaults=job_defaults, timezone=utc)</div></pre></td></tr></table></figure>
+<h3 id="启动调度器"><a href="#启动调度器" class="headerlink" title="启动调度器"></a>启动调度器</h3><p>使用<code>start()</code>方法启动调度器，<code>BlockingScheduler</code>需要在初始化之后才能执行<code>start()</code>,对于其他的Scheduler，调用<code>start()</code>方法都会直接返回，然后可以继续执行后面的初始化操作。</p>
+<p>调度器启动之后，就不能更改它的配置了。</p>
+<h3 id="添加任务"><a href="#添加任务" class="headerlink" title="添加任务"></a>添加任务</h3><p>有两种添加任务的办法：</p>
+<ul>
+<li>调用<code>add_job()</code></li>
+<li>使用<code>scheduled_job()</code>修饰器</li>
+</ul>
+<p>第一个方法是使用最多的，因为调用它会返回一个<code>apscheduler.job.Job</code>实例，后续可以对它进行修改或者删除，而使用修饰器添加的任务添加之后就不能进行修改。</p>
+<p>在调度器中设置定时任务，如果任务添加的时候，调度器还没有启动，那么任务只是暂时放到调度器中，当调度器启动之后重新计算第一次执行时间。</p>
+<p>需要注意的是，可以使用执行器或者任务仓库来序列化任务，但是这个任务必须满足两个条件：</p>
+<ol>
+<li>调用对象必须全局可访问</li>
+<li>调用对象的参数必须也可以序列化。</li>
+</ol>
+<p>在所有内置的任务仓库中，只有<code>MemoryJobStore</code>不能序列化对象；在所有内置的执行器中，只有<code>ProcessPoolExecutors</code>会序列化任务。</p>
+<p>如果你需要在应用中使用持久性任务，那就必须给任务定义一个ID，并设置<code>replace_existing=True</code>,否则每次重启应用都会返回一个新的任务。</p>
+<p>如果要立即执行任务，只需要在添加任务的时候省略<code>trigger</code>参数。</p>
+<h3 id="删除任务"><a href="#删除任务" class="headerlink" title="删除任务"></a>删除任务</h3><p>当从调度器中删除任务的时候，就会从相关联的任务仓库中删除任务，后面就不会再执行了，有两种方法来删除任务。</p>
+<ol>
+<li>调用<code>remove_job()</code>，参数为job ID以及任务仓库名</li>
+<li>调用<code>remove()</code></li>
+</ol>
+<p>第二种方法用起来更加方便，但是需要先保存添加任务时返回的实例对象；而通过<code>scheduled_job()</code>添加的任务，只能使用第一种方法进行删除。</p>
+<p>如果任务执行完毕，它会自动被删除。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">job = scheduler.add_job(myfunc, <span class="string">'interval'</span>, minutes=<span class="number">2</span>)</div><div class="line">job.remove()</div></pre></td></tr></table></figure>
+<p>同样的，如果显式使用任务ID，则使用下面的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">scheduler.add_job(myfunc, &apos;interval&apos;, minutes=2, id=&apos;my_job_id&apos;)</div><div class="line">scheduler.remove_job(&apos;my_job_id&apos;)</div></pre></td></tr></table></figure>
+<h3 id="暂停与恢复任务"><a href="#暂停与恢复任务" class="headerlink" title="暂停与恢复任务"></a>暂停与恢复任务</h3><p>暂停与恢复任务也很简单，可以直接操作任务实例或者调度器来实现，当任务暂停时，它的运行时间会被重置，暂停期间不会计算进去，重启之后又算进去。</p>
+<p>暂停任务可以使用以下两种方法：</p>
+<ul>
+<li><code>apscheduler.job.Job.pause()</code></li>
+<li><code>apscheduler.schedulers.base.BaseScheduler.pause_job()</code></li>
+</ul>
+<p>恢复任务可以使用以下两种方法：</p>
+<ul>
+<li><code>apscheduler.job.Job.resume()</code></li>
+<li><code>apscheduler.schedulers.BaseScheduler.resume_job()</code></li>
+</ul>
+<h3 id="获取任务列表"><a href="#获取任务列表" class="headerlink" title="获取任务列表"></a>获取任务列表</h3><p>可以使用<code>get_jobs()</code>方法来获取当前正在处理的任务列表，如果只是想获取某个任务仓库中的任务列表，可以使用任务仓库名作为参数传入。</p>
+<p>APS还提供了一个<code>print_jobs()</code>方法来打印格式化的任务列表。</p>
+<h3 id="修改任务"><a href="#修改任务" class="headerlink" title="修改任务"></a>修改任务</h3><p>使用<code>apscheduler.job.Job.modify()</code>或者<code>modify_job()</code>方法可以修改任务的属性，你可以修改任务的任意属性，除了<code>id</code>。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">job.modify(max_instances=<span class="number">6</span>, name=<span class="string">'Alternate name'</span>)</div></pre></td></tr></table></figure>
+<p>如果你想重新调度某个任务，例如改变它的触发器，则可以使用<code>apscheduler.job.Job.reschedule()</code>或者<code>reschedule_job()</code>方法，这个两个方法都可以为任务重新创建一个触发器，并重新计算任务的运行时间。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scheduler.reschedule_job(<span class="string">'my_job_id'</span>, trigger=<span class="string">'cron'</span>, minute=<span class="string">'*/5'</span>)</div></pre></td></tr></table></figure>
+<h3 id="关闭调度器"><a href="#关闭调度器" class="headerlink" title="关闭调度器"></a>关闭调度器</h3><p>使用下面的方法关闭调度器：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scheduler.shutdown()</div></pre></td></tr></table></figure>
+<p>默认情况下，scheduler会关闭它的任务仓库以及执行器，并等待所有正在执行的任务执行完。如果你不想等待，可以这样操作：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scheduler.shutdown(wait=<span class="keyword">False</span>)</div></pre></td></tr></table></figure>
+<h3 id="限制任务实例并发执行的个数"><a href="#限制任务实例并发执行的个数" class="headerlink" title="限制任务实例并发执行的个数"></a>限制任务实例并发执行的个数</h3><p>默认情况下，只允许同时执行一个任务实例，通过<code>max_instances</code>参数来设置允许并发执行任务的个数。</p>
+<h3 id="错失任务的合并"><a href="#错失任务的合并" class="headerlink" title="错失任务的合并"></a>错失任务的合并</h3><p>有时候调度器可能无法按时执行某个任务，最常见的情况就是当某个持久性任务保存在任务仓库中时，调度器关闭之后再重启，但是任务需要在重启之前被执行，这时这个任务就被错过了。调度器会根据任务<code>misfire_grace_time</code>参数的配置来决定错过的任务还要不要继续执行。这样做的话可能导致重启调度器之后会连续执行好几个任务。</p>
+<h3 id="调度器事件"><a href="#调度器事件" class="headerlink" title="调度器事件"></a>调度器事件</h3><p>可以给调度器添加事件监听器，调度器事件只有在某些情况下才会被触发，并且可以携带某些有用的信息。通过给<code>add_listener()</code>传递合适的<code>mask</code>参数，可以只监听几种特定的事件类型。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_listener</span><span class="params">(event)</span>:</span></div><div class="line">    <span class="keyword">if</span> event.exception:</div><div class="line">        print(<span class="string">'The job crashed :('</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        print(<span class="string">'The job worked :)'</span>)</div><div class="line"></div><div class="line">scheduler.add_listener(my_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;hr&gt;
+&lt;p&gt;&lt;code&gt;APScheduler&lt;/code&gt;(以下简称APS)框架可以让用户定时执行或者周期性执行Python任务。既可以添加
+    
+    </summary>
+    
+      <category term="python" scheme="http://nummy.github.io/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://nummy.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux su &amp; sudo 用法</title>
+    <link href="http://nummy.github.io/2016/02/17/sudo/"/>
+    <id>http://nummy.github.io/2016/02/17/sudo/</id>
+    <published>2016-02-17T11:44:04.000Z</published>
+    <updated>2016-02-18T05:02:13.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-su命令用于切换用户"><a href="#1-su命令用于切换用户" class="headerlink" title="1.su命令用于切换用户"></a>1.su命令用于切换用户</h3><p>通过su命令可以在不同用户间进行切换，如果是root用户香其他用户切换，则不需要输入密码。而普通用户切换到其它任何用户都需要输入口令。</p>
+<p><strong>语法规则</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">su [option] [user]</div><div class="line">-l : 登录并切换到用户环境</div><div class="line">-c : 执行一个命令，然后退出所切换到的环境</div></pre></td></tr></table></figure></p>
+<p><strong>用法</strong></p>
+<ul>
+<li>su不加任何参数，默认切换到root用户</li>
+<li>su加参数-，表示默认切换到root用户，并改变到root用户环境</li>
+<li>su 参数 -用户</li>
+</ul>
+<p><strong>su缺点</strong><br>需要把root用户的口令泄露给普通用户，带来安全威胁。</p>
+<h3 id="2-sudo授权许可使用su"><a href="#2-sudo授权许可使用su" class="headerlink" title="2.sudo授权许可使用su"></a>2.sudo授权许可使用su</h3><p>通过sudo，我们能把某些超级权限有针对性的下放，并且不需要普通用户知道root密码，所以sudo 相对于权限无限制性的su来说，还是比较安全的，所以sudo 也能被称为受限制的su ；另外sudo 是需要授权许可的，所以也被称为授权许可的su；</p>
+<p>sudo 执行命令的流程是当前用户切换到root（或其它指定切换到的用户），然后以root（或其它指定的切换到的用户）身份执行命令，执行完成后，直接退回到当前用户；而这些的前提是要通过sudo的配置文件/etc/sudoers来进行授权；</p>
+<p>比如我们使用普通用户查看etc/shadow文件的内容时，就会报权限不够的问题。这时可以使用sudo more /etc/shadow进行查看。前提是先配置/etc/sudoers文件进行授权。在root用户在使用visodu对/etc/sudoers进行修改。添加如下一行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">normal_user ALL=/bin/more</div></pre></td></tr></table></figure>
+<p>如果是给用户组授权，则需要在用户组名前加上%</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">%group_name ALL=/usr/bin*</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;1-su命令用于切换用户&quot;&gt;&lt;a href=&quot;#1-su命令用于切换用户&quot; class=&quot;headerlink&quot; title=&quot;1.su命令用于切换用户&quot;&gt;&lt;/a&gt;1.su命令用于切换用户&lt;/h3&gt;&lt;p&gt;通过su命令可以在不同用户间进行切换，如果是root用户香其
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://nummy.github.io/categories/Linux/"/>
+    
+    
+      <category term="linux" scheme="http://nummy.github.io/tags/linux/"/>
+    
+      <category term="shell" scheme="http://nummy.github.io/tags/shell/"/>
+    
+  </entry>
+  
+</feed>

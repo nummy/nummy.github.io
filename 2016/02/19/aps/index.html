@@ -1,0 +1,137 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="description"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Python定时任务框架APScheduler（译） · Nummy</title><link rel="short icon" href="/favicon.ico"><!-- font--><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600|Roboto Mono"><!-- icon--><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><!-- theme style--><link rel="stylesheet" href="/css/style.css"><!-- baidu analytics--><script type="text/javascript">var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?9e0cbea7d3319c6c94c71dfb93c151b8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- google analytics--><script type="text/javascript">(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-74273646-1', 'auto');
+ga('send', 'pageview');</script></head><body><div id="main"><header><a href="/." class="logo">Nummy</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">Python定时任务框架APScheduler（译）</h1><span class="post-time">Feb 19, 2016</span><div id="sidebar" class="post-sidebar"><h3 class="heading">Directory</h3><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基础概念"><span class="toc-text">基础概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选择合适的调度器、执行器以及任务仓库"><span class="toc-text">选择合适的调度器、执行器以及任务仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置任务调度器"><span class="toc-text">配置任务调度器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动调度器"><span class="toc-text">启动调度器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加任务"><span class="toc-text">添加任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除任务"><span class="toc-text">删除任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#暂停与恢复任务"><span class="toc-text">暂停与恢复任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取任务列表"><span class="toc-text">获取任务列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改任务"><span class="toc-text">修改任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关闭调度器"><span class="toc-text">关闭调度器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#限制任务实例并发执行的个数"><span class="toc-text">限制任务实例并发执行的个数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#错失任务的合并"><span class="toc-text">错失任务的合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调度器事件"><span class="toc-text">调度器事件</span></a></li></ol></div><div class="post-content"><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><hr>
+<p><code>APScheduler</code>(以下简称APS)框架可以让用户定时执行或者周期性执行Python任务。既可以添加任务也可以删除任务，还可以将任务存储在数据库中。当APS重启之后，还会继续执行之前设置的任务。<br>APS是跨平台的，注意APS既不是守护进程也不是服务，更不是命令行程序。APS是进程内的调度器，也就是说它的实现原理是在进程内产生内置的阻塞来创建定时服务，以便在预定的时间内执行某个任务。<br>APS支持以下三种定时任务：</p>
+<ul>
+<li><code>crontab</code>类型任务</li>
+<li>固定时间间隔任务</li>
+<li>基于日期时间的一次性任务</li>
+</ul>
+<p>你可以使用上面任意一种定时任务或者组合任务。<br>APS支持以下面几种方式保存：</p>
+<ul>
+<li>内存</li>
+<li>SQLAlchemy</li>
+<li>MongoDB</li>
+<li>Redis</li>
+</ul>
+<p>APS也可以整合进其他几个Python框架：</p>
+<ul>
+<li>asyncio</li>
+<li>gevent</li>
+<li>Tornado</li>
+<li>Twisted</li>
+<li>Qt</li>
+</ul>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><hr>
+<p>使用pip进行安装：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ pip install apscheduler</div></pre></td></tr></table></figure></p>
+<p>如果你没有安装pip，可以通过下面链接进行安装<a href="https://bootstrap.pypa.io/get-pip.py" target="_blank" rel="external">get-pip.py</a><br>如果不能通过pip下载，也可以直接下载<a href="://pypi.python.org/pypi/APScheduler/">APS安装包</a>，解压再进行安装<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ python setup.py install</div></pre></td></tr></table></figure></p>
+<h3 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h3><p>APS由以下几部分组成：</p>
+<ul>
+<li>触发器（triggers）</li>
+<li>任务仓库（job stores）</li>
+<li>执行器（executors）</li>
+<li>调度器（schedulers）</li>
+</ul>
+<p>触发器包含了所有定时任务逻辑，每个任务都有一个对应的触发器，触发器决定任何的何时执行，初始配置情况下，触发器是无状态的。</p>
+<p>任务仓库保存要执行的任务，其中一个默认的任务仓库将任务保存在内存中，而另外几个任务仓库将任务保存在数据库中。在将任务保存到任务仓库前，会对任务执行序列化操作，当重新读取任务时，再执行反序列化操作。除了默认的任务仓库，其他任务仓库都不会在内存中保存任务，而是作为任务保存、加载、更新以及搜索的一个中间件。任务仓库在定时器之间不能共享。</p>
+<p>执行器用来执行定时任务，它只是将要执行的任务放在新的线程或者线程池中运行。执行完毕之后，再通知定时器。</p>
+<p>调度器将其它几个组件联系在一起，一般在应用中只有一个调度器，程序开发者不会直接操作触发器、任务仓库或执行器，相反，调度器提供了这个接口。任务仓库以及执行器的配置都是通过调度器来实现的。</p>
+<h3 id="选择合适的调度器、执行器以及任务仓库"><a href="#选择合适的调度器、执行器以及任务仓库" class="headerlink" title="选择合适的调度器、执行器以及任务仓库"></a>选择合适的调度器、执行器以及任务仓库</h3><p>选择调度器是根据我们的开发环境与实际应用来决定的，下面是一些常用调度器：</p>
+<ul>
+<li><a href="http://apscheduler.readthedocs.org/en/latest/modules/schedulers/blocking.html#apscheduler.schedulers.blocking.BlockingScheduler" target="_blank" rel="external">BlockingScheduler</a>：适合于只在进程中运行单个任务的情况</li>
+<li><a href="http://apscheduler.readthedocs.org/en/latest/modules/schedulers/background.html#apscheduler.schedulers.background.BackgroundScheduler" target="_blank" rel="external">BackgroundScheduler</a>: 适合于要求任何在程序后台运行的情况</li>
+<li><code>AsyncIOScheduler</code>：适合于使用asyncio框架的情况</li>
+<li><code>GeventScheduler</code>: 适合于使用gevent框架的情况</li>
+<li><a href="http://apscheduler.readthedocs.org/en/latest/modules/schedulers/tornado.html#apscheduler.schedulers.tornado.TornadoScheduler" target="_blank" rel="external">TornadoScheduler</a>: 适合于使用Tornado框架的应用</li>
+<li><code>TwistedScheduler</code>: 适合使用Twisted框架的应用</li>
+<li><code>QtScheduler</code>: 适合使用QT的情况</li>
+</ul>
+<p>而任务仓库，如果是非持久任务，使用<code>MemoryStore</code>就可以了，如果是持久性任务，那么久需要根据编程环境进行选择了。</p>
+<p>大多数情况下，执行器选择<code>ThreadPoolExecutor</code>就可以了，但是如果涉及到比较耗CPU的任务，就可以选择<code>ProcessPoolExecutor</code>，以充分利用多核CPU。，当然也可以同时使用两个执行器。</p>
+<p>可以在相应的API中找到对应的任务仓库以及执行器。</p>
+<h3 id="配置任务调度器"><a href="#配置任务调度器" class="headerlink" title="配置任务调度器"></a>配置任务调度器</h3><p>APS提供了多种调度器配置方法，既可以使用配置字典，也可以直接传递配置参数给调度器，还可以先初始化调度器，添加完任务之后，最后再来配置调度器。<br>相关的配置参数可以参考API文档。<br>举个简单例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> apscheduler.schedulers.background <span class="keyword">import</span> BackgroundScheduler</div><div class="line">scheduler = BackgroundScheduler()</div><div class="line"><span class="comment"># Initialize the rest of the application here, or before the scheduler initialization</span></div></pre></td></tr></table></figure>
+<p>上面的代码生成一个后台调度器，使用默认名为<code>default</code>的<code>MemoryJobStore</code>，以及默认名为<code>default</code>的<code>ThreadPoolExecutor</code>，最大线程数为10。</p>
+<p>现在假设你想使用两个任务仓库以及两个执行器，并且还想调整下任务的默认参数。可以使用下面三种方法，所完成的功能是一样的。</p>
+<p>方法1：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pytz <span class="keyword">import</span> utc</div><div class="line"></div><div class="line"><span class="keyword">from</span> apscheduler.schedulers.background <span class="keyword">import</span> BackgroundScheduler</div><div class="line"><span class="keyword">from</span> apscheduler.jobstores.mongodb <span class="keyword">import</span> MongoDBJobStore</div><div class="line"><span class="keyword">from</span> apscheduler.jobstores.sqlalchemy <span class="keyword">import</span> SQLAlchemyJobStore</div><div class="line"><span class="keyword">from</span> apscheduler.executors.pool <span class="keyword">import</span> ThreadPoolExecutor, ProcessPoolExecutor</div><div class="line"></div><div class="line"></div><div class="line">jobstores = &#123;</div><div class="line">    <span class="string">'mongo'</span>: MongoDBJobStore(),</div><div class="line">    <span class="string">'default'</span>: SQLAlchemyJobStore(url=<span class="string">'sqlite:///jobs.sqlite'</span>)</div><div class="line">&#125;</div><div class="line">executors = &#123;</div><div class="line">    <span class="string">'default'</span>: ThreadPoolExecutor(<span class="number">20</span>),</div><div class="line">    <span class="string">'processpool'</span>: ProcessPoolExecutor(<span class="number">5</span>)</div><div class="line">&#125;</div><div class="line">job_defaults = &#123;</div><div class="line">    <span class="string">'coalesce'</span>: <span class="keyword">False</span>,</div><div class="line">    <span class="string">'max_instances'</span>: <span class="number">3</span></div><div class="line">&#125;</div><div class="line">scheduler = BackgroundScheduler(jobstores=jobstores, executors=executors, job_defaults=job_defaults, timezone=utc)</div></pre></td></tr></table></figure>
+<p>方法2：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> apscheduler.schedulers.background <span class="keyword">import</span> BackgroundScheduler</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># The "apscheduler." prefix is hard coded</span></div><div class="line">scheduler = BackgroundScheduler(&#123;</div><div class="line">    <span class="string">'apscheduler.jobstores.mongo'</span>: &#123;</div><div class="line">         <span class="string">'type'</span>: <span class="string">'mongodb'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="string">'apscheduler.jobstores.default'</span>: &#123;</div><div class="line">        <span class="string">'type'</span>: <span class="string">'sqlalchemy'</span>,</div><div class="line">        <span class="string">'url'</span>: <span class="string">'sqlite:///jobs.sqlite'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="string">'apscheduler.executors.default'</span>: &#123;</div><div class="line">        <span class="string">'class'</span>: <span class="string">'apscheduler.executors.pool:ThreadPoolExecutor'</span>,</div><div class="line">        <span class="string">'max_workers'</span>: <span class="string">'20'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="string">'apscheduler.executors.processpool'</span>: &#123;</div><div class="line">        <span class="string">'type'</span>: <span class="string">'processpool'</span>,</div><div class="line">        <span class="string">'max_workers'</span>: <span class="string">'5'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="string">'apscheduler.job_defaults.coalesce'</span>: <span class="string">'false'</span>,</div><div class="line">    <span class="string">'apscheduler.job_defaults.max_instances'</span>: <span class="string">'3'</span>,</div><div class="line">    <span class="string">'apscheduler.timezone'</span>: <span class="string">'UTC'</span>,</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>方法3：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pytz <span class="keyword">import</span> utc</div><div class="line"></div><div class="line"><span class="keyword">from</span> apscheduler.schedulers.background <span class="keyword">import</span> BackgroundScheduler</div><div class="line"><span class="keyword">from</span> apscheduler.jobstores.sqlalchemy <span class="keyword">import</span> SQLAlchemyJobStore</div><div class="line"><span class="keyword">from</span> apscheduler.executors.pool <span class="keyword">import</span> ProcessPoolExecutor</div><div class="line"></div><div class="line"></div><div class="line">jobstores = &#123;</div><div class="line">    <span class="string">'mongo'</span>: &#123;<span class="string">'type'</span>: <span class="string">'mongodb'</span>&#125;,</div><div class="line">    <span class="string">'default'</span>: SQLAlchemyJobStore(url=<span class="string">'sqlite:///jobs.sqlite'</span>)</div><div class="line">&#125;</div><div class="line">executors = &#123;</div><div class="line">    <span class="string">'default'</span>: &#123;<span class="string">'type'</span>: <span class="string">'threadpool'</span>, <span class="string">'max_workers'</span>: <span class="number">20</span>&#125;,</div><div class="line">    <span class="string">'processpool'</span>: ProcessPoolExecutor(max_workers=<span class="number">5</span>)</div><div class="line">&#125;</div><div class="line">job_defaults = &#123;</div><div class="line">    <span class="string">'coalesce'</span>: <span class="keyword">False</span>,</div><div class="line">    <span class="string">'max_instances'</span>: <span class="number">3</span></div><div class="line">&#125;</div><div class="line">scheduler = BackgroundScheduler()</div><div class="line"></div><div class="line"><span class="comment"># .. do something else here, maybe add jobs etc.</span></div><div class="line"></div><div class="line">scheduler.configure(jobstores=jobstores, executors=executors, job_defaults=job_defaults, timezone=utc)</div></pre></td></tr></table></figure>
+<h3 id="启动调度器"><a href="#启动调度器" class="headerlink" title="启动调度器"></a>启动调度器</h3><p>使用<code>start()</code>方法启动调度器，<code>BlockingScheduler</code>需要在初始化之后才能执行<code>start()</code>,对于其他的Scheduler，调用<code>start()</code>方法都会直接返回，然后可以继续执行后面的初始化操作。</p>
+<p>调度器启动之后，就不能更改它的配置了。</p>
+<h3 id="添加任务"><a href="#添加任务" class="headerlink" title="添加任务"></a>添加任务</h3><p>有两种添加任务的办法：</p>
+<ul>
+<li>调用<code>add_job()</code></li>
+<li>使用<code>scheduled_job()</code>修饰器</li>
+</ul>
+<p>第一个方法是使用最多的，因为调用它会返回一个<code>apscheduler.job.Job</code>实例，后续可以对它进行修改或者删除，而使用修饰器添加的任务添加之后就不能进行修改。</p>
+<p>在调度器中设置定时任务，如果任务添加的时候，调度器还没有启动，那么任务只是暂时放到调度器中，当调度器启动之后重新计算第一次执行时间。</p>
+<p>需要注意的是，可以使用执行器或者任务仓库来序列化任务，但是这个任务必须满足两个条件：</p>
+<ol>
+<li>调用对象必须全局可访问</li>
+<li>调用对象的参数必须也可以序列化。</li>
+</ol>
+<p>在所有内置的任务仓库中，只有<code>MemoryJobStore</code>不能序列化对象；在所有内置的执行器中，只有<code>ProcessPoolExecutors</code>会序列化任务。</p>
+<p>如果你需要在应用中使用持久性任务，那就必须给任务定义一个ID，并设置<code>replace_existing=True</code>,否则每次重启应用都会返回一个新的任务。</p>
+<p>如果要立即执行任务，只需要在添加任务的时候省略<code>trigger</code>参数。</p>
+<h3 id="删除任务"><a href="#删除任务" class="headerlink" title="删除任务"></a>删除任务</h3><p>当从调度器中删除任务的时候，就会从相关联的任务仓库中删除任务，后面就不会再执行了，有两种方法来删除任务。</p>
+<ol>
+<li>调用<code>remove_job()</code>，参数为job ID以及任务仓库名</li>
+<li>调用<code>remove()</code></li>
+</ol>
+<p>第二种方法用起来更加方便，但是需要先保存添加任务时返回的实例对象；而通过<code>scheduled_job()</code>添加的任务，只能使用第一种方法进行删除。</p>
+<p>如果任务执行完毕，它会自动被删除。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">job = scheduler.add_job(myfunc, <span class="string">'interval'</span>, minutes=<span class="number">2</span>)</div><div class="line">job.remove()</div></pre></td></tr></table></figure>
+<p>同样的，如果显式使用任务ID，则使用下面的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">scheduler.add_job(myfunc, &apos;interval&apos;, minutes=2, id=&apos;my_job_id&apos;)</div><div class="line">scheduler.remove_job(&apos;my_job_id&apos;)</div></pre></td></tr></table></figure>
+<h3 id="暂停与恢复任务"><a href="#暂停与恢复任务" class="headerlink" title="暂停与恢复任务"></a>暂停与恢复任务</h3><p>暂停与恢复任务也很简单，可以直接操作任务实例或者调度器来实现，当任务暂停时，它的运行时间会被重置，暂停期间不会计算进去，重启之后又算进去。</p>
+<p>暂停任务可以使用以下两种方法：</p>
+<ul>
+<li><code>apscheduler.job.Job.pause()</code></li>
+<li><code>apscheduler.schedulers.base.BaseScheduler.pause_job()</code></li>
+</ul>
+<p>恢复任务可以使用以下两种方法：</p>
+<ul>
+<li><code>apscheduler.job.Job.resume()</code></li>
+<li><code>apscheduler.schedulers.BaseScheduler.resume_job()</code></li>
+</ul>
+<h3 id="获取任务列表"><a href="#获取任务列表" class="headerlink" title="获取任务列表"></a>获取任务列表</h3><p>可以使用<code>get_jobs()</code>方法来获取当前正在处理的任务列表，如果只是想获取某个任务仓库中的任务列表，可以使用任务仓库名作为参数传入。</p>
+<p>APS还提供了一个<code>print_jobs()</code>方法来打印格式化的任务列表。</p>
+<h3 id="修改任务"><a href="#修改任务" class="headerlink" title="修改任务"></a>修改任务</h3><p>使用<code>apscheduler.job.Job.modify()</code>或者<code>modify_job()</code>方法可以修改任务的属性，你可以修改任务的任意属性，除了<code>id</code>。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">job.modify(max_instances=<span class="number">6</span>, name=<span class="string">'Alternate name'</span>)</div></pre></td></tr></table></figure>
+<p>如果你想重新调度某个任务，例如改变它的触发器，则可以使用<code>apscheduler.job.Job.reschedule()</code>或者<code>reschedule_job()</code>方法，这个两个方法都可以为任务重新创建一个触发器，并重新计算任务的运行时间。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scheduler.reschedule_job(<span class="string">'my_job_id'</span>, trigger=<span class="string">'cron'</span>, minute=<span class="string">'*/5'</span>)</div></pre></td></tr></table></figure>
+<h3 id="关闭调度器"><a href="#关闭调度器" class="headerlink" title="关闭调度器"></a>关闭调度器</h3><p>使用下面的方法关闭调度器：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scheduler.shutdown()</div></pre></td></tr></table></figure>
+<p>默认情况下，scheduler会关闭它的任务仓库以及执行器，并等待所有正在执行的任务执行完。如果你不想等待，可以这样操作：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scheduler.shutdown(wait=<span class="keyword">False</span>)</div></pre></td></tr></table></figure>
+<h3 id="限制任务实例并发执行的个数"><a href="#限制任务实例并发执行的个数" class="headerlink" title="限制任务实例并发执行的个数"></a>限制任务实例并发执行的个数</h3><p>默认情况下，只允许同时执行一个任务实例，通过<code>max_instances</code>参数来设置允许并发执行任务的个数。</p>
+<h3 id="错失任务的合并"><a href="#错失任务的合并" class="headerlink" title="错失任务的合并"></a>错失任务的合并</h3><p>有时候调度器可能无法按时执行某个任务，最常见的情况就是当某个持久性任务保存在任务仓库中时，调度器关闭之后再重启，但是任务需要在重启之前被执行，这时这个任务就被错过了。调度器会根据任务<code>misfire_grace_time</code>参数的配置来决定错过的任务还要不要继续执行。这样做的话可能导致重启调度器之后会连续执行好几个任务。</p>
+<h3 id="调度器事件"><a href="#调度器事件" class="headerlink" title="调度器事件"></a>调度器事件</h3><p>可以给调度器添加事件监听器，调度器事件只有在某些情况下才会被触发，并且可以携带某些有用的信息。通过给<code>add_listener()</code>传递合适的<code>mask</code>参数，可以只监听几种特定的事件类型。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_listener</span><span class="params">(event)</span>:</span></div><div class="line">    <span class="keyword">if</span> event.exception:</div><div class="line">        print(<span class="string">'The job crashed :('</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        print(<span class="string">'The job worked :)'</span>)</div><div class="line"></div><div class="line">scheduler.add_listener(my_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)</div></pre></td></tr></table></figure>
+</div></article><div class="tags"><a href="/tags/python/">python</a></div><div class="paginator"><a href="/2016/02/19/aps-example/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2016/02/17/sudo/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//ahonn.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script></section><footer><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">Nummy Lee</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div></body><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script></html>
