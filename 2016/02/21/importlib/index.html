@@ -11,17 +11,16 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
 ga('create', 'UA-74273646-1', 'auto');
-ga('send', 'pageview');</script></head><body><div id="main"><header><a href="/." class="logo">Nummy</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">Python运行中动态导入模块</h1><span class="post-time">Feb 21, 2016</span><div class="post-content"><p>有时候，需要在运行Python的过程中根据动态参数来导入具体的模块，这可以通过importlib模块来实现。</p>
+ga('send', 'pageview');</script></head><body><div id="main"><header><a href="/." class="logo">Nummy</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Accueil</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Catégories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">À propos</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">Python运行中动态导入模块</h1><span class="post-time">Feb 21, 2016</span><div class="post-content"><p>有时候，需要在运行Python的过程中根据动态参数来导入具体的模块，这可以通过importlib模块来实现。</p>
 <p>importlib模块只有一个方法import_module(),它可以接受一个参数或者两个参数，一个参数，说明通过绝对路径来导入模块，如果是两个参数，说明通过相对路径来导入模块，这时第一个参数为相对路径，第二个参数为基准路径。</p>
 <p>例如pkg包下面有一个模块mod，还有一个子包subpkg,目录结构如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">/pkg</div><div class="line">    __init__.py</div><div class="line">    mod.py</div><div class="line">    /subpkg</div><div class="line">	__init__.py</div><div class="line">	...</div></pre></td></tr></table></figure></p>
 <p>那么通过绝对路径到导入模块的代码如下所示：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">importlib.import_module(<span class="string">"pkg.mod"</span>)</div></pre></td></tr></table></figure></p>
 <p>而通过相对路径导入模块的代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">importlib.import_module(<span class="string">"..mod"</span>, <span class="string">"pkg.subpkg"</span>)</div></pre></td></tr></table></figure></p>
-</div></article><div class="tags"><a href="/tags/python/">python</a></div><div class="paginator"><a href="/2016/02/21/process/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2016/02/21/proxy/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">(function() {
-var d = document, s = d.createElement('script');
-
-s.src = '//ahonn.disqus.com/embed.js';
-
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script></section><footer><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">Nummy Lee</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div></body><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script></html>
+</div></article><div class="tags"><a href="/tags/python/">python</a></div><div class="paginator"><a href="/2016/02/21/process/" class="prev"><i class="iconfont icon-left"></i><span> Précédent</span></a><a href="/2016/02/21/proxy/" class="next"><span>Suivant</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div data-thread-key="http://nummy.github.io/2016/02/21/importlib/index.html" data-title="Python运行中动态导入模块" data-url="http://nummy.github.io/2016/02/21/importlib/index.html" class="ds-thread"></div><script type="text/javascript">var duoshuoQuery = {short_name: "nummy" };
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();</script></section></section><footer><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">Nummy Lee</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div></body><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script></html>
