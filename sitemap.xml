@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://nummy.github.io/2016/08/17/runit-quick-tutorial/</loc>
+    
+    <lastmod>2016-08-17T15:19:58.810Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://nummy.github.io/about/index.html</loc>
     
     <lastmod>2016-08-02T02:15:46.546Z</lastmod>
@@ -166,20 +173,6 @@
     <loc>http://nummy.github.io/2016/02/17/python-%E7%B1%BB%E4%B8%AD%E6%96%B9%E6%B3%95%E7%9A%84%E5%8C%BA%E5%88%AB/</loc>
     
     <lastmod>2016-02-18T02:56:01.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://nummy.github.io/2016/02/17/Hexo%E5%88%9B%E5%BB%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</loc>
-    
-    <lastmod>2016-02-17T08:09:21.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://nummy.github.io/2016/08/02/hello-world/</loc>
-    
-    <lastmod>2016-02-17T06:21:07.000Z</lastmod>
     
   </url>
   

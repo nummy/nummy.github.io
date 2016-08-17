@@ -1,17 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="description"><meta name="viewport" content="width=device-width, initial-scale=1"><title>U盘启动盘安装Win10&amp;CentOS所遇到的坑 · Nummy</title><link rel="short icon" href="/favicon.ico"><!-- font--><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600|Roboto Mono"><!-- icon--><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><!-- theme style--><link rel="stylesheet" href="/css/style.css"><!-- baidu analytics--><script type="text/javascript">var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?9e0cbea7d3319c6c94c71dfb93c151b8";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script><!-- google analytics--><script type="text/javascript">(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-74273646-1', 'auto');
-ga('send', 'pageview');</script></head><body><div id="main"><header><a href="/." class="logo">Nummy</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">U盘启动盘安装Win10&CentOS所遇到的坑</h1><span class="post-time">Feb 20, 2016</span><div class="post-content"><p>之前一直在Win10上用虚拟机装的CentOS，很不爽，想自己再装个Win10&amp;CentOS双系统，无可用光盘，只好自己制作一个U盘启动盘。具体过程就不描述了，网上教程一大把。</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="description"><meta name="viewport" content="width=device-width, initial-scale=1"><title>U盘启动盘安装Win10&amp;CentOS所遇到的坑 · Nummy</title><link rel="short icon" href="/favicon.ico"><!-- font--><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600|Roboto Mono"><!-- icon--><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><!-- theme style--><link rel="stylesheet" href="/css/style.css"></head><body><div id="main"><header><a href="/." class="logo">Nummy</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">U盘启动盘安装Win10&CentOS所遇到的坑</h1><span class="post-time">Feb 20, 2016</span><div class="post-content"><p>之前一直在Win10上用虚拟机装的CentOS，很不爽，想自己再装个Win10&amp;CentOS双系统，无可用光盘，只好自己制作一个U盘启动盘。具体过程就不描述了，网上教程一大把。</p>
 <p>现在说一下安装之后所遇到的问题以及解决办法。</p>
 <ol>
 <li><p>问题1：U盘安装启动出现press the enter key to begin the installation process 就不动弹了。<br>解决办法：<br>替换U盘中，/syslinux/vesamenu.c32文件，<a href="http://vdisk.weibo.com/s/dDpCP-5ht4wdC" target="_blank" rel="external">共享地址</a></p>
