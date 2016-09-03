@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="description"><meta name="viewport" content="width=device-width, initial-scale=1"><title>scala学习笔记【1】基础 · Nummy</title><link rel="short icon" href="/favicon.ico"><!-- font--><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600|Roboto Mono"><!-- icon--><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><!-- theme style--><link rel="stylesheet" href="/css/style.css"></head><body><div id="main"><header><a href="/." class="logo">Nummy</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">scala学习笔记【1】基础</h1><span class="post-time">Sep 3, 2016</span><div id="sidebar" class="post-sidebar"><h3 class="heading">Directory</h3><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用类型"><span class="toc-text">常用类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#算术和操作符重载"><span class="toc-text">算术和操作符重载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#apply方法"><span class="toc-text">apply方法</span></a></li></ol></div><div class="post-content"><h3 id="常用类型"><a href="#常用类型" class="headerlink" title="常用类型"></a>常用类型</h3><p>scala中常用类型如下：</p>
+<ul>
+<li>Byte</li>
+<li>Char</li>
+<li>Short</li>
+<li>Int</li>
+<li>Long</li>
+<li>Float</li>
+<li>Double</li>
+<li>Booean</li>
+</ul>
+<p>这些类型都是类，所以在scala中不需要包装类型，在基本类型和包装类型之间的转换工作是scala编译器的事。</p>
+<p>在scala中，我们使用方法而不是强制类型转换，来做数值类型之间的转换。例如：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="number">99.44</span>.toInt         <span class="comment">// 99</span></div><div class="line"><span class="number">99.</span>toChar           <span class="comment">// 'c'</span></div></pre></td></tr></table></figure></p>
+<p>和Java一样，toString将任意对象转换成字符串，要将包含了数字的字符串转换成数字，使用toInt或者toDouble。</p>
+<h3 id="算术和操作符重载"><a href="#算术和操作符重载" class="headerlink" title="算术和操作符重载"></a>算术和操作符重载</h3><p>和Java相比，Scala并没有提供++和–操作符，我们需要使用+=1或者-=1；</p>
+<p>对于常规的BigInt和BigDecimal对象，我们可以使用常规的方法使用那些数学操作符：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> x:<span class="type">BigInt</span> = <span class="number">12121212</span></div><div class="line">x*x*x</div></pre></td></tr></table></figure></p>
+<p>在java中，我们需要使用<code>x.multiply(x).multiply(x)</code>。</p>
+<p>###　调用函数和方法<br>相比Java，在scala中使用数学函数更简单，我们不需要从某个类的调用它的静态方法。<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scala.math._</div><div class="line">sqrt(<span class="number">2</span>)</div><div class="line">pow(<span class="number">2</span>,<span class="number">4</span>)</div></pre></td></tr></table></figure></p>
+<p>在使用以scala开头的包时，我们可以省略scala的前缀。例如<code>import math._</code>等价于<code>import scala.math._</code>。</p>
+<p>Scala中没有静态方法，但是提供了单例对象。</p>
+<p>不带参数的方法通常不使用圆括号，一般来讲，没有参数并不改变当前对象的方法都不带圆括号。</p>
+<p>scala中允许使用数字*字符串，从而实现复制字符串的功能。</p>
+<h3 id="apply方法"><a href="#apply方法" class="headerlink" title="apply方法"></a>apply方法</h3><p>在scala中，我们通常使用类似函数调用的语法。例如：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">"Hello"</span>(<span class="number">4</span>) <span class="comment">// o</span></div></pre></td></tr></table></figure></p>
+<p>你可以将这种用法当作()操作符的重载形式，它背后原理是实现一个名为apply的方法。所以<code>&quot;Hello&quot;(4)</code>相当于以下代码：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">"Hello"</span>.apply(<span class="number">4</span>)</div></pre></td></tr></table></figure></p>
+</div></article><div class="tags"><a href="/tags/scala/">scala</a></div><div class="paginator"><a href="/2016/08/17/runit-quick-tutorial/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div data-thread-key="http://nummy.github.io/2016/09/03/scala-base/index.html" data-title="scala学习笔记【1】基础" data-url="http://nummy.github.io/2016/09/03/scala-base/index.html" class="ds-thread"></div><script type="text/javascript">var duoshuoQuery = {short_name: "nummy" };
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();</script></section></section><footer><div class="copyright"><p>&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">Nummy Lee</span></p><p class="theme">Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div></body><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script></html>
