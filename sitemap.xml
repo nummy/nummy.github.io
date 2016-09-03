@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://nummy.github.io/2016/09/03/scala-map-and-tuple/</loc>
+    
+    <lastmod>2016-09-03T08:49:29.662Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://nummy.github.io/about/index.html</loc>
     
-    <lastmod>2016-09-03T08:32:11.273Z</lastmod>
+    <lastmod>2016-09-03T08:33:53.988Z</lastmod>
     
   </url>
   
