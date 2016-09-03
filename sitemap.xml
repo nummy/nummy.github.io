@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://nummy.github.io/2016/09/03/scala-array/</loc>
+    
+    <lastmod>2016-09-03T07:54:21.900Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://nummy.github.io/2016/09/03/scala-base/</loc>
     
     <lastmod>2016-09-03T02:25:14.047Z</lastmod>
