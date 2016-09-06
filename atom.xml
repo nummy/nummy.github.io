@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://nummy.github.io/"/>
-  <updated>2016-09-06T12:57:38.139Z</updated>
+  <updated>2016-09-06T12:59:01.481Z</updated>
   <id>http://nummy.github.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>scala inheritance</title>
+    <title>scala学习笔记【8】继承</title>
     <link href="http://nummy.github.io/2016/09/06/scala-inheritance/"/>
     <id>http://nummy.github.io/2016/09/06/scala-inheritance/</id>
     <published>2016-09-06T12:57:16.000Z</published>
-    <updated>2016-09-06T12:57:38.139Z</updated>
+    <updated>2016-09-06T12:59:01.481Z</updated>
     
     <content type="html"><![CDATA[<h3 id="扩展类"><a href="#扩展类" class="headerlink" title="扩展类"></a>扩展类</h3><p>scala扩展类的方式和Java一样，使用extends关键字：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Employee</span> <span class="keyword">extends</span> <span class="title">Person</span></span>&#123;</div><div class="line">    <span class="keyword">val</span> salary = <span class="number">0.0</span></div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>和Java一样，你可以将类声明为final，这样它就不能被扩展。你可以将单个方法或者字段声明为final， 以确保它们不能够被重写。</p>
