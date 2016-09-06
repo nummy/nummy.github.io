@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://nummy.github.io/2016/09/06/scala-inheritance/</loc>
+    
+    <lastmod>2016-09-06T12:57:38.139Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://nummy.github.io/2016/09/06/scala-package/</loc>
+    
+    <lastmod>2016-09-06T12:56:50.153Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://nummy.github.io/2016/09/04/scala-object/</loc>
     
     <lastmod>2016-09-04T01:17:41.580Z</lastmod>
